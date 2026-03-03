@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+    --color-border: hsl(214.3 31.8% 91.4%);
+    --color-input: hsl(214.3 31.8% 91.4%);
+    --color-ring: hsl(222.2 84% 4.9%);
+    --color-background: hsl(0 0% 100%);
+    --color-foreground: hsl(222.2 84% 4.9%);
+    --color-primary: hsl(222.2 47.4% 11.2%);
+    --color-primary-foreground: hsl(210 40% 98%);
+    --color-secondary: hsl(210 40% 96.1%);
+    --color-secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --color-muted: hsl(210 40% 96.1%);
+    --color-muted-foreground: hsl(215.4 16.3% 46.9%);
+    --color-accent: hsl(210 40% 96.1%);
+    --color-accent-foreground: hsl(222.2 47.4% 11.2%);
+    --color-card: hsl(0 0% 100%);
+    --color-card-foreground: hsl(222.2 84% 4.9%);
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors;
+        @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none;
+        @apply disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply bg-primary text-primary-foreground;
+        @apply hover:bg-primary/90 h-10 px-4 py-2;
+    }
+
+    .btn-secondary {
+        @apply bg-secondary text-secondary-foreground;
+        @apply hover:bg-secondary/80 h-10 px-4 py-2;
+    }
+
+    .btn-outline {
+        @apply border-input bg-background border;
+        @apply hover:bg-accent hover:text-accent-foreground;
+        @apply h-10 px-4 py-2;
+    }
+
+    .btn-ghost {
+        @apply hover:bg-accent hover:text-accent-foreground;
+        @apply h-10 px-4 py-2;
+    }
+
+    .card {
+        @apply border-border rounded-lg border;
+        @apply bg-card text-card-foreground shadow-sm;
+    }
+
+    .input {
+        @apply border-input flex h-10 w-full rounded-md border;
+        @apply bg-background px-3 py-2 text-sm;
+        @apply placeholder:text-muted-foreground;
+        @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none;
+        @apply disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .label {
+        @apply text-sm leading-none font-medium;
+        @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+    }
+
+    .badge {
+        @apply inline-flex items-center rounded-full border border-transparent;
+        @apply px-2.5 py-0.5 text-xs font-semibold transition-colors;
+        @apply focus:ring-ring focus:ring-2 focus:outline-none;
+    }
+
+    .badge-default {
+        @apply bg-primary text-primary-foreground;
+        @apply hover:bg-primary/80;
+    }
+
+    .badge-secondary {
+        @apply bg-secondary text-secondary-foreground;
+        @apply hover:bg-secondary/80;
+    }
+
+    .badge-outline {
+        @apply border-border text-foreground;
+    }
+
+    .skeleton {
+        @apply bg-muted animate-pulse rounded-md;
+    }
+}
+
+select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+
+    &,
+    &::picker(select) {
+        appearance: base-select;
+        border: 1px solid hsl(214.3 31.8% 91.4%);
+        border-radius: 0.75rem;
+    }
+
+    &::picker(select) {
+        @apply my-1 max-h-60 rounded-xl opacity-0 shadow-lg transition-all transition-discrete;
+    }
+
+    &:hover {
+        background-color: unset;
+    }
+
+    &::picker-icon {
+        display: none;
+    }
+
+    .select-arrow {
+        transition: rotate 0.4s ease;
+    }
+
+    &:open .select-arrow {
+        rotate: 180deg;
+    }
+
+    selectedcontent > * {
+        transition:
+            transform 0.5s cubic-bezier(0.35, 1.55, 0.65, 1),
+            opacity 0.5s;
+
+        @starting-style {
+            opacity: 0;
+            transform: translate(0, 100%);
+        }
+    }
+
+    .option-container {
+        @apply flex flex-col gap-1.25 p-1.25;
+
+        .option-value-wrap {
+            @apply flex items-center gap-2.5 rounded-lg px-2.5 py-1.25;
+            @apply hover:bg-accent;
+        }
+
+        option {
+            padding-block: 0.3125rem;
+            padding-inline: 0.625rem;
+            border-radius: 0.5rem;
+
+            &::checkmark {
+                content: "";
+                width: 0.5rem;
+                height: 0.5rem;
+                background-color: rgb(0, 100, 0);
+                border-radius: 50%;
+            }
+
+            &:checked {
+                background-color: rgba(0, 100, 0, 0.125);
+            }
+
+            &:hover {
+                @apply bg-accent;
+            }
+        }
+    }
+
+    &:open::picker(select) {
+        opacity: 1;
+
+        @starting-style {
+            opacity: 0;
+        }
+    }
+
+    &::picker(select)::-webkit-scrollbar {
+        width: 0;
+    }
+}

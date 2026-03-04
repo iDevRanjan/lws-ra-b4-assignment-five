@@ -16,7 +16,7 @@ export default function JobCard({ job }) {
                         <div>
                             <h3 className="mb-1 text-lg font-semibold">
                                 <Link
-                                    to={`/job-details/${job.slug}`}
+                                    to={`/jobs/${job.slug}`}
                                     className="hover:underline"
                                 >
                                     {job.title}

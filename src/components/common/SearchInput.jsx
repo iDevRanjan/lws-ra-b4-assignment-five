@@ -2,7 +2,11 @@ import { Search } from "lucide-react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 
-export default function SearchInput({ queryObject, handleSetQuerySearch }) {
+export default function SearchInput({
+    queryObject,
+    handleSetQuerySearch,
+    clearFiltersKey,
+}) {
     const searchInputRef = useRef(null);
 
     function handleClick() {
@@ -22,6 +26,7 @@ export default function SearchInput({ queryObject, handleSetQuerySearch }) {
                 <div className="relative">
                     <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <input
+                        key={clearFiltersKey}
                         ref={searchInputRef}
                         type="text"
                         placeholder="Search jobs by title, skill..."

@@ -3,8 +3,6 @@ import { useQueryObject } from "../../hooks/useQueryObject";
 export default function ClearFilters() {
     const { handleClearQueryFilter } = useQueryObject();
 
-    console.log("Render");
-
     return (
         <button
             onClick={handleClearQueryFilter}

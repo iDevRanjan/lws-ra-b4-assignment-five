@@ -2,6 +2,8 @@ import { useImmer } from "use-immer";
 import { QueryObjectContext } from "../context";
 import { initialQueryObject } from "../data/initialQueryObject";
 import { useCallback, useState } from "react";
+import { searchAndFilterQueryChecking } from "../utils/searchAndFilterQueryChecking";
+import toast from "react-hot-toast";
 
 export default function QueryObjectProvider({ children }) {
     const [queryObject, setQueryObject] = useImmer(initialQueryObject);
@@ -52,7 +54,16 @@ export default function QueryObjectProvider({ children }) {
     }
 
     function handleClearQueryFilter() {
+        const isAnyQueryNotAvailableWithoutSortValue =
+            searchAndFilterQueryChecking(queryObject);
+
+        if (isAnyQueryNotAvailableWithoutSortValue) {
+            toast("ℹ️ No query are available");
+            return;
+        }
+
         setQueryObject((draft) => {
+            draft.search = "";
             draft.type = [];
             draft.experienceLevel = [];
             draft.minSalary = null;

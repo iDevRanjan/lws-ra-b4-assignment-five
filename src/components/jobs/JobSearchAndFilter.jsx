@@ -26,6 +26,7 @@ export default function JobSearchAndFilter({ handleQueryParams }) {
                     <SearchInput
                         queryObject={queryObject}
                         handleSetQuerySearch={handleSetQuerySearch}
+                        clearFiltersKey={clearFiltersKey}
                     />
                     <JobFiltersContainer
                         handleSetQueryFilter={handleSetQueryFilter}

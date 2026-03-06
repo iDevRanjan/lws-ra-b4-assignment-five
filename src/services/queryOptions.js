@@ -1,6 +1,7 @@
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../utils/constants";
 import { getAllJobs, getJobBySlug, getSimilarJobs } from "./jobApi";
+import { getCompanyBySlug, getCompanyOpenPositions } from "./companyApi";
 
 export function getAllJobsQueryOption(params) {
     return queryOptions({
@@ -37,5 +38,19 @@ export function getSimilarJobsQueryOption(params) {
          * https://tanstack.com/query/latest/docs/framework/react/guides/disabling-queries
          */
         enabled: false,
+    });
+}
+
+export function getCompanyBySlugQueryOption(params) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.companyBySlug, params],
+        queryFn: () => getCompanyBySlug(params),
+    });
+}
+
+export function getCompanyOpenPositionsQueryOption(params) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.companyOpenPositions, params],
+        queryFn: () => getCompanyOpenPositions(params),
     });
 }

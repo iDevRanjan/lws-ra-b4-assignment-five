@@ -87,6 +87,11 @@
     .skeleton {
         @apply bg-muted animate-pulse rounded-md;
     }
+
+    label:has(+ .relative :required)::after {
+        content: " *";
+        @apply text-red-600;
+    }
 }
 
 select {

@@ -41,9 +41,12 @@ export default function Home() {
     return (
         <main className="container mx-auto px-4 py-8">
             <Hero />
-            <JobSearchAndFilter handleQueryParams={handleQueryParams} />
+            <JobSearchAndFilter
+                handleQueryParams={handleQueryParams}
+                queryParamsProps={params}
+            />
             <JobSearchingResultsHeader
-                availableJobs={createPageData.totalJobsCount}
+                displayedJobsCount={createPageData.displayedJobsCount}
             />
             {!isPending && !isError && isJobsAvailable && (
                 <JobCardsGrid

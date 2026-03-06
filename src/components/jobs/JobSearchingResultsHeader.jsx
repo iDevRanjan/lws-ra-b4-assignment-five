@@ -1,8 +1,8 @@
-import DropdownMenu from "../common/DropdownMenu";
+import SortDropdownMenu from "../common/SortDropdownMenu";
 import { jobSortingOptionData } from "../../data/jobSortingOptionData";
 import { useQueryObject } from "../../hooks/useQueryObject";
 
-export default function JobSearchingResultsHeader({ availableJobs }) {
+export default function JobSearchingResultsHeader({ displayedJobsCount }) {
     const { handleSetQuerySort } = useQueryObject();
 
     return (
@@ -10,12 +10,12 @@ export default function JobSearchingResultsHeader({ availableJobs }) {
             <div>
                 <h2 className="text-2xl font-semibold">Available Jobs</h2>
                 <p className="text-muted-foreground mt-1 text-sm">
-                    Showing {availableJobs} results
+                    Showing {displayedJobsCount} results
                 </p>
             </div>
             <div className="flex items-center gap-2">
                 <span className="text-muted-foreground text-sm">Sort by:</span>
-                <DropdownMenu
+                <SortDropdownMenu
                     selectTitle="Job Sorting"
                     itemsData={jobSortingOptionData}
                     handleSetQuerySort={handleSetQuerySort}

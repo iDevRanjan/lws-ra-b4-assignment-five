@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
 import { Bookmark, Clock, MapPin } from "lucide-react";
 
@@ -20,12 +21,12 @@ export default function JobHeader({ jobDetailsData }) {
                                 {jobDetailsData.title}
                             </h1>
                             <div className="text-muted-foreground flex flex-wrap items-center gap-3">
-                                <a
-                                    href="company-profile.html"
+                                <Link
+                                    to={`/companies/${jobDetailsData.company.slug}`}
                                     className="hover:text-primary text-lg font-medium"
                                 >
                                     {jobDetailsData.company.name}
-                                </a>
+                                </Link>
                                 <span>•</span>
                                 <span className="flex items-center gap-1">
                                     <MapPin className="h-4 w-4" />

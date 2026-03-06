@@ -1,14 +1,11 @@
-export default function DropdownMenu({
-    selectTitle,
+export default function FormDropdownMenu({
+    selectId,
     itemsData,
-    handleSetQuerySort,
+    required,
+    selectRegister,
 }) {
-    function handleChange(event) {
-        handleSetQuerySort(event.target.value);
-    }
-
     return (
-        <select name={selectTitle} onChange={handleChange}>
+        <select id={selectId} required={required} {...selectRegister}>
             <button>
                 <selectedcontent></selectedcontent>
                 <svg

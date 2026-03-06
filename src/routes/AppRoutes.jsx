@@ -4,8 +4,15 @@ import RootFallback from "../components/layout/RootFallback";
 import Home from "../pages/public/Home";
 import QueryObjectProvider from "../providers/QueryObjectProvider";
 import JobDetails from "../pages/public/JobDetails";
-import { getJobBySlugLoader } from "../services/routerLoaders";
+import {
+    getCompanyBySlugLoader,
+    getJobBySlugLoader,
+} from "../services/routerLoaders";
 import ErrorElement from "../pages/error/ErrorElement";
+import CompanyProfile from "../pages/public/CompanyProfile";
+import Login from "../pages/auth/Login";
+import PublicRoutes from "./PublicRoutes";
+import AuthProvider from "../providers/AuthProvider";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -30,6 +37,29 @@ function router(queryClient) {
                             element: <JobDetails />,
                             loader: (loaderFnArgs) =>
                                 getJobBySlugLoader(loaderFnArgs, queryClient),
+                        },
+                        {
+                            path: "companies/:companySlug",
+                            element: <CompanyProfile />,
+                            loader: (loaderFnArgs) =>
+                                getCompanyBySlugLoader(
+                                    loaderFnArgs,
+                                    queryClient,
+                                ),
+                        },
+                        {
+                            element: <PublicRoutes />,
+                            children: [
+                                { path: "login", element: <Login /> },
+                                {
+                                    path: "user-register",
+                                    // element: <Register />,
+                                },
+                                {
+                                    path: "company-register",
+                                    // element: <CompanyRegister />,
+                                },
+                            ],
                         },
                     ],
                 },
@@ -57,5 +87,9 @@ function router(queryClient) {
 // - `errorElement` নিশ্চিত করে যে ডাটা লোড না হলে বা কোড ভুল থাকলেও লেআউট ভাঙবে না।
 
 export default function AppRoutes({ queryClient }) {
-    return <RouterProvider router={router(queryClient)} />;
+    return (
+        <AuthProvider>
+            <RouterProvider router={router(queryClient)} />
+        </AuthProvider>
+    );
 }

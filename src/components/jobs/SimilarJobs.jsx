@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSimilarJobsQueryOption } from "../../services/queryOptions";
 import SimilarJobSkeleton from "../skeletons/SimilarJobSkeleton";
+import { Link } from "react-router";
 
 export default function SimilarJobs({ jobId }) {
     const {
@@ -10,6 +11,9 @@ export default function SimilarJobs({ jobId }) {
         error,
         refetch,
     } = useQuery(getSimilarJobsQueryOption(jobId));
+
+    const isSimilarJobsAvailable =
+        similarJobsData?.success && similarJobsData?.data.length > 0;
 
     if (isError) {
         return (
@@ -25,7 +29,7 @@ export default function SimilarJobs({ jobId }) {
             className="card p-6"
             ref={(node) => {
                 if (!node) return;
-                if (similarJobsData?.success) return;
+                if (isSimilarJobsAvailable) return;
 
                 const observer = new IntersectionObserver((entries) => {
                     const entry = entries[0];
@@ -45,7 +49,7 @@ export default function SimilarJobs({ jobId }) {
         >
             <h2 className="mb-4 text-xl font-semibold">Similar Jobs</h2>
             {isPending && <SimilarJobSkeleton />}
-            {!isPending && similarJobsData?.success && (
+            {!isPending && isSimilarJobsAvailable && (
                 <div className="space-y-4">
                     {similarJobsData?.data.map((similarJobData) => (
                         <article
@@ -63,15 +67,15 @@ export default function SimilarJobs({ jobId }) {
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <h3 className="mb-1 font-semibold">
-                                        <a
-                                            href="job-details.html"
+                                        <Link
+                                            to={`/jobs/${similarJobData.slug}`}
                                             className="hover:underline"
                                         >
                                             {similarJobData.title}
-                                        </a>
+                                        </Link>
                                     </h3>
                                     <p className="text-muted-foreground mb-2 text-sm">
-                                        {similarJobData.company.name} •
+                                        {similarJobData.company.name} •{" "}
                                         {similarJobData.location} •{" "}
                                         {similarJobData.workMode}
                                     </p>
@@ -81,12 +85,12 @@ export default function SimilarJobs({ jobId }) {
                                             - ${similarJobData.salaryMax / 1000}
                                             k
                                         </span>
-                                        <a
-                                            href="job-details.html"
+                                        <Link
+                                            to={`/jobs/${similarJobData.slug}`}
                                             className="text-primary text-sm hover:underline"
                                         >
                                             View Details
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

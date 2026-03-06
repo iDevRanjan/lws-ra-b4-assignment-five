@@ -1,6 +1,7 @@
 import { Clock, MapPin, Users } from "lucide-react";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
 import { Link } from "react-router";
+import { slugify } from "../../utils/slugify";
 
 export default function JobCard({ job }) {
     return (
@@ -23,12 +24,12 @@ export default function JobCard({ job }) {
                                 </Link>
                             </h3>
                             <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
-                                <a
-                                    href="company-profile.html"
+                                <Link
+                                    to={`/companies/${slugify(job.company.name)}`}
                                     className="hover:text-primary font-medium"
                                 >
                                     {job.company.name}
-                                </a>
+                                </Link>
                                 <span>•</span>
                                 <span className="flex items-center gap-1">
                                     <MapPin className="h-4 w-4" />
@@ -72,12 +73,12 @@ export default function JobCard({ job }) {
                             </span>
                         </div>
                         <div className="flex gap-2">
-                            <a
-                                href="job-seeker/job-details.html"
-                                className="btn btn-outline text-sm"
+                            <Link
+                                to={`/jobs/${job.slug}`}
+                                className="btn btn-outline cursor-pointer text-sm"
                             >
                                 View Details
-                            </a>
+                            </Link>
                             <button className="btn btn-primary cursor-pointer text-sm">
                                 Apply Now
                             </button>

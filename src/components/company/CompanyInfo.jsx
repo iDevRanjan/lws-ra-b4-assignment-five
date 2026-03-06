@@ -1,4 +1,5 @@
 import { Calendar, Globe, MapPin, Users } from "lucide-react";
+import { Link } from "react-router";
 
 export default function CompanyInfo({ companyInfo }) {
     return (
@@ -22,7 +23,11 @@ export default function CompanyInfo({ companyInfo }) {
                 <div className="space-y-2 pt-2">
                     <div className="flex items-center gap-2 text-sm">
                         <Globe className="text-muted-foreground h-4 w-4" />
-                        <a href="#" className="text-primary hover:underline">
+                        <a
+                            target="_blank"
+                            href={`${companyInfo.websiteUrl}`}
+                            className="text-primary hover:underline"
+                        >
                             {companyInfo.websiteUrl}
                         </a>
                     </div>
@@ -45,12 +50,12 @@ export default function CompanyInfo({ companyInfo }) {
                         </span>
                     </div>
                 </div>
-                <a
-                    href="../company/company-profile.html"
+                <Link
+                    to={`/companies/${companyInfo.slug}`}
                     className="btn btn-outline mt-4 w-full"
                 >
                     View Company Profile
-                </a>
+                </Link>
             </div>
         </div>
     );

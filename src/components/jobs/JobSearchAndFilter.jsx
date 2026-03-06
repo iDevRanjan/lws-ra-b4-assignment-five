@@ -4,7 +4,10 @@ import { useQueryObject } from "../../hooks/useQueryObject";
 import { getSearchAndFilterParams } from "../../utils/getSearchAndFilterParams";
 import { useDebounce } from "../../hooks/useDebounce";
 
-export default function JobSearchAndFilter({ handleQueryParams }) {
+export default function JobSearchAndFilter({
+    handleQueryParams,
+    queryParamsProps,
+}) {
     const {
         queryObject,
         handleSetQuerySearch,
@@ -14,6 +17,7 @@ export default function JobSearchAndFilter({ handleQueryParams }) {
 
     function generateQueryPath() {
         const params = getSearchAndFilterParams(queryObject);
+        if (params === queryParamsProps) return;
         handleQueryParams(params);
     }
 

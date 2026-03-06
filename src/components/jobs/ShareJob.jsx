@@ -1,6 +1,16 @@
 import { Facebook, Link, Linkedin, Twitter } from "lucide-react";
+import { linkCopyOnClipboard } from "../../utils/linkCopyOnClipboard";
 
 export default function ShareJob() {
+    function handleClick() {
+        const url = window.location.href;
+        linkCopyOnClipboard(
+            url,
+            "Share job link copied to clipboard!",
+            "Failed to copy URL",
+        );
+    }
+
     return (
         <div className="card p-6">
             <h3 className="mb-4 text-lg font-semibold">Share this Job</h3>
@@ -23,7 +33,11 @@ export default function ShareJob() {
                 >
                     <Facebook className="h-4 w-4" />
                 </button>
-                <button className="btn btn-outline flex-1" title="Copy link">
+                <button
+                    onClick={handleClick}
+                    className="btn btn-outline flex-1 cursor-pointer"
+                    title="Copy link"
+                >
                     <Link className="h-4 w-4" />
                 </button>
             </div>

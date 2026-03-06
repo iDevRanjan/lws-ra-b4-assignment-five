@@ -1,4 +1,7 @@
-import { getJobBySlugQueryOption } from "./queryOptions";
+import {
+    getCompanyBySlugQueryOption,
+    getJobBySlugQueryOption,
+} from "./queryOptions";
 
 export async function getJobBySlugLoader(loaderFnArgs, queryClient) {
     const { params } = loaderFnArgs;
@@ -10,4 +13,13 @@ export async function getJobBySlugLoader(loaderFnArgs, queryClient) {
      * https://tanstack.com/query/latest/docs/reference/QueryClient#queryclientensurequerydata
      */
     await queryClient.ensureQueryData(getJobBySlugQueryOption(params.jobSlug));
+}
+
+export async function getCompanyBySlugLoader(loaderFnArgs, queryClient) {
+    const { params } = loaderFnArgs;
+    if (!params.companySlug) throw new Error("No company slug provided");
+
+    await queryClient.ensureQueryData(
+        getCompanyBySlugQueryOption(params.companySlug),
+    );
 }

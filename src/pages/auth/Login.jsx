@@ -5,15 +5,9 @@ import Field from "../../components/common/Field";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { applicationLogin } from "../../services/authApi";
 import { useAuth } from "../../hooks/useAuth";
-
-const localStorageData = {
-    isLoggedin: false,
-    token: undefined,
-    userId: undefined,
-    role: undefined,
-};
+import { useNavigate } from "react-router";
+import { applicationLoginMutationOption } from "../../services/mutationOptions";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -22,23 +16,31 @@ export default function Login() {
         handleSubmit,
         formState: { errors },
         setError,
+        clearErrors,
     } = useForm();
     const { login } = useAuth();
-    const { mutate: mutateLogin } = useMutation({
-        mutationFn: (loginFormData) => applicationLogin(loginFormData),
-        onSuccess: (data) => {
-            const authLocalStorageData = {
-                isLoggedin: data.success,
-                token: data.token,
-                loggedinClientId: data.data.id,
-                role: data.data.role,
-            };
-            login(authLocalStorageData);
-        },
-    });
+    const { mutate: mutateLogin } = useMutation(
+        applicationLoginMutationOption(login),
+    );
+    const navigate = useNavigate();
 
     function onSubmit(formData) {
-        mutateLogin(formData);
+        mutateLogin(formData, {
+            onSuccess: () => {
+                navigate("/", {
+                    replace: true,
+                });
+            },
+            onError: (error) => {
+                setError("login", {
+                    type: "server",
+                    message:
+                        error.response.data.message ||
+                        error.message ||
+                        "Login failed",
+                });
+            },
+        });
     }
 
     return (
@@ -139,8 +141,14 @@ export default function Login() {
                                 })}
                             />
                         </Field>
+                        {errors.login && (
+                            <p className="text-center text-red-600">
+                                {errors.login.message}
+                            </p>
+                        )}
                         <button
                             type="submit"
+                            onClick={() => clearErrors("login")}
                             className="btn btn-primary h-11 w-full cursor-pointer text-base"
                         >
                             <LogIn className="mr-2 h-4 w-4" />

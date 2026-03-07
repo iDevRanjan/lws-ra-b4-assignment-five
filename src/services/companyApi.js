@@ -15,3 +15,12 @@ export async function getCompanyOpenPositions(openPositionsSlug) {
     );
     return response.data;
 }
+
+export async function getCompanyProfile(authToken) {
+    const response = await axios.get(`${BASE_URL}/api/companies/profile`, {
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    });
+    return response.data;
+}

@@ -13,6 +13,7 @@ import CompanyProfile from "../pages/public/CompanyProfile";
 import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
 import AuthProvider from "../providers/AuthProvider";
+import ProfileProvider from "../providers/ProfileProvider";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -89,7 +90,9 @@ function router(queryClient) {
 export default function AppRoutes({ queryClient }) {
     return (
         <AuthProvider>
-            <RouterProvider router={router(queryClient)} />
+            <ProfileProvider>
+                <RouterProvider router={router(queryClient)} />
+            </ProfileProvider>
         </AuthProvider>
     );
 }

@@ -1,7 +1,12 @@
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../utils/constants";
 import { getAllJobs, getJobBySlug, getSimilarJobs } from "./jobApi";
-import { getCompanyBySlug, getCompanyOpenPositions } from "./companyApi";
+import {
+    getCompanyBySlug,
+    getCompanyOpenPositions,
+    getCompanyProfile,
+} from "./companyApi";
+import { getUserProfile } from "./userApi";
 
 export function getAllJobsQueryOption(params) {
     return queryOptions({
@@ -52,5 +57,23 @@ export function getCompanyOpenPositionsQueryOption(params) {
     return queryOptions({
         queryKey: [QUERY_KEYS.companyOpenPositions, params],
         queryFn: () => getCompanyOpenPositions(params),
+    });
+}
+
+export function getClientProfileQueryOption(authData) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.clientProfile, authData.role],
+        queryFn: () => {
+            if (authData.role === "USER") {
+                return getUserProfile(authData.token);
+            }
+            if (authData.role === "COMPANY") {
+                return getCompanyProfile(authData.token);
+            }
+
+            throw new Error("Invalid role");
+        },
+        enabled: authData.isLoggedin,
+        retry: false,
     });
 }

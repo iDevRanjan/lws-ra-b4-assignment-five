@@ -1,7 +1,12 @@
 import { Link } from "react-router";
 import { Briefcase } from "lucide-react";
+import { useProfile } from "../../hooks/useProfile";
 
 export default function Header() {
+    const { clientProfileData } = useProfile();
+
+    console.log(clientProfileData);
+
     return (
         <header className="border-border bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
             <div className="container mx-auto flex h-16 items-center justify-between px-4">

@@ -1,5 +1,5 @@
 import { mutationOptions } from "@tanstack/react-query";
-import { applicationLogin } from "./authApi";
+import { applicationLogin, clientRegister } from "./authApi";
 
 export function applicationLoginMutationOption(login) {
     return mutationOptions({
@@ -13,5 +13,11 @@ export function applicationLoginMutationOption(login) {
             };
             login(authLocalStorageData);
         },
+    });
+}
+
+export function clientRegisterMutationOption() {
+    return mutationOptions({
+        mutationFn: (registerFormData) => clientRegister(registerFormData),
     });
 }

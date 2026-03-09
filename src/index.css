@@ -64,6 +64,19 @@
         @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
     }
 
+    label:has(+ .relative :required)::after {
+        content: " *";
+        @apply text-red-600;
+    }
+
+    .textarea {
+        @apply border-input flex min-h-20 w-full rounded-md border;
+        @apply bg-background px-3 py-2 text-sm;
+        @apply placeholder:text-muted-foreground;
+        @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none;
+        @apply disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
     .badge {
         @apply inline-flex items-center rounded-full border border-transparent;
         @apply px-2.5 py-0.5 text-xs font-semibold transition-colors;
@@ -86,11 +99,6 @@
 
     .skeleton {
         @apply bg-muted animate-pulse rounded-md;
-    }
-
-    label:has(+ .relative :required)::after {
-        content: " *";
-        @apply text-red-600;
     }
 }
 

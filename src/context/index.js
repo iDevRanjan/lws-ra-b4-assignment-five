@@ -3,3 +3,4 @@ import { createContext } from "react";
 export const QueryObjectContext = createContext(null);
 export const AuthContext = createContext(null);
 export const ProfileContext = createContext(null);
+export const JobSeekerApplicationsContext = createContext(null);

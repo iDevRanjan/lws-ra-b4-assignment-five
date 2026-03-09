@@ -14,6 +14,9 @@ import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
 import AuthProvider from "../providers/AuthProvider";
 import ProfileProvider from "../providers/ProfileProvider";
+import JobSeekerRegister from "../pages/auth/JobSeekerRegister";
+import CompanyRegister from "../pages/auth/CompanyRegister";
+import JobSeekerApplicationsProvider from "../providers/JobSeekerApplicationsProvider";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -28,9 +31,11 @@ function router(queryClient) {
                         {
                             index: true,
                             element: (
-                                <QueryObjectProvider>
-                                    <Home />
-                                </QueryObjectProvider>
+                                <JobSeekerApplicationsProvider>
+                                    <QueryObjectProvider>
+                                        <Home />
+                                    </QueryObjectProvider>
+                                </JobSeekerApplicationsProvider>
                             ),
                         },
                         {
@@ -51,14 +56,17 @@ function router(queryClient) {
                         {
                             element: <PublicRoutes />,
                             children: [
-                                { path: "login", element: <Login /> },
                                 {
-                                    path: "user-register",
-                                    // element: <Register />,
+                                    path: "login",
+                                    element: <Login />,
+                                },
+                                {
+                                    path: "jobseeker-register",
+                                    element: <JobSeekerRegister />,
                                 },
                                 {
                                     path: "company-register",
-                                    // element: <CompanyRegister />,
+                                    element: <CompanyRegister />,
                                 },
                             ],
                         },

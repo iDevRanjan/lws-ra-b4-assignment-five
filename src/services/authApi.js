@@ -9,3 +9,11 @@ export async function applicationLogin(loginFormData) {
     );
     return response.data;
 }
+
+export async function clientRegister(registerFormData) {
+    const response = await axios.post(
+        `${BASE_URL}/api/auth/register`,
+        registerFormData,
+    );
+    return response.data;
+}

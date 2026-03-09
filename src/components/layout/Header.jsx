@@ -1,11 +1,35 @@
 import { Link } from "react-router";
 import { Briefcase } from "lucide-react";
 import { useProfile } from "../../hooks/useProfile";
+import { useAuth } from "../../hooks/useAuth";
+import DefaultNavbar from "../common/DefaultNavbar";
+import LoggedinJobSeekerNavbar from "../jobs/LoggedinJobSeekerNavbar";
+import LoggedinCompanyNavbar from "../company/LoggedinCompanyNavbar";
 
 export default function Header() {
+    const { authData } = useAuth();
     const { clientProfileData } = useProfile();
 
-    console.log(clientProfileData);
+    const role = clientProfileData?.data?.role;
+    let NavbarComponent = <DefaultNavbar />;
+
+    if (authData.isLoggedin && clientProfileData?.success) {
+        if (role === "USER") {
+            NavbarComponent = (
+                <LoggedinJobSeekerNavbar
+                    jobSeekerProfileData={clientProfileData.data}
+                />
+            );
+        }
+
+        if (role === "COMPANY") {
+            NavbarComponent = (
+                <LoggedinCompanyNavbar
+                    companyProfileData={clientProfileData.data}
+                />
+            );
+        }
+    }
 
     return (
         <header className="border-border bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
@@ -18,17 +42,7 @@ export default function Header() {
                         </span>
                     </Link>
                 </div>
-                <div className="flex items-center gap-4">
-                    <Link to={"login"} className="btn btn-ghost text-sm">
-                        Sign In
-                    </Link>
-                    <Link
-                        to={"register-company"}
-                        className="btn btn-primary text-sm"
-                    >
-                        Post a Job
-                    </Link>
-                </div>
+                {NavbarComponent}
             </div>
         </header>
     );

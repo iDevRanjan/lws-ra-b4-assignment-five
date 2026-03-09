@@ -8,9 +8,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
 import { applicationLoginMutationOption } from "../../services/mutationOptions";
+import toast from "react-hot-toast";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -18,8 +20,9 @@ export default function Login() {
         setError,
         clearErrors,
     } = useForm();
+
     const { login } = useAuth();
-    const { mutate: mutateLogin } = useMutation(
+    const { mutate: mutateLogin, isPending } = useMutation(
         applicationLoginMutationOption(login),
     );
     const navigate = useNavigate();
@@ -27,6 +30,7 @@ export default function Login() {
     function onSubmit(formData) {
         mutateLogin(formData, {
             onSuccess: () => {
+                toast.success("Welcome back! You are logged in");
                 navigate("/", {
                     replace: true,
                 });
@@ -35,7 +39,7 @@ export default function Login() {
                 setError("login", {
                     type: "server",
                     message:
-                        error.response.data.message ||
+                        error.response?.data?.message ||
                         error.message ||
                         "Login failed",
                 });
@@ -136,7 +140,7 @@ export default function Login() {
                                 selectRegister={register("role", {
                                     required: {
                                         value: true,
-                                        message: "Role is required",
+                                        message: "Please select your role",
                                     },
                                 })}
                             />
@@ -149,6 +153,7 @@ export default function Login() {
                         <button
                             type="submit"
                             onClick={() => clearErrors("login")}
+                            disabled={isPending}
                             className="btn btn-primary h-11 w-full cursor-pointer text-base"
                         >
                             <LogIn className="mr-2 h-4 w-4" />

@@ -77,3 +77,12 @@ export function getClientProfileQueryOption(authData) {
         retry: false,
     });
 }
+
+export function getJobSeekerApplicationsQueryOption(authData) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.jobSeekerApplications],
+        queryFn: () => {},
+        enabled: authData.isLoggedin,
+        retry: false,
+    });
+}

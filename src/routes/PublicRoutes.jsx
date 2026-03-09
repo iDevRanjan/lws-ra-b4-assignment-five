@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
 import ExestingClient from "../components/common/ExestingClient";

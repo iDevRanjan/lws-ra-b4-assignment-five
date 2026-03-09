@@ -1,5 +1,5 @@
 import FilterMenu from "../common/FilterMenu";
-import { experienceLevelOptionData } from "../../data/experienceLevelOptionData";
+import { experienceLevelFilterOptionData } from "../../data/experienceLevelFilterOptionData";
 import { jobTypeOptionData } from "../../data/jobTypeOptionData";
 import { salaryRangeOptionData } from "../../data/salaryRangeOptionData";
 import { skillsOptionData } from "../../data/skillsOptionData";
@@ -27,7 +27,7 @@ const JobFiltersContainer = memo(function JobFiltersContainer({
                 key={`experience-lavel-${clearFiltersKey}`}
                 selectTitle="Experience Lavel"
                 inputType="checkbox"
-                itemsData={experienceLevelOptionData}
+                itemsData={experienceLevelFilterOptionData}
                 name="experience-lavel"
                 handleSetQueryFilter={handleSetQueryFilter}
             />

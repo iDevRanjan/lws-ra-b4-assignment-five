@@ -8,7 +8,7 @@ import LoggedinCompanyNavbar from "../company/LoggedinCompanyNavbar";
 
 export default function Header() {
     const { authData } = useAuth();
-    const { clientProfileData } = useProfile();
+    const { data: clientProfileData } = useProfile();
 
     const role = clientProfileData?.data?.role;
     let NavbarComponent = <DefaultNavbar />;

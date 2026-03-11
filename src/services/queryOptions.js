@@ -6,7 +6,7 @@ import {
     getCompanyOpenPositions,
     getCompanyProfile,
 } from "./companyApi";
-import { getUserProfile } from "./userApi";
+import { getJobSeekerApplications, getUserProfile } from "./userApi";
 
 export function getAllJobsQueryOption(params) {
     return queryOptions({
@@ -78,11 +78,14 @@ export function getClientProfileQueryOption(axiosInstance, authData) {
     });
 }
 
-export function getJobSeekerApplicationsQueryOption(authData) {
+export function getJobSeekerApplicationsQueryOption(
+    axiosInstance,
+    isLoggedinJobSeeker,
+) {
     return queryOptions({
         queryKey: [QUERY_KEYS.jobSeekerApplications],
-        queryFn: () => {},
-        enabled: authData.isLoggedin,
+        queryFn: () => getJobSeekerApplications(axiosInstance),
+        enabled: isLoggedinJobSeeker,
         retry: false,
     });
 }

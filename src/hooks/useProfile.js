@@ -1,12 +1,17 @@
-import { useContext } from "react";
-import { ProfileContext } from "../context";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "./useAuth";
+import { getClientProfileQueryOption } from "../services/queryOptions";
+import { useAxiosInstance } from "./useAxiosInstance";
+import { useAxios } from "./useAxios";
 
 export function useProfile() {
-    const context = useContext(ProfileContext);
+    const { authData } = useAuth();
+    const axiosInstance = useAxiosInstance();
 
-    if (!context) {
-        throw new Error("useProfile must be used within a ProfileProvider");
-    }
+    console.log(axiosInstance);
 
-    return context;
+    // console.log(axiosInstance.interceptors.request);
+    // console.log(axiosInstance.interceptors.response);
+
+    return useQuery(getClientProfileQueryOption(axiosInstance, authData));
 }

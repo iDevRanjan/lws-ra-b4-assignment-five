@@ -1,12 +1,13 @@
 import axios from "axios";
+import { AxiosInstanceContext } from "../context";
+import { useAuth } from "../hooks/useAuth";
 import { useEffect, useEffectEvent } from "react";
-import { useAuth } from "./useAuth";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:9000",
 });
 
-export function useAxios() {
+export default function AxiosInstanceProvider({ children }) {
     const { authData, logout } = useAuth();
     const onLogout = useEffectEvent(logout);
 
@@ -42,5 +43,9 @@ export function useAxios() {
         };
     }, [authData?.token]);
 
-    return axiosInstance;
+    return (
+        <AxiosInstanceContext value={axiosInstance}>
+            {children}
+        </AxiosInstanceContext>
+    );
 }

@@ -13,10 +13,9 @@ import CompanyProfile from "../pages/public/CompanyProfile";
 import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
 import AuthProvider from "../providers/AuthProvider";
-import ProfileProvider from "../providers/ProfileProvider";
 import JobSeekerRegister from "../pages/auth/JobSeekerRegister";
 import CompanyRegister from "../pages/auth/CompanyRegister";
-import JobSeekerApplicationsProvider from "../providers/JobSeekerApplicationsProvider";
+import AxiosInstanceProvider from "../providers/AxiosInstanceProvider";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -31,11 +30,9 @@ function router(queryClient) {
                         {
                             index: true,
                             element: (
-                                <JobSeekerApplicationsProvider>
-                                    <QueryObjectProvider>
-                                        <Home />
-                                    </QueryObjectProvider>
-                                </JobSeekerApplicationsProvider>
+                                <QueryObjectProvider>
+                                    <Home />
+                                </QueryObjectProvider>
                             ),
                         },
                         {
@@ -98,9 +95,9 @@ function router(queryClient) {
 export default function AppRoutes({ queryClient }) {
     return (
         <AuthProvider>
-            <ProfileProvider>
+            <AxiosInstanceProvider>
                 <RouterProvider router={router(queryClient)} />
-            </ProfileProvider>
+            </AxiosInstanceProvider>
         </AuthProvider>
     );
 }

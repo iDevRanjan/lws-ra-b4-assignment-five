@@ -5,7 +5,7 @@ import ExestingClient from "../components/common/ExestingClient";
 
 export default function PublicRoutes() {
     const { authData, logout } = useAuth();
-    const { isPending, clientProfileData } = useProfile();
+    const { isPending, data: clientProfileData } = useProfile();
 
     if (authData.isLoggedin && isPending) {
         return (

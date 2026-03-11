@@ -2,8 +2,6 @@ import { User } from "lucide-react";
 import { NavLink } from "react-router";
 
 export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
-    console.log(jobSeekerProfileData);
-
     return (
         <>
             <nav className="hidden items-center gap-6 md:flex">

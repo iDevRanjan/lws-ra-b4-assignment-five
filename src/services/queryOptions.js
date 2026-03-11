@@ -60,15 +60,15 @@ export function getCompanyOpenPositionsQueryOption(params) {
     });
 }
 
-export function getClientProfileQueryOption(authData) {
+export function getClientProfileQueryOption(axiosInstance, authData) {
     return queryOptions({
         queryKey: [QUERY_KEYS.clientProfile, authData.role],
         queryFn: () => {
             if (authData.role === "USER") {
-                return getUserProfile(authData.token);
+                return getUserProfile(axiosInstance);
             }
             if (authData.role === "COMPANY") {
-                return getCompanyProfile(authData.token);
+                return getCompanyProfile(axiosInstance);
             }
 
             throw new Error("Invalid role");

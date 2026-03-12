@@ -1,7 +1,4 @@
 export async function getUserProfile(axiosInstance) {
-    console.log(axiosInstance.interceptors.request);
-    console.log(axiosInstance.interceptors.response);
-
     const response = await axiosInstance.get("/api/users/profile");
     return response.data;
 }

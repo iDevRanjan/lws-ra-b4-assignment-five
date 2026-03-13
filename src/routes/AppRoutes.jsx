@@ -12,10 +12,8 @@ import ErrorElement from "../pages/error/ErrorElement";
 import CompanyProfile from "../pages/public/CompanyProfile";
 import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
-import AuthProvider from "../providers/AuthProvider";
 import JobSeekerRegister from "../pages/auth/JobSeekerRegister";
 import CompanyRegister from "../pages/auth/CompanyRegister";
-import AxiosInstanceProvider from "../providers/AxiosInstanceProvider";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -93,11 +91,5 @@ function router(queryClient) {
 // - `errorElement` নিশ্চিত করে যে ডাটা লোড না হলে বা কোড ভুল থাকলেও লেআউট ভাঙবে না।
 
 export default function AppRoutes({ queryClient }) {
-    return (
-        <AuthProvider>
-            <AxiosInstanceProvider>
-                <RouterProvider router={router(queryClient)} />
-            </AxiosInstanceProvider>
-        </AuthProvider>
-    );
+    return <RouterProvider router={router(queryClient)} />;
 }

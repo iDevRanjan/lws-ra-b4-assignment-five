@@ -23,16 +23,25 @@ export default function Login() {
 
     const { login } = useAuth();
     const { mutate: mutateLogin, isPending } = useMutation(
-        applicationLoginMutationOption(login),
+        applicationLoginMutationOption(),
     );
     const navigate = useNavigate();
 
     function onSubmit(formData) {
         mutateLogin(formData, {
-            onSuccess: () => {
+            onSuccess: (data) => {
+                const authLocalStorageData = {
+                    isLoggedin: data.success,
+                    token: data.token,
+                    loggedinClientId: data.data.id,
+                    role: data.data.role,
+                };
+                login(authLocalStorageData);
+
                 toast.success("Welcome back! You are logged in");
-                navigate("/", {
+                navigate("/login", {
                     replace: true,
+                    state: { isFreshLoggedin: true },
                 });
             },
             onError: (error) => {

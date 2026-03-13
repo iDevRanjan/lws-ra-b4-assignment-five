@@ -1,9 +1,11 @@
-export async function getUserProfile(axiosInstance) {
+import { axiosInstance } from "./axiosInstance";
+
+export async function getUserProfile() {
     const response = await axiosInstance.get("/api/users/profile");
     return response.data;
 }
 
-export async function getJobSeekerApplications(axiosInstance) {
+export async function getJobSeekerApplications() {
     const response = await axiosInstance.get(
         "/api/applications/my-applications",
     );

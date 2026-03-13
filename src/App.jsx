@@ -1,19 +1,8 @@
 import AppRoutes from "./routes/AppRoutes";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./services/queryClient";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            // staleTime: 1 * 60 * 1000,
-            // gcTime: 2.5 * 60 * 1000,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            refetchOnWindowFocus: false,
-        },
-    },
-});
 
 export default function App() {
     return (

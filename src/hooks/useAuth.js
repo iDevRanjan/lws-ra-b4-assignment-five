@@ -1,12 +1,10 @@
-import { useContext } from "react";
-import { AuthContext } from "../context";
+import { useCallback, useSyncExternalStore } from "react";
+import { authActions } from "../store/actions/authActions";
+import { store } from "../store";
 
 export function useAuth() {
-    const context = useContext(AuthContext);
+    const getAuthData = useCallback(() => store.getState().authData, []);
+    const authData = useSyncExternalStore(store.subscribe, getAuthData);
 
-    if (!context) {
-        throw new Error("useAuth must be used within a AuthProvider");
-    }
-
-    return context;
+    return { authData, ...authActions };
 }

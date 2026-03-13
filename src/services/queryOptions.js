@@ -60,15 +60,15 @@ export function getCompanyOpenPositionsQueryOption(params) {
     });
 }
 
-export function getClientProfileQueryOption(axiosInstance, authData) {
+export function getClientProfileQueryOption(authData) {
     return queryOptions({
         queryKey: [QUERY_KEYS.clientProfile, authData.role],
         queryFn: () => {
             if (authData.role === "USER") {
-                return getUserProfile(axiosInstance);
+                return getUserProfile();
             }
             if (authData.role === "COMPANY") {
-                return getCompanyProfile(axiosInstance);
+                return getCompanyProfile();
             }
 
             throw new Error("Invalid role");
@@ -78,13 +78,10 @@ export function getClientProfileQueryOption(axiosInstance, authData) {
     });
 }
 
-export function getJobSeekerApplicationsQueryOption(
-    axiosInstance,
-    isLoggedinJobSeeker,
-) {
+export function getJobSeekerApplicationsQueryOption(isLoggedinJobSeeker) {
     return queryOptions({
         queryKey: [QUERY_KEYS.jobSeekerApplications],
-        queryFn: () => getJobSeekerApplications(axiosInstance),
+        queryFn: getJobSeekerApplications,
         enabled: isLoggedinJobSeeker,
         retry: false,
     });

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
 import ExestingClient from "../components/common/ExestingClient";
@@ -6,6 +6,10 @@ import ExestingClient from "../components/common/ExestingClient";
 export default function PublicRoutes() {
     const { authData, logout } = useAuth();
     const { isPending, data: clientProfileData } = useProfile();
+    const { state } = useLocation();
+
+    if (authData.isLoggedin && state?.isFreshLoggedin)
+        return <Navigate to="/" />;
 
     if (authData.isLoggedin && isPending) {
         return (

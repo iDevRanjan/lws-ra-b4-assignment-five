@@ -9,6 +9,7 @@ import CompanyInfo from "../../components/company/CompanyInfo";
 import ShareJob from "../../components/jobs/ShareJob";
 import SimilarJobs from "../../components/jobs/SimilarJobs";
 import JobApplySection from "../../components/jobs/JobApplySection";
+import { useApplications } from "../../hooks/useApplications";
 
 export default function JobDetails() {
     const params = useParams();
@@ -16,6 +17,7 @@ export default function JobDetails() {
     const { data: jobDetails } = useSuspenseQuery(
         getJobBySlugQueryOption(params.jobSlug),
     );
+    const { data: jobSeekerApplicationData } = useApplications();
 
     return (
         <main className="container mx-auto px-4 py-8">
@@ -42,7 +44,12 @@ export default function JobDetails() {
                     <SimilarJobs jobId={jobDetails.data.id} />
                 </div>
                 <div className="space-y-6 lg:col-span-1">
-                    <JobApplySection jobDetailsData={jobDetails.data} />
+                    <JobApplySection
+                        jobDetailsData={jobDetails.data}
+                        jobSeekerApplicationData={
+                            jobSeekerApplicationData?.data ?? []
+                        }
+                    />
                     <CompanyInfo companyInfo={jobDetails.data.company} />
                     <ShareJob />
                     <button className="text-muted-foreground hover:text-foreground flex w-full items-center justify-center gap-2 text-sm">

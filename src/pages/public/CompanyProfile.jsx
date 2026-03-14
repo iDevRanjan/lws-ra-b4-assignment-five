@@ -35,7 +35,7 @@ export default function CompanyProfile() {
                         companyProfileData={companyProfile.data}
                     />
                     <CompanySocialMedia
-                        socialLinks={companyProfile.data.socialLinks}
+                        socialLinks={companyProfile.data.socialLinks ?? {}}
                     />
                 </div>
             </div>

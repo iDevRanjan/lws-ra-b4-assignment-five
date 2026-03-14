@@ -1,18 +1,17 @@
 import { Link } from "react-router";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
 import { Bookmark, Clock, MapPin } from "lucide-react";
+import CompanyAvatar from "../common/CompanyAvatar";
 
 export default function JobHeader({ jobDetailsData }) {
     return (
         <div className="card p-6">
             <div className="flex items-start gap-4">
                 <div className="shrink-0">
-                    <div className="bg-secondary flex h-20 w-20 items-center justify-center rounded-lg">
-                        <img
-                            src={jobDetailsData.company.logoUrl}
-                            alt={jobDetailsData.company.name}
-                        />
-                    </div>
+                    <CompanyAvatar
+                        companyInfo={jobDetailsData.company}
+                        size={20}
+                    />
                 </div>
                 <div className="min-w-0 flex-1">
                     <div className="mb-3 flex items-start justify-between gap-4">

@@ -1,16 +1,34 @@
-import { Clock, MapPin, Users } from "lucide-react";
+import { memo } from "react";
+import { Clock, MapPin, Send, Users, X } from "lucide-react";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
 import { Link } from "react-router";
 import { slugify } from "../../utils/slugify";
+import { applicationJobChecking } from "../../utils/applicationJobChecking";
+import ApplyNowButton from "../common/ApplyNowButton";
+import WithdrawButton from "../common/WithdrawButton";
+import CompanyAvatar from "../common/CompanyAvatar";
 
-export default function JobCard({ job }) {
+const JobCard = memo(function JobCard({ job, role, jobSeekerApplicationData }) {
+    const isApplicationJobAvailable = applicationJobChecking(
+        jobSeekerApplicationData,
+        job.id,
+    );
+
+    function renderJobActionButton() {
+        if (role === "COMPANY") return null;
+
+        return isApplicationJobAvailable ? (
+            <WithdrawButton />
+        ) : (
+            <ApplyNowButton />
+        );
+    }
+
     return (
         <article className="card p-6 transition-shadow hover:shadow-md">
             <div className="flex flex-col gap-4 md:flex-row">
                 <div className="shrink-0">
-                    <div className="bg-secondary flex h-16 w-16 items-center justify-center rounded-lg">
-                        <img src={job.company.logoUrl} alt={job.company.name} />
-                    </div>
+                    <CompanyAvatar companyInfo={job.company} size={16} />
                 </div>
                 <div className="flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-4">
@@ -75,17 +93,17 @@ export default function JobCard({ job }) {
                         <div className="flex gap-2">
                             <Link
                                 to={`/jobs/${job.slug}`}
-                                className="btn btn-outline cursor-pointer text-sm"
+                                className="btn btn-outline w-full cursor-pointer text-sm"
                             >
                                 View Details
                             </Link>
-                            <button className="btn btn-primary cursor-pointer text-sm">
-                                Apply Now
-                            </button>
+                            {renderJobActionButton()}
                         </div>
                     </div>
                 </div>
             </div>
         </article>
     );
-}
+});
+
+export default JobCard;

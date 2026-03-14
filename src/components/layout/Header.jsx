@@ -1,33 +1,44 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Briefcase } from "lucide-react";
 import { useProfile } from "../../hooks/useProfile";
 import { useAuth } from "../../hooks/useAuth";
 import DefaultNavbar from "../common/DefaultNavbar";
 import LoggedinJobSeekerNavbar from "../jobs/LoggedinJobSeekerNavbar";
 import LoggedinCompanyNavbar from "../company/LoggedinCompanyNavbar";
+import LoginPageNavbar from "../common/LoginPageNavbar";
+import RegisterPageNavbar from "../common/RegisterPageNavbar";
 
 export default function Header() {
     const { authData } = useAuth();
     const { data: clientProfileData } = useProfile();
+    const location = useLocation();
 
     const role = clientProfileData?.data?.role;
+    const isClientLoggedin = authData.isLoggedin && clientProfileData?.success;
     let NavbarComponent = <DefaultNavbar />;
 
-    if (authData.isLoggedin && clientProfileData?.success) {
+    if (isClientLoggedin) {
         if (role === "USER") {
             NavbarComponent = (
                 <LoggedinJobSeekerNavbar
                     jobSeekerProfileData={clientProfileData.data}
                 />
             );
-        }
-
-        if (role === "COMPANY") {
+        } else if (role === "COMPANY") {
             NavbarComponent = (
                 <LoggedinCompanyNavbar
                     companyProfileData={clientProfileData.data}
                 />
             );
+        }
+    } else {
+        if (location.pathname === "/login") {
+            NavbarComponent = <LoginPageNavbar />;
+        } else if (
+            location.pathname === "/jobseeker-register" ||
+            location.pathname === "/company-register"
+        ) {
+            NavbarComponent = <RegisterPageNavbar />;
         }
     }
 

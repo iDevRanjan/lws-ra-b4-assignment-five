@@ -1,7 +1,12 @@
 import React from "react";
 import JobCard from "./JobCard";
 
-export default function JobCardsGrid({ allJobsData, isPlaceholderData }) {
+export default function JobCardsGrid({
+    allJobsData,
+    isPlaceholderData,
+    role,
+    jobSeekerApplicationData,
+}) {
     const pages = allJobsData?.pages ?? [];
 
     return (
@@ -14,7 +19,12 @@ export default function JobCardsGrid({ allJobsData, isPlaceholderData }) {
             {pages.map((group) => (
                 <React.Fragment key={group.currentPage}>
                     {group.data.map((job) => (
-                        <JobCard job={job} key={job.id} />
+                        <JobCard
+                            key={job.id}
+                            job={job}
+                            role={role}
+                            jobSeekerApplicationData={jobSeekerApplicationData}
+                        />
                     ))}
                 </React.Fragment>
             ))}

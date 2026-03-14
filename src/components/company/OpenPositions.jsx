@@ -4,14 +4,18 @@ import JobCardSkeleton from "../skeletons/JobCardSkeleton";
 import JobCard from "../jobs/JobCard";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
+import { useApplications } from "../../hooks/useApplications";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function OpenPositions({ companySlug }) {
+    const { authData } = useAuth();
     const {
         data: openPositions,
         isPending,
         isError,
         error,
     } = useQuery(getCompanyOpenPositionsQueryOption(companySlug));
+    const { data: jobSeekerApplicationData } = useApplications();
 
     const isOpenPositionsAvailable =
         openPositions?.success && openPositions?.data.length > 0;
@@ -31,7 +35,14 @@ export default function OpenPositions({ companySlug }) {
                 )}
                 {isOpenPositionsAvailable &&
                     openPositions.data.map((openPosition) => (
-                        <JobCard key={openPosition.id} job={openPosition} />
+                        <JobCard
+                            key={openPosition.id}
+                            job={openPosition}
+                            role={authData.role}
+                            jobSeekerApplicationData={
+                                jobSeekerApplicationData?.data ?? []
+                            }
+                        />
                     ))}
             </div>
             <div className="mt-6 text-center">

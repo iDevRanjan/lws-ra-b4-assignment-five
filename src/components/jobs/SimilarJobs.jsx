@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSimilarJobsQueryOption } from "../../services/queryOptions";
 import SimilarJobSkeleton from "../skeletons/SimilarJobSkeleton";
 import { Link } from "react-router";
+import CompanyAvatar from "../common/CompanyAvatar";
 
 export default function SimilarJobs({ jobId }) {
     const {
@@ -58,12 +59,10 @@ export default function SimilarJobs({ jobId }) {
                         >
                             <div className="flex gap-4">
                                 <div className="shrink-0">
-                                    <div className="bg-secondary flex h-12 w-12 items-center justify-center rounded-lg">
-                                        <img
-                                            src={similarJobData.company.logoUrl}
-                                            alt={similarJobData.company.name}
-                                        />
-                                    </div>
+                                    <CompanyAvatar
+                                        companyInfo={similarJobData.company}
+                                        size={12}
+                                    />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <h3 className="mb-1 font-semibold">

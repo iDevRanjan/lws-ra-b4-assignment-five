@@ -1,7 +1,11 @@
-import { User } from "lucide-react";
 import { NavLink } from "react-router";
+import NavbarNavigationMenu from "../common/NavbarNavigationMenu";
+import { useState } from "react";
+import JobSeekerAvatar from "../common/JobSeekerAvatar";
 
 export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
+    const [open, setOpen] = useState(false);
+
     return (
         <>
             <nav className="hidden items-center gap-6 md:flex">
@@ -24,22 +28,29 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
                     My Applications
                 </NavLink>
             </nav>
-            <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                    <div className="bg-secondary flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
-                        {jobSeekerProfileData.profilePictureUrl ? (
-                            <img
-                                src={jobSeekerProfileData.profilePictureUrl}
-                                alt={jobSeekerProfileData.name}
-                            />
-                        ) : (
-                            <User className="text-color-primary h-4 w-4" />
-                        )}
-                    </div>
-                    <span className="hidden text-sm font-medium md:inline">
-                        {jobSeekerProfileData.name}
-                    </span>
-                </div>
+            <div
+                className="relative flex cursor-pointer items-center gap-2"
+                tabIndex={0}
+                onClick={() => setOpen((prev) => !prev)}
+                onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                        setOpen(false);
+                    }
+                }}
+            >
+                <JobSeekerAvatar
+                    jobSeekerProfileData={jobSeekerProfileData}
+                    size={8}
+                />
+                <span className="hidden text-sm font-medium md:inline">
+                    {jobSeekerProfileData.name}
+                </span>
+                {open && (
+                    <NavbarNavigationMenu
+                        toProfile="login"
+                        toDashboard="jobseeker-register"
+                    />
+                )}
             </div>
         </>
     );

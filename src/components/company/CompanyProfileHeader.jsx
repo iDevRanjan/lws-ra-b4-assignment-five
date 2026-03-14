@@ -1,5 +1,6 @@
 import { Building, MapPin, Share2, Users } from "lucide-react";
 import { linkCopyOnClipboard } from "../../utils/linkCopyOnClipboard";
+import CompanyAvatar from "../common/CompanyAvatar";
 
 export default function CompanyProfileHeader({ companyProfileData }) {
     function handleClick() {
@@ -15,12 +16,7 @@ export default function CompanyProfileHeader({ companyProfileData }) {
         <div className="card mb-8 p-8">
             <div className="flex flex-col items-center gap-6 md:flex-row">
                 <div className="shrink-0">
-                    <div className="bg-secondary flex h-32 w-32 items-center justify-center rounded-xl">
-                        <img
-                            src={companyProfileData.logoUrl}
-                            alt={companyProfileData.name}
-                        />
-                    </div>
+                    <CompanyAvatar companyInfo={companyProfileData} size={32} />
                 </div>
                 <div className="h-full flex-1 items-center">
                     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

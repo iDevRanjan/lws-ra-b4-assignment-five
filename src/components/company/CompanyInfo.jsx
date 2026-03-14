@@ -1,5 +1,6 @@
-import { Calendar, Globe, MapPin, Users } from "lucide-react";
+import { Building2, Calendar, Globe, MapPin, Users } from "lucide-react";
 import { Link } from "react-router";
+import CompanyAvatar from "../common/CompanyAvatar";
 
 export default function CompanyInfo({ companyInfo }) {
     return (
@@ -7,9 +8,7 @@ export default function CompanyInfo({ companyInfo }) {
             <h3 className="mb-4 text-lg font-semibold">About Company</h3>
             <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                    <div className="bg-secondary flex h-16 w-16 shrink-0 items-center justify-center rounded-lg">
-                        <img src={companyInfo.logoUrl} alt={companyInfo.name} />
-                    </div>
+                    <CompanyAvatar companyInfo={companyInfo} size={16} />
                     <div>
                         <h4 className="font-semibold">{companyInfo.name}</h4>
                         <p className="text-muted-foreground text-sm">

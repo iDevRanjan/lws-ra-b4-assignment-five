@@ -9,9 +9,13 @@ import LoadMoreJobs from "../../components/jobs/LoadMoreJobs";
 import FetchJobError from "../../components/jobs/FetchJobError";
 import NoJobsFound from "../../components/jobs/NoJobsFound";
 import { useState } from "react";
+import { useApplications } from "../../hooks/useApplications";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Home() {
     const [params, setParams] = useState("");
+
+    const { authData } = useAuth();
     const {
         data: allJobsData,
         isPending,
@@ -22,6 +26,7 @@ export default function Home() {
         hasNextPage,
         refetch,
     } = useInfiniteQuery(getAllJobsQueryOption(params));
+    const { data: jobSeekerApplicationData } = useApplications();
 
     const pageDetails = allJobsData?.pages[0] || {};
     const isJobsAvailable = pageDetails.data?.length > 0;
@@ -52,6 +57,10 @@ export default function Home() {
                 <JobCardsGrid
                     allJobsData={allJobsData}
                     isPlaceholderData={isPlaceholderData}
+                    role={authData.role}
+                    jobSeekerApplicationData={
+                        jobSeekerApplicationData?.data ?? []
+                    }
                 />
             )}
             {isFetching && (!isPlaceholderData || !isJobsAvailable) && (

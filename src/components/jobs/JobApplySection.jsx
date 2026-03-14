@@ -1,7 +1,32 @@
-import { Send } from "lucide-react";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
+import { applicationJobChecking } from "../../utils/applicationJobChecking";
+import { useAuth } from "../../hooks/useAuth";
+import WithdrawButton from "../common/WithdrawButton";
+import ApplyNowButton from "../common/ApplyNowButton";
 
-export default function JobApplySection({ jobDetailsData }) {
+export default function JobApplySection({
+    jobDetailsData,
+    jobSeekerApplicationData,
+}) {
+    const { authData } = useAuth();
+    const isApplicationJobAvailable = applicationJobChecking(
+        jobSeekerApplicationData,
+        jobDetailsData.id,
+    );
+
+    function renderJobActionButton() {
+        if (authData.role === "COMPANY")
+            return (
+                <p className="text-center">Companies cannot apply for jobs!</p>
+            );
+
+        return isApplicationJobAvailable ? (
+            <WithdrawButton />
+        ) : (
+            <ApplyNowButton />
+        );
+    }
+
     return (
         <div className="card p-6 lg:sticky lg:top-24">
             <div className="space-y-4">
@@ -14,10 +39,7 @@ export default function JobApplySection({ jobDetailsData }) {
                         {jobDetailsData.salaryPeriod}
                     </p>
                 </div>
-                <button className="btn btn-primary w-full text-base">
-                    <Send className="mr-2 h-4 w-4" />
-                    Apply Now
-                </button>
+                {renderJobActionButton()}
                 <div className="border-border space-y-3 border-t pt-4">
                     <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">

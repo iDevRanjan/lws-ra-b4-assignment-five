@@ -20,30 +20,30 @@
 
 @layer components {
     .btn {
-        @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors;
+        @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors;
         @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none;
         @apply disabled:pointer-events-none disabled:opacity-50;
     }
 
     .btn-primary {
         @apply bg-primary text-primary-foreground;
-        @apply hover:bg-primary/90 h-10 px-4 py-2;
+        @apply hover:bg-primary/90 h-10;
     }
 
     .btn-secondary {
         @apply bg-secondary text-secondary-foreground;
-        @apply hover:bg-secondary/80 h-10 px-4 py-2;
+        @apply hover:bg-secondary/80 h-10;
     }
 
     .btn-outline {
         @apply border-input bg-background border;
         @apply hover:bg-accent hover:text-accent-foreground;
-        @apply h-10 px-4 py-2;
+        @apply h-10;
     }
 
     .btn-ghost {
         @apply hover:bg-accent hover:text-accent-foreground;
-        @apply h-10 px-4 py-2;
+        @apply h-10;
     }
 
     .card {

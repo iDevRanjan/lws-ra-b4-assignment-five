@@ -40,7 +40,7 @@ export default function OpenPositions({ companySlug }) {
                             job={openPosition}
                             role={authData.role}
                             jobSeekerApplicationData={
-                                jobSeekerApplicationData?.data ?? []
+                                jobSeekerApplicationData?.data
                             }
                         />
                     ))}

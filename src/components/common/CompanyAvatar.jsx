@@ -12,6 +12,7 @@ export default function CompanyAvatar({ companyInfo, size }) {
             <Building2 className="text-primary size-5" />
             {companyInfo.logoUrl && (
                 <img
+                    key={companyInfo.name}
                     src={companyInfo.logoUrl}
                     alt={companyInfo.name}
                     onError={(event) => {

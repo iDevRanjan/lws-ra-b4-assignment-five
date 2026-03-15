@@ -47,7 +47,7 @@ export default function JobDetails() {
                     <JobApplySection
                         jobDetailsData={jobDetails.data}
                         jobSeekerApplicationData={
-                            jobSeekerApplicationData?.data ?? []
+                            jobSeekerApplicationData?.data
                         }
                     />
                     <CompanyInfo companyInfo={jobDetails.data.company} />

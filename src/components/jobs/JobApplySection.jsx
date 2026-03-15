@@ -6,7 +6,7 @@ import ApplyNowButton from "../common/ApplyNowButton";
 
 export default function JobApplySection({
     jobDetailsData,
-    jobSeekerApplicationData,
+    jobSeekerApplicationData = [],
 }) {
     const { authData } = useAuth();
     const isApplicationJobAvailable = applicationJobChecking(

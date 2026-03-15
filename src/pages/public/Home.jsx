@@ -58,9 +58,7 @@ export default function Home() {
                     allJobsData={allJobsData}
                     isPlaceholderData={isPlaceholderData}
                     role={authData.role}
-                    jobSeekerApplicationData={
-                        jobSeekerApplicationData?.data ?? []
-                    }
+                    jobSeekerApplicationData={jobSeekerApplicationData?.data}
                 />
             )}
             {isFetching && (!isPlaceholderData || !isJobsAvailable) && (

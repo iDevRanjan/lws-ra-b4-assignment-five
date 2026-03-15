@@ -28,8 +28,7 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
                     My Applications
                 </NavLink>
             </nav>
-            <div
-                className="relative flex cursor-pointer items-center gap-2"
+            <button
                 tabIndex={0}
                 onClick={() => setOpen((prev) => !prev)}
                 onBlur={(event) => {
@@ -37,6 +36,7 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
                         setOpen(false);
                     }
                 }}
+                className="relative flex cursor-pointer items-center gap-2"
             >
                 <JobSeekerAvatar
                     jobSeekerProfileData={jobSeekerProfileData}
@@ -51,7 +51,7 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
                         toDashboard="jobseeker-register"
                     />
                 )}
-            </div>
+            </button>
         </>
     );
 }

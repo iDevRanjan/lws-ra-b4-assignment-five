@@ -8,7 +8,11 @@ import ApplyNowButton from "../common/ApplyNowButton";
 import WithdrawButton from "../common/WithdrawButton";
 import CompanyAvatar from "../common/CompanyAvatar";
 
-const JobCard = memo(function JobCard({ job, role, jobSeekerApplicationData }) {
+const JobCard = memo(function JobCard({
+    job,
+    role,
+    jobSeekerApplicationData = [],
+}) {
     const isApplicationJobAvailable = applicationJobChecking(
         jobSeekerApplicationData,
         job.id,

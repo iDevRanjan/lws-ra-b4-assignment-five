@@ -12,6 +12,7 @@ export default function JobSeekerAvatar({ jobSeekerProfileData, size }) {
             <User className="text-primary size-5" />
             {jobSeekerProfileData.profilePictureUrl && (
                 <img
+                    key={jobSeekerProfileData.name}
                     src={jobSeekerProfileData.profilePictureUrl}
                     alt={jobSeekerProfileData.name}
                     onError={(event) => {

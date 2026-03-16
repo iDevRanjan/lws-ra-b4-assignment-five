@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRecommendedJobsQueryOption } from "../../services/queryOptions";
 import JobCardSkeleton from "../skeletons/JobCardSkeleton";
 import JobCard from "./JobCard";
+import { useApplications } from "../../hooks/useApplications";
 
 export default function RecommendedJobsContainer() {
     const {
@@ -10,6 +11,7 @@ export default function RecommendedJobsContainer() {
         error,
         data: recommendedJobsData,
     } = useQuery(getRecommendedJobsQueryOption());
+    const { data: jobSeekerApplicationData } = useApplications();
 
     if (isPending) {
         return <JobCardSkeleton />;
@@ -37,6 +39,7 @@ export default function RecommendedJobsContainer() {
                     key={recommendedJobData.id}
                     job={recommendedJobData}
                     role="USER"
+                    jobSeekerApplicationData={jobSeekerApplicationData?.data}
                 />
             ))}
         </div>

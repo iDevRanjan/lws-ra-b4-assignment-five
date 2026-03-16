@@ -3,16 +3,18 @@ import { applicationJobChecking } from "../../utils/applicationJobChecking";
 import { useAuth } from "../../hooks/useAuth";
 import WithdrawButton from "../common/WithdrawButton";
 import ApplyNowButton from "../common/ApplyNowButton";
+import { getStatusConfig } from "../../utils/getStatusConfig";
 
 export default function JobApplySection({
     jobDetailsData,
     jobSeekerApplicationData = [],
 }) {
     const { authData } = useAuth();
-    const isApplicationJobAvailable = applicationJobChecking(
+    const { exist, status } = applicationJobChecking(
         jobSeekerApplicationData,
         jobDetailsData.id,
     );
+    const buttonConfig = getStatusConfig(status);
 
     function renderJobActionButton() {
         if (authData.role === "COMPANY")
@@ -20,8 +22,16 @@ export default function JobApplySection({
                 <p className="text-center">Companies cannot apply for jobs!</p>
             );
 
-        return isApplicationJobAvailable ? (
-            <WithdrawButton />
+        return exist ? (
+            status === "New" ? (
+                <WithdrawButton />
+            ) : (
+                <button
+                    className={`btn text-primary-foreground w-full cursor-not-allowed ${buttonConfig.className} whitespace-nowrap`}
+                >
+                    {buttonConfig.label}
+                </button>
+            )
         ) : (
             <ApplyNowButton />
         );

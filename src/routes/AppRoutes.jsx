@@ -7,7 +7,6 @@ import JobDetails from "../pages/public/JobDetails";
 import {
     getCompanyBySlugLoader,
     getJobBySlugLoader,
-    // protectedLoader,
 } from "../services/routerLoaders";
 import ErrorElement from "../pages/error/ErrorElement";
 import CompanyProfile from "../pages/public/CompanyProfile";
@@ -71,7 +70,6 @@ function router(queryClient) {
                         },
                         {
                             element: <PrivateRoute />,
-                            // loader: protectedLoader,
                             children: [
                                 {
                                     element: (

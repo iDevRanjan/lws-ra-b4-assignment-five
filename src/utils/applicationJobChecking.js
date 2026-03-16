@@ -1,9 +1,12 @@
 export function applicationJobChecking(applicationJobs, jobId) {
     if (!applicationJobs || !jobId) return;
 
-    const isApplicationJobAvailable = applicationJobs.some(
+    const application = applicationJobs.find(
         (applicationJob) => jobId === applicationJob.jobId,
     );
 
-    return isApplicationJobAvailable;
+    return {
+        exist: Boolean(application),
+        status: application?.status,
+    };
 }

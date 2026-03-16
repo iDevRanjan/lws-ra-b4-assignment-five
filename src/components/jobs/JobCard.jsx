@@ -7,22 +7,32 @@ import { applicationJobChecking } from "../../utils/applicationJobChecking";
 import ApplyNowButton from "../common/ApplyNowButton";
 import WithdrawButton from "../common/WithdrawButton";
 import CompanyAvatar from "../common/CompanyAvatar";
+import { getStatusConfig } from "../../utils/getStatusConfig";
 
 const JobCard = memo(function JobCard({
     job,
     role,
     jobSeekerApplicationData = [],
 }) {
-    const isApplicationJobAvailable = applicationJobChecking(
+    const { exist, status } = applicationJobChecking(
         jobSeekerApplicationData,
         job.id,
     );
+    const buttonConfig = getStatusConfig(status);
 
     function renderJobActionButton() {
         if (role === "COMPANY") return null;
 
-        return isApplicationJobAvailable ? (
-            <WithdrawButton />
+        return exist ? (
+            status === "New" ? (
+                <WithdrawButton />
+            ) : (
+                <button
+                    className={`btn text-primary-foreground w-full cursor-not-allowed ${buttonConfig.className} whitespace-nowrap`}
+                >
+                    {buttonConfig.label}
+                </button>
+            )
         ) : (
             <ApplyNowButton />
         );
@@ -97,7 +107,7 @@ const JobCard = memo(function JobCard({
                         <div className="flex gap-2">
                             <Link
                                 to={`/jobs/${job.slug}`}
-                                className="btn btn-outline w-full cursor-pointer text-sm"
+                                className="btn btn-outline w-full cursor-pointer text-sm whitespace-nowrap"
                             >
                                 View Details
                             </Link>

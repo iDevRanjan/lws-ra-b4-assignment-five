@@ -1,6 +1,6 @@
 export default function JobCardSkeleton() {
     return (
-        <article className="card p-6" id="loading-skeleton">
+        <article className="card p-6">
             <div className="flex flex-col gap-4 md:flex-row">
                 <div className="shrink-0">
                     <div className="skeleton h-16 w-16" />

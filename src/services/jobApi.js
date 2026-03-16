@@ -1,4 +1,5 @@
 import axios from "axios";
+import { axiosInstance } from "./axiosInstance";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -16,5 +17,10 @@ export async function getJobBySlug(jobSlug) {
 
 export async function getSimilarJobs(jobId) {
     const response = await axios.get(`${BASE_URL}/api/jobs/${jobId}/similar`);
+    return response.data;
+}
+
+export async function getRecommendedJobs() {
+    const response = await axiosInstance.get("/api/jobs/recommendations");
     return response.data;
 }

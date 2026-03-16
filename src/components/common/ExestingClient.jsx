@@ -25,7 +25,7 @@ export default function ExestingClient({ clientProfileData, logout }) {
                         className="btn btn-primary flex w-full items-center justify-center gap-2 py-2.5"
                     >
                         <Home className="h-4 w-4" />
-                        Go to Home Page
+                        Go to Home
                     </button>
                     <div className="relative my-2">
                         <div className="absolute inset-0 flex items-center">

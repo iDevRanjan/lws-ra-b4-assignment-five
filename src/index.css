@@ -83,20 +83,6 @@
         @apply focus:ring-ring focus:ring-2 focus:outline-none;
     }
 
-    .badge-default {
-        @apply bg-primary text-primary-foreground;
-        @apply hover:bg-primary/80;
-    }
-
-    .badge-secondary {
-        @apply bg-secondary text-secondary-foreground;
-        @apply hover:bg-secondary/80;
-    }
-
-    .badge-outline {
-        @apply border-border text-foreground;
-    }
-
     .skeleton {
         @apply bg-muted animate-pulse rounded-md;
     }

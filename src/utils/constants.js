@@ -6,6 +6,7 @@ export const QUERY_KEYS = {
     companyOpenPositions: "company-open-positions",
     clientProfile: "client-profile",
     jobSeekerApplications: "job-seeker-applications",
+    recommendedJobs: "recommended-jobs",
 };
 
 export const LOCALSTORAGE_KEYS = {

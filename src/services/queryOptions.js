@@ -1,6 +1,11 @@
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../utils/constants";
-import { getAllJobs, getJobBySlug, getSimilarJobs } from "./jobApi";
+import {
+    getAllJobs,
+    getJobBySlug,
+    getRecommendedJobs,
+    getSimilarJobs,
+} from "./jobApi";
 import {
     getCompanyBySlug,
     getCompanyOpenPositions,
@@ -84,5 +89,12 @@ export function getJobSeekerApplicationsQueryOption(isLoggedinJobSeeker) {
         queryFn: getJobSeekerApplications,
         enabled: isLoggedinJobSeeker,
         retry: false,
+    });
+}
+
+export function getRecommendedJobsQueryOption() {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.recommendedJobs],
+        queryFn: getRecommendedJobs,
     });
 }

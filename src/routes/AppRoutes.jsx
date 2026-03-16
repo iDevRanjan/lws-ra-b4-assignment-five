@@ -7,6 +7,7 @@ import JobDetails from "../pages/public/JobDetails";
 import {
     getCompanyBySlugLoader,
     getJobBySlugLoader,
+    // protectedLoader,
 } from "../services/routerLoaders";
 import ErrorElement from "../pages/error/ErrorElement";
 import CompanyProfile from "../pages/public/CompanyProfile";
@@ -14,6 +15,9 @@ import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
 import JobSeekerRegister from "../pages/auth/JobSeekerRegister";
 import CompanyRegister from "../pages/auth/CompanyRegister";
+import PrivateRoute from "./PrivateRoute";
+import RoleBasedRoute from "./RoleBasedRoute";
+import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -62,6 +66,62 @@ function router(queryClient) {
                                 {
                                     path: "company-register",
                                     element: <CompanyRegister />,
+                                },
+                            ],
+                        },
+                        {
+                            element: <PrivateRoute />,
+                            // loader: protectedLoader,
+                            children: [
+                                {
+                                    element: (
+                                        <RoleBasedRoute allowedRole="USER" />
+                                    ),
+                                    children: [
+                                        {
+                                            path: "jobseeker-dashboard",
+                                            element: <JobSeekerDashboard />,
+                                        },
+                                        {
+                                            path: "/jobseeker-profile",
+                                            // element: <UserProfile />,
+                                        },
+                                        {
+                                            path: "/edit-user-profile",
+                                            // element: <EditUserProfile />,
+                                        },
+                                        {
+                                            path: "jobseeker-applications",
+                                            // element: <AppliedJobs />,
+                                        },
+                                    ],
+                                },
+                                {
+                                    element: (
+                                        <RoleBasedRoute allowedRole="COMPANY" />
+                                    ),
+                                    children: [
+                                        {
+                                            path: "/company-dashboard",
+                                            // element: <CompanyDashboard />,
+                                        },
+                                        {
+                                            path: "/edit-company-profile",
+                                            // element: <EditCompanyProfile />,
+                                        },
+                                        {
+                                            path: "/create-job",
+                                            // element: <CreateJob />,
+                                        },
+                                        {
+                                            path: "/manage-jobs",
+                                            // element: <ManageJobs />,
+                                        },
+                                        {
+                                            path: "/applicants",
+                                            // element: <Applicants />,
+                                        },
+                                    ],
                                 },
                             ],
                         },

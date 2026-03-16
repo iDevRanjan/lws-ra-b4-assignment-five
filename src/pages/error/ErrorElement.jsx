@@ -1,3 +1,4 @@
+import { Home } from "lucide-react";
 import { useNavigate, useRouteError } from "react-router";
 
 export default function ErrorElement() {
@@ -10,9 +11,10 @@ export default function ErrorElement() {
             <p>{error?.statusText || error?.message || "Page not found"}</p>
             <button
                 onClick={() => navigate("/")}
-                className="btn btn-primary max-w-fit cursor-pointer text-sm"
+                className="btn btn-primary flex items-center justify-center gap-2 py-2.5"
             >
-                Go to home
+                <Home className="h-4 w-4" />
+                Go to Home
             </button>
         </div>
     );

@@ -11,7 +11,7 @@ export default function LoggedinCompanyNavbar({ companyProfileData }) {
         <>
             <nav className="hidden items-center gap-6 md:flex">
                 <NavLink
-                    to="#"
+                    to="company-dashboard"
                     className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                     Dashboard

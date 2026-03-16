@@ -10,19 +10,13 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
         <>
             <nav className="hidden items-center gap-6 md:flex">
                 <NavLink
-                    to="#"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
-                    Jobs
-                </NavLink>
-                <NavLink
-                    to="#"
+                    to="jobseeker-dashboard"
                     className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                     Dashboard
                 </NavLink>
                 <NavLink
-                    to="#"
+                    to="jobseeker-applications"
                     className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                     My Applications

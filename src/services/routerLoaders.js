@@ -1,3 +1,5 @@
+import { redirect } from "react-router";
+import { store } from "../store";
 import {
     getCompanyBySlugQueryOption,
     getJobBySlugQueryOption,
@@ -23,3 +25,13 @@ export async function getCompanyBySlugLoader(loaderFnArgs, queryClient) {
         getCompanyBySlugQueryOption(params.companySlug),
     );
 }
+
+// export function protectedLoader() {
+//     const authData = store.getState().authData;
+
+//     if (!authData.isLoggedin) {
+//         throw redirect("/login");
+//     }
+
+//     return null;
+// }

@@ -26,7 +26,6 @@ export default function LoginPageNavbar() {
                 >
                     <span>Sign Up</span>
                     <ChevronDown
-                        data-lucide="chevron-down"
                         className="ml-2 h-4 w-4"
                     />
                 </button>

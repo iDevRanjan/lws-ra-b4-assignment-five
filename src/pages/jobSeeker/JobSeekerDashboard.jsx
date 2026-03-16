@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 import RecentApplicationsContainer from "../../components/jobs/RecentApplicationsContainer";
 import RecommendedJobsContainer from "../../components/jobs/RecommendedJobsContainer";
+import { Lightbulb } from "lucide-react";
+import JobSeekerQuickActions from "../../components/jobs/JobSeekerQuickActions";
 
 export default function JobSeekerDashboard() {
     return (
@@ -44,83 +46,11 @@ export default function JobSeekerDashboard() {
                         <RecommendedJobsContainer />
                     </div>
                 </div>
-                {/* Sidebar Column */}
                 <div className="space-y-6 lg:col-span-1">
-                    {/* Quick Actions */}
-                    <div className="card p-6">
-                        <h3 className="mb-4 text-lg font-semibold">
-                            Quick Actions
-                        </h3>
-                        <div className="space-y-2">
-                            <a
-                                href="user-profile.html"
-                                className="hover:bg-accent flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                                <i
-                                    data-lucide="user"
-                                    className="text-muted-foreground h-5 w-5"
-                                />
-                                <span className="text-sm font-medium">
-                                    View Profile
-                                </span>
-                            </a>
-                            <a
-                                href="edit-user-profile.html"
-                                className="hover:bg-accent flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                                <i
-                                    data-lucide="edit"
-                                    className="text-muted-foreground h-5 w-5"
-                                />
-                                <span className="text-sm font-medium">
-                                    Edit Profile
-                                </span>
-                            </a>
-                            <a
-                                href="applied-jobs.html"
-                                className="hover:bg-accent flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                                <i
-                                    data-lucide="file-text"
-                                    className="text-muted-foreground h-5 w-5"
-                                />
-                                <span className="text-sm font-medium">
-                                    My Applications
-                                </span>
-                            </a>
-                            <a
-                                href="#"
-                                className="hover:bg-accent flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                                <i
-                                    data-lucide="bookmark"
-                                    className="text-muted-foreground h-5 w-5"
-                                />
-                                <span className="text-sm font-medium">
-                                    Saved Jobs
-                                </span>
-                            </a>
-                            <a
-                                href="#"
-                                className="hover:bg-accent flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                                <i
-                                    data-lucide="settings"
-                                    className="text-muted-foreground h-5 w-5"
-                                />
-                                <span className="text-sm font-medium">
-                                    Settings
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    {/* Tips */}
+                    <JobSeekerQuickActions />
                     <div className="card border-blue-200 bg-blue-50 p-6">
                         <div className="mb-3 flex items-start gap-3">
-                            <i
-                                data-lucide="lightbulb"
-                                className="h-5 w-5 shrink-0 text-blue-600"
-                            />
+                            <Lightbulb className="h-5 w-5 shrink-0 text-blue-600" />
                             <div>
                                 <h3 className="mb-1 text-sm font-semibold text-blue-900">
                                     Pro Tip

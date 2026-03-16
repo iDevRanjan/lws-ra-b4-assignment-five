@@ -38,7 +38,7 @@ export default function JobApplySection({
     }
 
     return (
-        <div className="card p-6 lg:sticky lg:top-24">
+        <div className="card z-1 p-6 lg:sticky lg:top-24">
             <div className="space-y-4">
                 <div className="border-border border-b pb-4 text-center">
                     <p className="text-primary mb-1 text-2xl font-bold">

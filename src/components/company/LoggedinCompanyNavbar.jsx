@@ -31,7 +31,7 @@ export default function LoggedinCompanyNavbar({ companyProfileData }) {
             </nav>
             <div className="flex items-center gap-4">
                 <Link to="#" className="btn btn-primary">
-                    <Plus data-lucide="plus" className="mr-2 h-4 w-4" />
+                    <Plus className="mr-2 h-4 w-4" />
                     Post Job
                 </Link>
                 <button

@@ -81,16 +81,16 @@ function router(queryClient) {
                                             element: <JobSeekerDashboard />,
                                         },
                                         {
-                                            path: "/jobseeker-profile",
+                                            path: "jobseeker-applications",
+                                            // element: <AppliedJobs />,
+                                        },
+                                        {
+                                            path: "jobseeker-profile",
                                             // element: <UserProfile />,
                                         },
                                         {
-                                            path: "/edit-user-profile",
+                                            path: "edit-jobseeker-profile",
                                             // element: <EditUserProfile />,
-                                        },
-                                        {
-                                            path: "jobseeker-applications",
-                                            // element: <AppliedJobs />,
                                         },
                                     ],
                                 },

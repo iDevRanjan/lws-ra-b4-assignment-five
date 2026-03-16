@@ -41,8 +41,8 @@ export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
                 </span>
                 {open && (
                     <NavbarNavigationMenu
-                        toProfile="login"
-                        toDashboard="jobseeker-register"
+                        toProfile="jobseeker-profile"
+                        toDashboard="jobseeker-dashboard"
                     />
                 )}
             </button>

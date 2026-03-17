@@ -1,4 +1,4 @@
-export function searchAndFilterQueryChecking(object) {
+export function queryChecking(object) {
     if (!object) return;
 
     const isAllFalsyValue = Object.entries(object).every(([key, value]) => {

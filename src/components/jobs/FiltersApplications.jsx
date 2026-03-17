@@ -14,12 +14,17 @@ function FilterSection({ title, children }) {
 
 export default function FiltersApplications({
     handleSetApplicationQueryFilter,
+    handleResetQueryFilter,
+    resetFiltersKey,
 }) {
     return (
         <aside className="lg:col-span-1">
             <div className="card sticky top-20 p-6">
                 <h2 className="mb-4 text-lg font-semibold">Filters</h2>
-                <FilterSection title="Application Status">
+                <FilterSection
+                    key={`status-${resetFiltersKey}`}
+                    title="Application Status"
+                >
                     {ApplicationsStatusFiltersData.map((item) => (
                         <ApplicationsFilterItem
                             key={item.id}
@@ -33,7 +38,10 @@ export default function FiltersApplications({
                         />
                     ))}
                 </FilterSection>
-                <FilterSection title="Application Date">
+                <FilterSection
+                    key={`date-${resetFiltersKey}`}
+                    title="Application Date"
+                >
                     {ApplicationsDateFiltersData.map((item) => (
                         <ApplicationsFilterItem
                             key={item.id}
@@ -48,7 +56,10 @@ export default function FiltersApplications({
                         />
                     ))}
                 </FilterSection>
-                <button className="btn btn-outline mt-2 w-full">
+                <button
+                    onClick={handleResetQueryFilter}
+                    className="btn btn-outline mt-2 w-full cursor-pointer"
+                >
                     <RotateCcw className="mr-2 h-4 w-4" />
                     Reset Filters
                 </button>

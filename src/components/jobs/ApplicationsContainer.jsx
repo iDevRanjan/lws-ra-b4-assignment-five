@@ -5,6 +5,9 @@ import { useDebounce } from "../../hooks/useDebounce";
 import FiltersApplications from "./FiltersApplications";
 import SortDropdownMenu from "../common/SortDropdownMenu";
 import { initialApplicationQueryObject } from "../../data/initialApplicationQueryObject";
+import { queryChecking } from "../../utils/queryChecking";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function ApplicationsContainer({
     handleQueryParams,
@@ -14,6 +17,7 @@ export default function ApplicationsContainer({
     const [applicationQueryObject, setApplicationQueryObject] = useImmer(
         initialApplicationQueryObject,
     );
+    const [resetFiltersKey, setResetFiltersKey] = useState(0);
 
     function handleSetApplicationQueryFilter(data) {
         const { name, value } = data;
@@ -39,11 +43,30 @@ export default function ApplicationsContainer({
         });
     }
 
+    function handleResetQueryFilter() {
+        const isAnyQueryNotAvailableWithoutSortValue = queryChecking(
+            applicationQueryObject,
+        );
+
+        if (isAnyQueryNotAvailableWithoutSortValue) {
+            toast("ℹ️ No active filters to reset");
+            return;
+        }
+
+        setApplicationQueryObject((draft) => {
+            draft.status = [];
+            draft.date = "";
+        });
+        setResetFiltersKey((prev) => prev + 1);
+    }
+
     function generateQueryPath() {
         const applicationParams = getApplicationParams(applicationQueryObject);
         if (applicationParams === queryParamsProps) return;
         handleQueryParams(applicationParams);
     }
+
+    console.log("Render");
 
     useDebounce(generateQueryPath, 300)();
 
@@ -53,6 +76,8 @@ export default function ApplicationsContainer({
                 handleSetApplicationQueryFilter={
                     handleSetApplicationQueryFilter
                 }
+                handleResetQueryFilter={handleResetQueryFilter}
+                resetFiltersKey={resetFiltersKey}
             />
             <div className="space-y-4 lg:col-span-3">
                 <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">

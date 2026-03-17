@@ -12,8 +12,13 @@ export default function SearchInput({
     function handleClick() {
         const sanitizedValue = searchInputRef.current.value.trim();
 
-        if (queryObject.search === sanitizedValue) {
+        if (!sanitizedValue && queryObject.search === "") {
             toast("ℹ️ No search query are available");
+            return;
+        }
+
+        if (queryObject.search === sanitizedValue) {
+            toast("ℹ️ You have already searched for this");
             return;
         }
 

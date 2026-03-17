@@ -2,7 +2,7 @@ import { useImmer } from "use-immer";
 import { QueryObjectContext } from "../context";
 import { initialQueryObject } from "../data/initialQueryObject";
 import { useCallback, useState } from "react";
-import { searchAndFilterQueryChecking } from "../utils/searchAndFilterQueryChecking";
+import { queryChecking } from "../utils/queryChecking";
 import toast from "react-hot-toast";
 
 export default function QueryObjectProvider({ children }) {
@@ -55,10 +55,10 @@ export default function QueryObjectProvider({ children }) {
 
     function handleClearQueryFilter() {
         const isAnyQueryNotAvailableWithoutSortValue =
-            searchAndFilterQueryChecking(queryObject);
+            queryChecking(queryObject);
 
         if (isAnyQueryNotAvailableWithoutSortValue) {
-            toast("ℹ️ No query are available");
+            toast("ℹ️ No active filters to clear");
             return;
         }
 

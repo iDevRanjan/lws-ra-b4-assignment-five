@@ -8,7 +8,7 @@ export default function RecentApplicationsContainer() {
         isError,
         error,
         data: jobSeekerApplicationData,
-    } = useApplications();
+    } = useApplications("");
 
     if (isPending) {
         return <ApplicationJobCardSkeleton />;

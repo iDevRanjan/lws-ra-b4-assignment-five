@@ -17,7 +17,7 @@ export default function JobDetails() {
     const { data: jobDetails } = useSuspenseQuery(
         getJobBySlugQueryOption(params.jobSlug),
     );
-    const { data: jobSeekerApplicationData } = useApplications();
+    const { data: jobSeekerApplicationData } = useApplications("");
 
     return (
         <main className="container mx-auto px-4 py-8">

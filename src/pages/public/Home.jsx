@@ -26,7 +26,7 @@ export default function Home() {
         hasNextPage,
         refetch,
     } = useInfiniteQuery(getAllJobsQueryOption(params));
-    const { data: jobSeekerApplicationData } = useApplications();
+    const { data: jobSeekerApplicationData } = useApplications("");
 
     const pageDetails = allJobsData?.pages[0] || {};
     const isJobsAvailable = pageDetails.data?.length > 0;

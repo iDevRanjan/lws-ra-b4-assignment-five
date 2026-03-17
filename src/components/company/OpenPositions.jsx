@@ -15,7 +15,7 @@ export default function OpenPositions({ companySlug }) {
         isError,
         error,
     } = useQuery(getCompanyOpenPositionsQueryOption(companySlug));
-    const { data: jobSeekerApplicationData } = useApplications();
+    const { data: jobSeekerApplicationData } = useApplications("");
 
     const isOpenPositionsAvailable =
         openPositions?.success && openPositions?.data.length > 0;

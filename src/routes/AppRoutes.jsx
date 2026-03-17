@@ -17,6 +17,7 @@ import CompanyRegister from "../pages/auth/CompanyRegister";
 import PrivateRoute from "./PrivateRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
 import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
+import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 
 function router(queryClient) {
     return createBrowserRouter([
@@ -82,7 +83,7 @@ function router(queryClient) {
                                         },
                                         {
                                             path: "jobseeker-applications",
-                                            // element: <AppliedJobs />,
+                                            element: <JobSeekerApplications />,
                                         },
                                         {
                                             path: "jobseeker-profile",

@@ -5,9 +5,9 @@ export async function getUserProfile() {
     return response.data;
 }
 
-export async function getJobSeekerApplications() {
+export async function getJobSeekerApplications(params) {
     const response = await axiosInstance.get(
-        "/api/applications/my-applications",
+        `/api/applications/my-applications${params ? `?${params}` : ""}`,
     );
     return response.data;
 }

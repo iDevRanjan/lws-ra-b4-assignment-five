@@ -83,10 +83,13 @@ export function getClientProfileQueryOption(authData) {
     });
 }
 
-export function getJobSeekerApplicationsQueryOption(isLoggedinJobSeeker) {
+export function getJobSeekerApplicationsQueryOption(
+    isLoggedinJobSeeker,
+    params,
+) {
     return queryOptions({
-        queryKey: [QUERY_KEYS.jobSeekerApplications],
-        queryFn: getJobSeekerApplications,
+        queryKey: [QUERY_KEYS.jobSeekerApplications, params],
+        queryFn: () => getJobSeekerApplications(params),
         enabled: isLoggedinJobSeeker,
         retry: false,
     });

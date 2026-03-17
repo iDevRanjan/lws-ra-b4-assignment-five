@@ -13,7 +13,7 @@ export default function RecommendedJobsContainer() {
         error,
         data: recommendedJobsData,
     } = useQuery(getRecommendedJobsQueryOption());
-    const { data: jobSeekerApplicationData } = useApplications();
+    const { data: jobSeekerApplicationData } = useApplications("");
     const [pageIndex, setPageIndex] = useState(5);
 
     if (isPending) {

@@ -4,8 +4,11 @@ import CompanyAvatar from "../common/CompanyAvatar";
 import { formatDate } from "../../utils/formatDate";
 import { getStatusConfig } from "../../utils/getStatusConfig";
 import WithdrawButton from "../common/WithdrawButton";
+import { memo } from "react";
 
-export default function ApplicationJobCard({ applicationData = {} }) {
+const ApplicationJobCard = memo(function ApplicationJobCard({
+    applicationData = {},
+}) {
     const status = applicationData?.status || "New";
     const badgeConfig = getStatusConfig(status);
 
@@ -69,4 +72,6 @@ export default function ApplicationJobCard({ applicationData = {} }) {
             </div>
         </article>
     );
-}
+});
+
+export default ApplicationJobCard;

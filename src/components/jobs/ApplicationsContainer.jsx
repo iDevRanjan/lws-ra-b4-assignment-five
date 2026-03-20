@@ -66,8 +66,6 @@ export default function ApplicationsContainer({
         handleQueryParams(applicationParams);
     }
 
-    console.log("Render");
-
     useDebounce(generateQueryPath, 300)();
 
     return (

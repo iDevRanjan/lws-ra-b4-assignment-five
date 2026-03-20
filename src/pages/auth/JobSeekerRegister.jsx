@@ -167,22 +167,25 @@ export default function JobSeekerRegister() {
                         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                             <Field
                                 label="Years of Experience"
-                                htmlFor="experience"
-                                error={errors.experience}
+                                htmlFor="experienceLevel"
+                                error={errors.experienceLevel}
                             >
                                 <FormDropdownMenu
-                                    selectId="experience"
+                                    selectId="experienceLevel"
                                     itemsData={
                                         experienceLevelRegisterOptionData
                                     }
                                     required={true}
-                                    selectRegister={register("experience", {
-                                        required: {
-                                            value: true,
-                                            message:
-                                                "Please select your experience level",
+                                    selectRegister={register(
+                                        "experienceLevel",
+                                        {
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    "Please select your experience level",
+                                            },
                                         },
-                                    })}
+                                    )}
                                 />
                             </Field>
                         </div>

@@ -4,7 +4,7 @@ import { useProfile } from "../hooks/useProfile";
 
 export default function PrivateRoute() {
     const { authData } = useAuth();
-    const { isPending } = useProfile();
+    const { isPending, isError, error } = useProfile();
 
     if (!authData.isLoggedin) {
         return <Navigate to="login" replace={true} />;
@@ -16,6 +16,10 @@ export default function PrivateRoute() {
                 <p>Checking authentication...</p>
             </div>
         );
+    }
+
+    if (isError) {
+        throw error;
     }
 
     return <Outlet />;

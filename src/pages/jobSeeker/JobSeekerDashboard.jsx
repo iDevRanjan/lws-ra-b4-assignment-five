@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import RecentApplicationsContainer from "../../components/jobs/RecentApplicationsContainer";
 import RecommendedJobsContainer from "../../components/jobs/RecommendedJobsContainer";
 import { Lightbulb } from "lucide-react";
-import JobSeekerQuickActions from "../../components/jobs/JobSeekerQuickActions";
+import JobSeekerQuickActions from "../../components/jobSeeker/JobSeekerQuickActions";
 
 export default function JobSeekerDashboard() {
     return (

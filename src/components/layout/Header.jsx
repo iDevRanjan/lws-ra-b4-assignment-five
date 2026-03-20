@@ -3,7 +3,7 @@ import { Briefcase } from "lucide-react";
 import { useProfile } from "../../hooks/useProfile";
 import { useAuth } from "../../hooks/useAuth";
 import DefaultNavbar from "../common/DefaultNavbar";
-import LoggedinJobSeekerNavbar from "../jobs/LoggedinJobSeekerNavbar";
+import LoggedinJobSeekerNavbar from "../jobSeeker/LoggedinJobSeekerNavbar";
 import LoggedinCompanyNavbar from "../company/LoggedinCompanyNavbar";
 import LoginPageNavbar from "../common/LoginPageNavbar";
 import RegisterPageNavbar from "../common/RegisterPageNavbar";

@@ -1,10 +1,10 @@
+import { queryClient } from "./queryClient";
 import {
     getCompanyBySlugQueryOption,
     getJobBySlugQueryOption,
 } from "./queryOptions";
 
-export async function getJobBySlugLoader(loaderFnArgs, queryClient) {
-    const { params } = loaderFnArgs;
+export async function getJobBySlugLoader({ params }) {
     if (!params.jobSlug) throw new Error("No job slug provided");
 
     // Learn more about:
@@ -15,8 +15,7 @@ export async function getJobBySlugLoader(loaderFnArgs, queryClient) {
     await queryClient.ensureQueryData(getJobBySlugQueryOption(params.jobSlug));
 }
 
-export async function getCompanyBySlugLoader(loaderFnArgs, queryClient) {
-    const { params } = loaderFnArgs;
+export async function getCompanyBySlugLoader({ params }) {
     if (!params.companySlug) throw new Error("No company slug provided");
 
     await queryClient.ensureQueryData(

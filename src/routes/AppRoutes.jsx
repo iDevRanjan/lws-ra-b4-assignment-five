@@ -20,121 +20,112 @@ import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
 import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
 
-function router(queryClient) {
-    return createBrowserRouter([
-        {
-            path: "/",
-            element: <MainLayout />,
-            hydrateFallbackElement: <RootFallback />,
-            children: [
-                {
-                    errorElement: <ErrorElement />,
-                    children: [
-                        {
-                            index: true,
-                            element: (
-                                <QueryObjectProvider>
-                                    <Home />
-                                </QueryObjectProvider>
-                            ),
-                        },
-                        {
-                            path: "jobs/:jobSlug",
-                            element: <JobDetails />,
-                            loader: (loaderFnArgs) =>
-                                getJobBySlugLoader(loaderFnArgs, queryClient),
-                        },
-                        {
-                            path: "companies/:companySlug",
-                            element: <CompanyProfile />,
-                            loader: (loaderFnArgs) =>
-                                getCompanyBySlugLoader(
-                                    loaderFnArgs,
-                                    queryClient,
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <MainLayout />,
+        hydrateFallbackElement: <RootFallback />,
+        children: [
+            {
+                errorElement: <ErrorElement />,
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <QueryObjectProvider>
+                                <Home />
+                            </QueryObjectProvider>
+                        ),
+                    },
+                    {
+                        path: "jobs/:jobSlug",
+                        element: <JobDetails />,
+                        loader: getJobBySlugLoader,
+                    },
+                    {
+                        path: "companies/:companySlug",
+                        element: <CompanyProfile />,
+                        loader: getCompanyBySlugLoader,
+                    },
+                    {
+                        element: <PublicRoutes />,
+                        children: [
+                            {
+                                path: "login",
+                                element: <Login />,
+                            },
+                            {
+                                path: "jobseeker-register",
+                                element: <JobSeekerRegister />,
+                            },
+                            {
+                                path: "company-register",
+                                element: <CompanyRegister />,
+                            },
+                        ],
+                    },
+                    {
+                        element: <PrivateRoute />,
+                        children: [
+                            {
+                                element: <RoleBasedRoute allowedRole="USER" />,
+                                children: [
+                                    {
+                                        path: "jobseeker-dashboard",
+                                        element: <JobSeekerDashboard />,
+                                    },
+                                    {
+                                        path: "jobseeker-applications",
+                                        element: <JobSeekerApplications />,
+                                    },
+                                    {
+                                        path: "jobseeker-profile",
+                                        element: <JobSeekerProfile />,
+                                    },
+                                    {
+                                        path: "edit-jobseeker-profile",
+                                        // element: <EditUserProfile />,
+                                    },
+                                ],
+                            },
+                            {
+                                element: (
+                                    <RoleBasedRoute allowedRole="COMPANY" />
                                 ),
-                        },
-                        {
-                            element: <PublicRoutes />,
-                            children: [
-                                {
-                                    path: "login",
-                                    element: <Login />,
-                                },
-                                {
-                                    path: "jobseeker-register",
-                                    element: <JobSeekerRegister />,
-                                },
-                                {
-                                    path: "company-register",
-                                    element: <CompanyRegister />,
-                                },
-                            ],
-                        },
-                        {
-                            element: <PrivateRoute />,
-                            children: [
-                                {
-                                    element: (
-                                        <RoleBasedRoute allowedRole="USER" />
-                                    ),
-                                    children: [
-                                        {
-                                            path: "jobseeker-dashboard",
-                                            element: <JobSeekerDashboard />,
-                                        },
-                                        {
-                                            path: "jobseeker-applications",
-                                            element: <JobSeekerApplications />,
-                                        },
-                                        {
-                                            path: "jobseeker-profile",
-                                            element: <JobSeekerProfile />,
-                                        },
-                                        {
-                                            path: "edit-jobseeker-profile",
-                                            // element: <EditUserProfile />,
-                                        },
-                                    ],
-                                },
-                                {
-                                    element: (
-                                        <RoleBasedRoute allowedRole="COMPANY" />
-                                    ),
-                                    children: [
-                                        {
-                                            path: "/company-dashboard",
-                                            // element: <CompanyDashboard />,
-                                        },
-                                        {
-                                            path: "/edit-company-profile",
-                                            // element: <EditCompanyProfile />,
-                                        },
-                                        {
-                                            path: "/create-job",
-                                            // element: <CreateJob />,
-                                        },
-                                        {
-                                            path: "/manage-jobs",
-                                            // element: <ManageJobs />,
-                                        },
-                                        {
-                                            path: "/applicants",
-                                            // element: <Applicants />,
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    path: "*",
-                    element: <ErrorElement />,
-                },
-            ],
-        },
-    ]);
-}
+                                children: [
+                                    {
+                                        path: "/company-dashboard",
+                                        // element: <CompanyDashboard />,
+                                    },
+                                    {
+                                        path: "/edit-company-profile",
+                                        // element: <EditCompanyProfile />,
+                                    },
+                                    {
+                                        path: "/create-job",
+                                        // element: <CreateJob />,
+                                    },
+                                    {
+                                        path: "/manage-jobs",
+                                        // element: <ManageJobs />,
+                                    },
+                                    {
+                                        path: "/applicants",
+                                        // element: <Applicants />,
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                path: "*",
+                element: <ErrorElement />,
+            },
+        ],
+    },
+]);
 
 // যখন আপনি `http://localhost:5173/not-found` ইউআরএলটি হিট করেন, তখন রাউটার প্রথমে মূল পাথ `/`-এর সাথে মিল খুঁজে পায় এবং এর `children` লিস্টে প্রবেশ করে। কিন্তু ভেতরে গিয়ে সে দেখে মাত্র দুটি নির্দিষ্ট রাস্তা আছে: একটি `index` (অর্থাৎ শুধু `/`) এবং অন্যটি `/jobs/:jobSlug`। যেহেতু `/not-found` ইউআরএলটি এই দুটির কোনোটির সাথেই মিলছে না, তাই রাউটার ধরে নেয় যে এই চিলড্রেন গ্রুপের ভেতর তার প্রয়োজনীয় কিছু নেই এবং সে গ্রুপটি থেকে বের হয়ে আসে।
 
@@ -150,6 +141,6 @@ function router(queryClient) {
 // - `path: "*"` নিশ্চিত করে যে ভুল ইউআরএল দিলেও লেআউটের ভেতরেই থাকবে।
 // - `errorElement` নিশ্চিত করে যে ডাটা লোড না হলে বা কোড ভুল থাকলেও লেআউট ভাঙবে না।
 
-export default function AppRoutes({ queryClient }) {
-    return <RouterProvider router={router(queryClient)} />;
+export default function AppRoutes() {
+    return <RouterProvider router={router} />;
 }

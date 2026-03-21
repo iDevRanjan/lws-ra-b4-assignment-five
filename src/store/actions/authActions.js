@@ -15,8 +15,7 @@ export const authActions = {
     },
     logout: () => {
         queryClient.clear();
-        const resetData = { isLoggedin: false };
-        setLocalStorageItem(LOCALSTORAGE_KEYS.authData, resetData);
+        setLocalStorageItem(LOCALSTORAGE_KEYS.authData, initialAuthState);
         store.setState((keys) => keys.authData, initialAuthState);
     },
 };

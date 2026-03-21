@@ -5,10 +5,10 @@ import Field from "../../components/common/Field";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router";
 import { applicationLoginMutationOption } from "../../services/mutationOptions";
 import toast from "react-hot-toast";
+import { authActions } from "../../store/actions/authActions";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +21,6 @@ export default function Login() {
         clearErrors,
     } = useForm();
 
-    const { login } = useAuth();
     const { mutate: mutateLogin, isPending } = useMutation(
         applicationLoginMutationOption(),
     );
@@ -36,13 +35,10 @@ export default function Login() {
                     loggedinClientId: data.data.id,
                     role: data.data.role,
                 };
-                login(authLocalStorageData);
+                authActions.login(authLocalStorageData);
 
                 toast.success("Welcome back! You are logged in");
-                navigate("/login", {
-                    replace: true,
-                    state: { isFreshLoggedin: true },
-                });
+                navigate("/");
             },
             onError: (error) => {
                 setError("login", {

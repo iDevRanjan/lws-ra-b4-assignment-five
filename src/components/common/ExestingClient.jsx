@@ -1,12 +1,19 @@
 import { Home, LogOut } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate, useRevalidator } from "react-router";
+import { authActions } from "../../store/actions/authActions";
 
-export default function ExestingClient({ clientProfileData, logout }) {
+export default function ExestingClient({ email }) {
     const navigate = useNavigate();
+    const { revalidate } = useRevalidator();
+
+    function handleClick() {
+        authActions.logout();
+        revalidate();
+    }
 
     return (
         <main className="container mx-auto flex h-[80vh] items-center justify-center px-4">
-            <div className="card w-full max-w-md rounded-xl border bg-white p-8 text-center shadow-lg">
+            <div className="card w-full max-w-md rounded-2xl border bg-white p-8 text-center shadow-lg">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                     <Home className="h-8 w-8 text-green-600" />
                 </div>
@@ -14,8 +21,7 @@ export default function ExestingClient({ clientProfileData, logout }) {
                     You are already logged in!
                 </h2>
                 <p className="mb-8 text-gray-600">
-                    Current session:{" "}
-                    <strong>{clientProfileData.data.email}</strong>
+                    Current session: <strong>{email}</strong>
                     <br />
                     You don't need to sign in or register again.
                 </p>
@@ -38,9 +44,7 @@ export default function ExestingClient({ clientProfileData, logout }) {
                         </div>
                     </div>
                     <button
-                        onClick={() => {
-                            logout();
-                        }}
+                        onClick={handleClick}
                         className="btn btn-outline flex w-full items-center justify-center gap-2 border-red-200 py-2.5 text-red-600 hover:border-red-300 hover:bg-red-50"
                     >
                         <LogOut className="h-4 w-4" />

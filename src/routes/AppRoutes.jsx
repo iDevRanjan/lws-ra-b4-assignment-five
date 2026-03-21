@@ -7,6 +7,7 @@ import JobDetails from "../pages/public/JobDetails";
 import {
     getCompanyBySlugLoader,
     getJobBySlugLoader,
+    publicLoader,
 } from "../services/routerLoaders";
 import ErrorElement from "../pages/error/ErrorElement";
 import CompanyProfile from "../pages/public/CompanyProfile";
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
                     },
                     {
                         element: <PublicRoutes />,
+                        loader: publicLoader,
                         children: [
                             {
                                 path: "login",

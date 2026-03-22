@@ -1,4 +1,4 @@
-import { Building2, Calendar, Globe, MapPin, Users } from "lucide-react";
+import { Calendar, Globe, MapPin, Users } from "lucide-react";
 import { Link } from "react-router";
 import CompanyAvatar from "../common/CompanyAvatar";
 

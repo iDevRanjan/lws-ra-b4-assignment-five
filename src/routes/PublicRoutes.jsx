@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData } from "react-router";
-import ExestingClient from "../components/common/ExestingClient";
+import ExestingClient from "../pages/public/ExestingClient";
 
 export default function PublicRoutes() {
     const { isLoggedin, email } = useLoaderData();

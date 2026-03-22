@@ -20,11 +20,13 @@ import RoleBasedRoute from "./RoleBasedRoute";
 import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
 import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
+import { rootAuthMiddleware } from "../services/authMiddleware";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
+        middleware: [rootAuthMiddleware],
         hydrateFallbackElement: <RootFallback />,
         children: [
             {

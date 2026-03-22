@@ -1,11 +1,10 @@
-import { Outlet } from "react-router";
-import { useAuth } from "../hooks/useAuth";
+import { Outlet, useLoaderData } from "react-router";
 import Unauthorized from "../pages/public/Unauthorized";
 
 export default function RoleBasedRoute({ allowedRole }) {
-    const { authData } = useAuth();
+    const { role } = useLoaderData();
 
-    if (authData.role !== allowedRole) {
+    if (role !== allowedRole) {
         return <Unauthorized />;
     }
 

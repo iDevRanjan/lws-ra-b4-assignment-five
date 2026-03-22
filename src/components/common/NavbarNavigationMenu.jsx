@@ -1,7 +1,14 @@
-import { Link } from "react-router";
+import { Link, useRevalidator } from "react-router";
 import { authActions } from "../../store/actions/authActions";
 
 export default function NavbarNavigationMenu({ toProfile, toDashboard }) {
+    const { revalidate } = useRevalidator();
+
+    function handleClick() {
+        authActions.logout();
+        revalidate();
+    }
+
     return (
         <div className="card absolute top-full left-0 z-10 mt-2 w-48 cursor-pointer p-2 text-left shadow-lg">
             <Link
@@ -17,7 +24,7 @@ export default function NavbarNavigationMenu({ toProfile, toDashboard }) {
                 Dashboard
             </Link>
             <button
-                onClick={authActions.logout}
+                onClick={handleClick}
                 className="w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-red-600 hover:bg-red-100"
             >
                 Logout

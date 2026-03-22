@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import { authContext } from "../context";
 import { queryClient } from "./queryClient";
 import {
@@ -26,6 +27,14 @@ export async function getCompanyBySlugLoader({ params }) {
 
 export async function publicLoader({ context }) {
     const authMiddlewareData = context.get(authContext);
+
+    return { ...authMiddlewareData };
+}
+
+export async function roleBasedLoader({ context }) {
+    const authMiddlewareData = context.get(authContext);
+
+    if (!authMiddlewareData.isLoggedin) throw redirect("/login");
 
     return { ...authMiddlewareData };
 }

@@ -8,6 +8,7 @@ import {
     getCompanyBySlugLoader,
     getJobBySlugLoader,
     publicLoader,
+    roleBasedLoader,
 } from "../services/routerLoaders";
 import ErrorElement from "../pages/error/ErrorElement";
 import CompanyProfile from "../pages/public/CompanyProfile";
@@ -15,18 +16,17 @@ import Login from "../pages/auth/Login";
 import PublicRoutes from "./PublicRoutes";
 import JobSeekerRegister from "../pages/auth/JobSeekerRegister";
 import CompanyRegister from "../pages/auth/CompanyRegister";
-import PrivateRoute from "./PrivateRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
 import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
 import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
-import { rootAuthMiddleware } from "../services/authMiddleware";
+import { authMiddleware } from "../services/authMiddleware";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
-        middleware: [rootAuthMiddleware],
+        middleware: [authMiddleware],
         hydrateFallbackElement: <RootFallback />,
         children: [
             {
@@ -69,55 +69,50 @@ const router = createBrowserRouter([
                         ],
                     },
                     {
-                        element: <PrivateRoute />,
+                        element: <RoleBasedRoute allowedRole="USER" />,
+                        loader: roleBasedLoader,
                         children: [
                             {
-                                element: <RoleBasedRoute allowedRole="USER" />,
-                                children: [
-                                    {
-                                        path: "jobseeker-dashboard",
-                                        element: <JobSeekerDashboard />,
-                                    },
-                                    {
-                                        path: "jobseeker-applications",
-                                        element: <JobSeekerApplications />,
-                                    },
-                                    {
-                                        path: "jobseeker-profile",
-                                        element: <JobSeekerProfile />,
-                                    },
-                                    {
-                                        path: "edit-jobseeker-profile",
-                                        // element: <EditUserProfile />,
-                                    },
-                                ],
+                                path: "jobseeker-dashboard",
+                                element: <JobSeekerDashboard />,
                             },
                             {
-                                element: (
-                                    <RoleBasedRoute allowedRole="COMPANY" />
-                                ),
-                                children: [
-                                    {
-                                        path: "/company-dashboard",
-                                        // element: <CompanyDashboard />,
-                                    },
-                                    {
-                                        path: "/edit-company-profile",
-                                        // element: <EditCompanyProfile />,
-                                    },
-                                    {
-                                        path: "/create-job",
-                                        // element: <CreateJob />,
-                                    },
-                                    {
-                                        path: "/manage-jobs",
-                                        // element: <ManageJobs />,
-                                    },
-                                    {
-                                        path: "/applicants",
-                                        // element: <Applicants />,
-                                    },
-                                ],
+                                path: "jobseeker-applications",
+                                element: <JobSeekerApplications />,
+                            },
+                            {
+                                path: "jobseeker-profile",
+                                element: <JobSeekerProfile />,
+                            },
+                            {
+                                path: "edit-jobseeker-profile",
+                                // element: <EditUserProfile />,
+                            },
+                        ],
+                    },
+                    {
+                        element: <RoleBasedRoute allowedRole="COMPANY" />,
+                        loader: roleBasedLoader,
+                        children: [
+                            {
+                                path: "/company-dashboard",
+                                // element: <CompanyDashboard />,
+                            },
+                            {
+                                path: "/edit-company-profile",
+                                // element: <EditCompanyProfile />,
+                            },
+                            {
+                                path: "/create-job",
+                                // element: <CreateJob />,
+                            },
+                            {
+                                path: "/manage-jobs",
+                                // element: <ManageJobs />,
+                            },
+                            {
+                                path: "/applicants",
+                                // element: <Applicants />,
                             },
                         ],
                     },

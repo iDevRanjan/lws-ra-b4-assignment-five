@@ -3,10 +3,14 @@ import { queryClient } from "./queryClient";
 import { getClientProfileQueryOption } from "./queryOptions";
 import { authContext } from "../context";
 
-export async function rootAuthMiddleware({ context }, next) {
+export async function authMiddleware({ context }, next) {
     const authData = store.getState().authData;
 
-    let authMiddlewareData = { isLoggedin: false, email: null };
+    let authMiddlewareData = {
+        isLoggedin: false,
+        email: undefined,
+        role: undefined,
+    };
 
     if (authData.isLoggedin) {
         try {
@@ -18,6 +22,7 @@ export async function rootAuthMiddleware({ context }, next) {
                 authMiddlewareData = {
                     isLoggedin: true,
                     email: response.data.email,
+                    role: response.data.role,
                 };
             }
         } catch (error) {

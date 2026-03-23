@@ -21,6 +21,7 @@ import JobSeekerDashboard from "../pages/jobSeeker/JobSeekerDashboard";
 import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
 import { authMiddleware } from "../services/authMiddleware";
+import EditJobSeekerProfile from "../pages/jobSeeker/EditJobSeekerProfile";
 
 const router = createBrowserRouter([
     {
@@ -86,7 +87,7 @@ const router = createBrowserRouter([
                             },
                             {
                                 path: "edit-jobseeker-profile",
-                                // element: <EditUserProfile />,
+                                element: <EditJobSeekerProfile />,
                             },
                         ],
                     },

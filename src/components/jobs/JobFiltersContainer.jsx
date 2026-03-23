@@ -15,39 +15,41 @@ const JobFiltersContainer = memo(function JobFiltersContainer({
             <span className="text-muted-foreground mr-2 text-sm font-medium">
                 Filters:
             </span>
-            <FilterMenu
-                key={`job-type-${clearFiltersKey}`}
-                selectTitle="Job Type"
-                inputType="checkbox"
-                itemsData={jobTypeOptionData}
-                name="job-type"
-                handleSetQueryFilter={handleSetQueryFilter}
-            />
-            <FilterMenu
-                key={`experience-lavel-${clearFiltersKey}`}
-                selectTitle="Experience Lavel"
-                inputType="checkbox"
-                itemsData={experienceLevelFilterOptionData}
-                name="experience-lavel"
-                handleSetQueryFilter={handleSetQueryFilter}
-            />
-            <FilterMenu
-                key={`salary-range-${clearFiltersKey}`}
-                selectTitle="Salary Range"
-                inputType="radio"
-                itemsData={salaryRangeOptionData}
-                name="salary-range"
-                handleSetQueryFilter={handleSetQueryFilter}
-            />
-            <FilterMenu
-                key={`skills-${clearFiltersKey}`}
-                selectTitle="Skills"
-                inputType="checkbox"
-                itemsData={skillsOptionData}
-                name="skills"
-                handleSetQueryFilter={handleSetQueryFilter}
-            />
-            <ClearFilters />
+            <div className="flex items-center gap-2 w-full">
+                <FilterMenu
+                    key={`job-type-${clearFiltersKey}`}
+                    selectTitle="Job Type"
+                    inputType="checkbox"
+                    itemsData={jobTypeOptionData}
+                    name="job-type"
+                    handleSetQueryFilter={handleSetQueryFilter}
+                />
+                <FilterMenu
+                    key={`experience-lavel-${clearFiltersKey}`}
+                    selectTitle="Experience Lavel"
+                    inputType="checkbox"
+                    itemsData={experienceLevelFilterOptionData}
+                    name="experience-lavel"
+                    handleSetQueryFilter={handleSetQueryFilter}
+                />
+                <FilterMenu
+                    key={`salary-range-${clearFiltersKey}`}
+                    selectTitle="Salary Range"
+                    inputType="radio"
+                    itemsData={salaryRangeOptionData}
+                    name="salary-range"
+                    handleSetQueryFilter={handleSetQueryFilter}
+                />
+                <FilterMenu
+                    key={`skills-${clearFiltersKey}`}
+                    selectTitle="Skills"
+                    inputType="checkbox"
+                    itemsData={skillsOptionData}
+                    name="skills"
+                    handleSetQueryFilter={handleSetQueryFilter}
+                />
+                <ClearFilters />
+            </div>
         </div>
     );
 });

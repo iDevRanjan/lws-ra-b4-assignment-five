@@ -29,7 +29,9 @@ export default function JobSeekerEducation({ profileDataEducation }) {
                         </div>
                     ))
                 ) : (
-                    <p>You have no education qualifications</p>
+                    <p className="text-muted-foreground py-4 text-center">
+                        You have no education qualifications
+                    </p>
                 )}
             </div>
         </div>

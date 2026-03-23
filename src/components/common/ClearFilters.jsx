@@ -6,7 +6,7 @@ export default function ClearFilters() {
     return (
         <button
             onClick={handleClearQueryFilter}
-            className="btn btn-outline cursor-pointer"
+            className="btn btn-outline cursor-pointer whitespace-nowrap"
         >
             Clear Filters
         </button>

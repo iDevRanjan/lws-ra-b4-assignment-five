@@ -1,6 +1,10 @@
 import { User } from "lucide-react";
 
 export default function JobSeekerAvatar({ jobSeekerProfileData, size }) {
+    const URL = jobSeekerProfileData.profilePictureUrl.startsWith("http")
+        ? jobSeekerProfileData.profilePictureUrl
+        : `${import.meta.env.VITE_API_BASE_URL}${jobSeekerProfileData.profilePictureUrl}`;
+
     return (
         <div
             className="bg-secondary relative flex items-center justify-center overflow-hidden rounded-full"
@@ -13,7 +17,7 @@ export default function JobSeekerAvatar({ jobSeekerProfileData, size }) {
             {jobSeekerProfileData.profilePictureUrl && (
                 <img
                     key={jobSeekerProfileData.name}
-                    src={jobSeekerProfileData.profilePictureUrl}
+                    src={URL}
                     alt={jobSeekerProfileData.name}
                     onError={(event) => {
                         event.target.style.display = "none";

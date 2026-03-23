@@ -40,7 +40,9 @@ export default function JobSeekerExperience({ profileDataExperience }) {
                         </div>
                     ))
                 ) : (
-                    <p>You have no working experience</p>
+                    <p className="text-muted-foreground py-4 text-center">
+                        You have no working experience
+                    </p>
                 )}
             </div>
         </div>

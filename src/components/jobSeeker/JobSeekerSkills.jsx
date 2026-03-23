@@ -5,12 +5,14 @@ export default function JobSeekerSkills({ profileDataSkills }) {
             <div className="flex flex-wrap gap-2">
                 {profileDataSkills.length > 0 ? (
                     profileDataSkills?.map((skill) => (
-                        <span key={skill} className="badge bg-gray-100">
+                        <span key={skill} className="badge badge-secondary">
                             {skill}
                         </span>
                     ))
                 ) : (
-                    <p>You have no skills</p>
+                    <p className="text-muted-foreground py-4 text-center">
+                        You have no skills
+                    </p>
                 )}
             </div>
         </div>

@@ -16,21 +16,36 @@ import Field from "../../components/common/Field";
 import { useRef } from "react";
 import { employmentTypeOptionData } from "../../data/employmentTypeOptionData";
 import FormDropdownMenu from "../../components/common/FormDropdownMenu";
+import { formatDateForInput } from "../../utils/formatDateForInput";
+import { Link } from "react-router";
 
 export default function EditJobSeekerProfile() {
     const { data: jobSeekerProfile } = useProfile();
     const skillInputRef = useRef(null);
+
+    const jobSeekerProfileData = jobSeekerProfile?.data ?? {};
 
     const {
         register,
         handleSubmit,
         formState: { errors, dirtyFields },
         control,
+        reset,
     } = useForm({
         defaultValues: {
-            ...jobSeekerProfile.data,
-            skills: jobSeekerProfile.data.skills.map((skill) => ({
+            ...jobSeekerProfileData,
+            skills: jobSeekerProfileData.skills?.map((skill) => ({
                 value: skill,
+            })),
+            experience: jobSeekerProfileData.experience?.map((exp) => ({
+                ...exp,
+                startDate: formatDateForInput(exp.startDate),
+                endDate: formatDateForInput(exp.endDate),
+            })),
+            education: jobSeekerProfileData.education?.map((edu) => ({
+                ...edu,
+                startDate: new Date(edu.startDate).getFullYear(),
+                endDate: new Date(edu.endDate).getFullYear(),
             })),
         },
     });
@@ -43,7 +58,6 @@ export default function EditJobSeekerProfile() {
         control,
         name: "skills",
     });
-
     const {
         fields: experienceFields,
         append: appendExperience,
@@ -51,6 +65,14 @@ export default function EditJobSeekerProfile() {
     } = useFieldArray({
         control,
         name: "experience",
+    });
+    const {
+        fields: educationFields,
+        append: appendEducation,
+        remove: removeEducation,
+    } = useFieldArray({
+        control,
+        name: "education",
     });
 
     function addSkill() {
@@ -67,10 +89,20 @@ export default function EditJobSeekerProfile() {
             title: "",
             companyName: "",
             location: "",
-            employmentType: "",
+            employmentType: "Full-time",
             startDate: "",
             endDate: "",
             description: "",
+        });
+    }
+
+    function addEducation() {
+        appendEducation({
+            schoolName: "",
+            degree: "",
+            startDate: "",
+            endDate: "",
+            fieldOfStudy: "",
         });
     }
 
@@ -80,7 +112,55 @@ export default function EditJobSeekerProfile() {
             return acc;
         }, {});
 
+        if (updatedData.skills) {
+            updatedData.skills = updatedData.skills.map((skill) => skill.value);
+        }
+
+        if (updatedData.experience) {
+            updatedData.experience = updatedData.experience.map((exp) => ({
+                ...exp,
+                startDate: exp.startDate
+                    ? new Date(exp.startDate).toISOString()
+                    : null,
+                endDate: exp.endDate
+                    ? new Date(exp.endDate).toISOString()
+                    : null,
+            }));
+        }
+
+        if (updatedData.education) {
+            updatedData.education = updatedData.education.map((edu) => ({
+                ...edu,
+                startDate: edu.startDate
+                    ? new Date(String(edu.startDate)).toISOString()
+                    : null,
+                endDate: edu.endDate
+                    ? new Date(String(edu.endDate)).toISOString()
+                    : null,
+            }));
+        }
+
+        const ignoredKeys = [
+            "id",
+            "email",
+            "role",
+            "location",
+            "resumeUrl",
+            "resumeOriginalName",
+            "resumeSize",
+            "resumeUploadDate",
+            "profilePictureUrl",
+            "createdAt",
+            "updatedAt",
+        ];
+
+        for (const key of ignoredKeys) {
+            delete updatedData[key];
+        }
+
         console.log(updatedData);
+
+        reset();
     }
 
     return (
@@ -95,10 +175,10 @@ export default function EditJobSeekerProfile() {
                             Update your personal information and preferences
                         </p>
                     </div>
-                    <a href="user-profile.html" className="btn btn-outline">
+                    <Link to="/jobseeker-profile" className="btn btn-outline">
                         <X className="mr-2 h-4 w-4" />
                         Cancel
-                    </a>
+                    </Link>
                 </div>
             </div>
             {/* Profile Photo Section */}
@@ -408,194 +488,311 @@ export default function EditJobSeekerProfile() {
                                 No experience added yet
                             </p>
                         )}
-                        {experienceFields.map((field, index) => {
-                            return (
-                                <div
-                                    key={field.id}
-                                    className="border-border rounded-lg border p-4"
-                                >
-                                    <div className="mb-2 flex justify-end">
-                                        <button
-                                            type="button"
-                                            className="btn-ghost flex size-10 cursor-pointer items-center justify-center rounded-full text-red-600 hover:bg-red-50"
-                                            onClick={() =>
-                                                removeExperience(index)
-                                            }
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </button>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 [&>*:last-child]:md:col-span-2">
-                                        <Field
-                                            label="Title"
-                                            htmlFor={`experience.${index}.title`}
-                                        >
-                                            <input
-                                                type="text"
-                                                id={`experience.${index}.title`}
-                                                className="input"
-                                                placeholder="Enter job title"
-                                                autoComplete="organization-title"
-                                                {...register(
-                                                    `experience.${index}.title`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="Location"
-                                            htmlFor={`experience.${index}.location`}
-                                        >
-                                            <input
-                                                type="text"
-                                                id={`experience.${index}.location`}
-                                                className="input"
-                                                placeholder="Enter job location"
-                                                {...register(
-                                                    `experience.${index}.location`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="Company"
-                                            htmlFor={`experience.${index}.companyName`}
-                                        >
-                                            <input
-                                                type="text"
-                                                id={`experience.${index}.companyName`}
-                                                className="input"
-                                                placeholder="Enter company name"
-                                                autoComplete="organization"
-                                                {...register(
-                                                    `experience.${index}.companyName`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="Employment Type"
-                                            htmlFor={`experience.${index}.employmentType`}
-                                        >
-                                            <FormDropdownMenu
-                                                selectId={`experience.${index}.employmentType`}
-                                                itemsData={
-                                                    employmentTypeOptionData
-                                                }
-                                                selectRegister={register(
-                                                    `experience.${index}.employmentType`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="Start Date"
-                                            htmlFor={`experience.${index}.startDate`}
-                                        >
-                                            <input
-                                                type="date"
-                                                id={`experience.${index}.startDate`}
-                                                className="input"
-                                                {...register(
-                                                    `experience.${index}.startDate`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="End Date"
-                                            htmlFor={`experience.${index}.endDate`}
-                                        >
-                                            <input
-                                                type="date"
-                                                id={`experience.${index}.endDate`}
-                                                className="input"
-                                                {...register(
-                                                    `experience.${index}.endDate`,
-                                                )}
-                                            />
-                                        </Field>
-                                        <Field
-                                            label="Description"
-                                            htmlFor={`experience.${index}.description`}
-                                        >
-                                            <textarea
-                                                id={`experience.${index}.description`}
-                                                className="textarea"
-                                                placeholder="Summarize your relevant experience, key skills, and how they align with this job role..."
-                                                {...register(
-                                                    `experience.${index}.description`,
-                                                )}
-                                            />
-                                        </Field>
-                                    </div>
+                        {experienceFields.map((field, index) => (
+                            <div
+                                key={field.id}
+                                className="border-border rounded-lg border p-4"
+                            >
+                                <div className="mb-2 flex justify-end">
+                                    <button
+                                        type="button"
+                                        className="btn-ghost flex size-10 cursor-pointer items-center justify-center rounded-full text-red-600 hover:bg-red-50"
+                                        onClick={() => removeExperience(index)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </button>
                                 </div>
-                            );
-                        })}
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 [&>*:last-child]:md:col-span-2">
+                                    <Field
+                                        label="Title"
+                                        htmlFor={`experience.${index}.title`}
+                                        error={
+                                            errors.experience?.[index]?.title
+                                        }
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`experience.${index}.title`}
+                                            className="input"
+                                            placeholder="Enter job title"
+                                            autoComplete="organization-title"
+                                            required={true}
+                                            {...register(
+                                                `experience.${index}.title`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Job title is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Location"
+                                        htmlFor={`experience.${index}.location`}
+                                        error={
+                                            errors.experience?.[index]?.location
+                                        }
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`experience.${index}.location`}
+                                            className="input"
+                                            placeholder="Enter job location"
+                                            required={true}
+                                            {...register(
+                                                `experience.${index}.location`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Job location is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Company"
+                                        htmlFor={`experience.${index}.companyName`}
+                                        error={
+                                            errors.experience?.[index]
+                                                ?.companyName
+                                        }
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`experience.${index}.companyName`}
+                                            className="input"
+                                            placeholder="Enter company name"
+                                            autoComplete="organization"
+                                            required={true}
+                                            {...register(
+                                                `experience.${index}.companyName`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Company name is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Employment Type"
+                                        htmlFor={`experience.${index}.employmentType`}
+                                        error={
+                                            errors.experience?.[index]
+                                                ?.employmentType
+                                        }
+                                    >
+                                        <FormDropdownMenu
+                                            selectId={`experience.${index}.employmentType`}
+                                            itemsData={employmentTypeOptionData}
+                                            required={true}
+                                            selectRegister={register(
+                                                `experience.${index}.employmentType`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Employment type is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Start Date"
+                                        htmlFor={`experience.${index}.startDate`}
+                                        error={
+                                            errors.experience?.[index]
+                                                ?.startDate
+                                        }
+                                    >
+                                        <input
+                                            type="date"
+                                            id={`experience.${index}.startDate`}
+                                            className="input"
+                                            required={true}
+                                            {...register(
+                                                `experience.${index}.startDate`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Start date is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="End Date"
+                                        htmlFor={`experience.${index}.endDate`}
+                                    >
+                                        <input
+                                            type="date"
+                                            id={`experience.${index}.endDate`}
+                                            className="input"
+                                            {...register(
+                                                `experience.${index}.endDate`,
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Description"
+                                        htmlFor={`experience.${index}.description`}
+                                        error={
+                                            errors.experience?.[index]
+                                                ?.description
+                                        }
+                                    >
+                                        <textarea
+                                            id={`experience.${index}.description`}
+                                            className="textarea"
+                                            placeholder="Summarize your relevant experience, key skills, and how they align with this job role..."
+                                            required={true}
+                                            {...register(
+                                                `experience.${index}.description`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Job description is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 {/* Education */}
                 <div className="card p-6">
                     <div className="mb-6 flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Education</h2>
-                        <button type="button" className="btn btn-outline">
+                        <button
+                            type="button"
+                            className="btn btn-outline cursor-pointer"
+                            onClick={addEducation}
+                        >
                             <Plus className="mr-2 h-4 w-4" />
                             Add Education
                         </button>
                     </div>
-                    <div className="border-border rounded-lg border p-4">
-                        <div className="mb-4 flex items-start justify-between">
-                            <h3 className="font-medium">
-                                Bachelor of Science in Computer Science
-                            </h3>
-                            {/* Remove should be implemented on the local state until the user saves the changes. */}
-                            <button
-                                type="button"
-                                className="btn-ghost p-1 text-red-600 hover:bg-red-50"
+                    <div className="space-y-6">
+                        {educationFields.length === 0 && (
+                            <p className="text-muted-foreground py-4 text-center">
+                                No education added yet
+                            </p>
+                        )}
+                        {educationFields.map((field, index) => (
+                            <div
+                                key={field.id}
+                                className="border-border rounded-lg border p-4"
                             >
-                                <Trash2 className="h-4 w-4" />
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <div>
-                                <label className="label mb-2 block">
-                                    Institution
-                                </label>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    defaultValue="Stanford University"
-                                />
+                                <div className="mb-2 flex justify-end">
+                                    <button
+                                        type="button"
+                                        className="btn-ghost flex size-10 cursor-pointer items-center justify-center rounded-full text-red-600 hover:bg-red-50"
+                                        onClick={() => removeEducation(index)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </button>
+                                </div>
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 [&>*:last-child]:md:col-span-2">
+                                    <Field
+                                        label="Institution"
+                                        htmlFor={`education.${index}.schoolName`}
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`education.${index}.schoolName`}
+                                            className="input"
+                                            placeholder="Enter institution name"
+                                            {...register(
+                                                `education.${index}.schoolName`,
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Degree"
+                                        htmlFor={`education.${index}.degree`}
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`education.${index}.degree`}
+                                            className="input"
+                                            placeholder="e.g. B.Tech, B.Sc, M.A"
+                                            {...register(
+                                                `education.${index}.degree`,
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Start Year"
+                                        htmlFor={`education.${index}.startDate`}
+                                        error={
+                                            errors.education?.[index].startDate
+                                        }
+                                    >
+                                        <input
+                                            type="number"
+                                            id={`education.${index}.startDate`}
+                                            className="input"
+                                            placeholder="e.g. 2020"
+                                            required={true}
+                                            {...register(
+                                                `education.${index}.startDate`,
+                                                {
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Start year is required",
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="End Year"
+                                        htmlFor={`education.${index}.endDate`}
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`education.${index}.endDate`}
+                                            className="input"
+                                            placeholder="e.g. 2024"
+                                            {...register(
+                                                `education.${index}.endDate`,
+                                            )}
+                                        />
+                                    </Field>
+                                    <Field
+                                        label="Field of Study"
+                                        htmlFor={`education.${index}.fieldOfStudy`}
+                                    >
+                                        <input
+                                            type="text"
+                                            id={`education.${index}.fieldOfStudy`}
+                                            className="input"
+                                            placeholder="e.g. Computer Science"
+                                            {...register(
+                                                `education.${index}.fieldOfStudy`,
+                                            )}
+                                        />
+                                    </Field>
+                                </div>
                             </div>
-                            <div>
-                                <label className="label mb-2 block">
-                                    Degree
-                                </label>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    defaultValue="Bachelor of Science"
-                                />
-                            </div>
-                            <div>
-                                <label className="label mb-2 block">
-                                    Start Year
-                                </label>
-                                <input
-                                    type="number"
-                                    className="input"
-                                    defaultValue={2016}
-                                />
-                            </div>
-                            <div>
-                                <label className="label mb-2 block">
-                                    End Year
-                                </label>
-                                <input
-                                    type="number"
-                                    className="input"
-                                    defaultValue={2020}
-                                />
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
-                {/* Resume Upload */}
                 {/* Social Links */}
                 <div className="card p-6">
                     <h2 className="mb-6 text-xl font-semibold">
@@ -605,7 +802,7 @@ export default function EditJobSeekerProfile() {
                         <div>
                             <label
                                 htmlFor="linkedin"
-                                className="label mb-2 block"
+                                className="label mb-2 flex items-center gap-1"
                             >
                                 <Linkedin className="mr-1 inline h-4 w-4" />
                                 LinkedIn
@@ -615,13 +812,13 @@ export default function EditJobSeekerProfile() {
                                 id="linkedin"
                                 className="input"
                                 placeholder="https://linkedin.com/in/username"
-                                defaultValue="https://linkedin.com/in/johndoe"
+                                {...register("linkedinUrl")}
                             />
                         </div>
                         <div>
                             <label
                                 htmlFor="github"
-                                className="label mb-2 block"
+                                className="label mb-2 flex items-center gap-1"
                             >
                                 <Github className="mr-1 inline h-4 w-4" />
                                 GitHub
@@ -631,13 +828,13 @@ export default function EditJobSeekerProfile() {
                                 id="github"
                                 className="input"
                                 placeholder="https://github.com/username"
-                                defaultValue="https://github.com/johndoe"
+                                {...register("githubUrl")}
                             />
                         </div>
                         <div>
                             <label
                                 htmlFor="portfolio"
-                                className="label mb-2 block"
+                                className="label mb-2 flex items-center gap-1"
                             >
                                 <Globe className="mr-1 inline h-4 w-4" />
                                 Portfolio Website
@@ -647,7 +844,7 @@ export default function EditJobSeekerProfile() {
                                 id="portfolio"
                                 className="input"
                                 placeholder="https://yourwebsite.com"
-                                defaultValue="https://johndoe.dev"
+                                {...register("portfolioUrl")}
                             />
                         </div>
                     </div>
@@ -655,10 +852,13 @@ export default function EditJobSeekerProfile() {
                 {/* Form Actions */}
                 <div className="card p-6">
                     <div className="flex flex-col justify-end gap-3 sm:flex-row">
-                        <a href="user-profile.html" className="btn btn-outline">
+                        <Link
+                            to="/jobseeker-profile"
+                            className="btn btn-outline"
+                        >
                             <X className="mr-2 h-4 w-4" />
                             Cancel
-                        </a>
+                        </Link>
                         <button type="submit" className="btn btn-primary">
                             <Save className="mr-2 h-4 w-4" />
                             Save Changes

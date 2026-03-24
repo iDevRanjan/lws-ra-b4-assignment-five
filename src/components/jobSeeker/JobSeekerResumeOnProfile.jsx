@@ -2,7 +2,7 @@ import { Download, FileText, Upload } from "lucide-react";
 import { Link } from "react-router";
 import { formatDate } from "../../utils/formatDate";
 
-export default function JobSeekerResumeOnProfile({ profileData }) {
+export default function JobSeekerResumeOnProfile({ profileData = {} }) {
     return (
         <div className="card p-6">
             <h3 className="mb-4 text-lg font-semibold">Resume</h3>

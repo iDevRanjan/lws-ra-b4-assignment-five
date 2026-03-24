@@ -1,6 +1,6 @@
 import { GraduationCap } from "lucide-react";
 
-export default function JobSeekerEducation({ profileDataEducation }) {
+export default function JobSeekerEducation({ profileDataEducation = [] }) {
     return (
         <div className="card p-6">
             <h2 className="mb-4 text-xl font-semibold">Education</h2>
@@ -23,7 +23,11 @@ export default function JobSeekerEducation({ profileDataEducation }) {
                                         education.startDate,
                                     ).getFullYear()}{" "}
                                     -{" "}
-                                    {new Date(education.endDate).getFullYear()}
+                                    {education.endDate
+                                        ? new Date(
+                                              education.endDate,
+                                          ).getFullYear()
+                                        : "Present"}
                                 </p>
                             </div>
                         </div>

@@ -3,7 +3,7 @@ import { formatDate } from "../../utils/formatDate";
 import JobSeekerAvatar from "../common/JobSeekerAvatar";
 import { Link } from "react-router";
 
-export default function JobSeekerProfileHeader({ profileData }) {
+export default function JobSeekerProfileHeader({ profileData = {} }) {
     return (
         <div className="card mb-8 p-8">
             <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">

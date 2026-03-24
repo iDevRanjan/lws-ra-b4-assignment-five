@@ -12,32 +12,36 @@ export default function JobSeekerProfile() {
 
     return (
         <main className="container mx-auto px-4 py-8">
-            <JobSeekerProfileHeader profileData={jobSeekerProfile.data} />
+            <JobSeekerProfileHeader profileData={jobSeekerProfile?.data} />
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 <div className="space-y-6 lg:col-span-2">
                     <div className="card p-6">
                         <h2 className="mb-4 text-xl font-semibold">About</h2>
                         <p className="text-foreground leading-relaxed">
-                            {jobSeekerProfile.data.bio ?? "N/A"}
+                            {jobSeekerProfile?.data.bio ?? "N/A"}
                         </p>
                     </div>
-                    <JobSeekerContactInfo profileData={jobSeekerProfile.data} />
+                    <JobSeekerContactInfo
+                        profileData={jobSeekerProfile?.data}
+                    />
                     <JobSeekerSkills
-                        profileDataSkills={jobSeekerProfile.data.skills}
+                        profileDataSkills={jobSeekerProfile?.data.skills}
                     />
                     <JobSeekerExperience
-                        profileDataExperience={jobSeekerProfile.data.experience}
+                        profileDataExperience={
+                            jobSeekerProfile?.data.experience
+                        }
                     />
                     <JobSeekerEducation
-                        profileDataEducation={jobSeekerProfile.data.education}
+                        profileDataEducation={jobSeekerProfile?.data.education}
                     />
                 </div>
                 <div className="space-y-6 lg:col-span-1">
                     <JobSeekerResumeOnProfile
-                        profileData={jobSeekerProfile.data}
+                        profileData={jobSeekerProfile?.data}
                     />
                     <JobSeekerSocialProfiles
-                        profileData={jobSeekerProfile.data}
+                        profileData={jobSeekerProfile?.data}
                     />
                 </div>
             </div>

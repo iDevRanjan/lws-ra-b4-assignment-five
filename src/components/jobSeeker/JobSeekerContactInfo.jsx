@@ -1,7 +1,7 @@
 import { Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router";
 
-export default function JobSeekerContactInfo({ profileData }) {
+export default function JobSeekerContactInfo({ profileData = {} }) {
     return (
         <div className="card p-6">
             <h2 className="mb-4 text-xl font-semibold">Contact Information</h2>

@@ -1,4 +1,4 @@
-export default function JobSeekerSkills({ profileDataSkills }) {
+export default function JobSeekerSkills({ profileDataSkills = [] }) {
     return (
         <div className="card p-6">
             <h2 className="mb-4 text-xl font-semibold">Skills</h2>

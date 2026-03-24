@@ -1,13 +1,13 @@
 export const employmentTypeOptionData = [
     {
         id: 1,
-        name: "Full-time",
-        value: "Full time",
+        name: "Full time",
+        value: "Full-time",
     },
     {
         id: 2,
-        name: "Part-time",
-        value: "Part time",
+        name: "Part time",
+        value: "Part-time",
     },
     {
         id: 3,

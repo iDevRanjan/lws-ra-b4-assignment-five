@@ -1,7 +1,7 @@
 import { Github, Globe, Linkedin } from "lucide-react";
 import { Link } from "react-router";
 
-export default function JobSeekerSocialProfiles({ profileData }) {
+export default function JobSeekerSocialProfiles({ profileData = {} }) {
     return (
         <div className="card p-6">
             <h3 className="mb-4 text-lg font-semibold">Social Profiles</h3>

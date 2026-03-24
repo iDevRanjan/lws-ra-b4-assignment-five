@@ -1,7 +1,7 @@
 import { formatDate } from "../../utils/formatDate";
 import { getDateDifference } from "../../utils/getDateDifference";
 
-export default function JobSeekerExperience({ profileDataExperience }) {
+export default function JobSeekerExperience({ profileDataExperience = [] }) {
     return (
         <div className="card p-6">
             <h2 className="mb-4 text-xl font-semibold">Work Experience</h2>

@@ -43,3 +43,10 @@ export async function applyAJob(coverLetterFormData, jobId) {
     );
     return response.data;
 }
+
+export async function withdrawApplication(applicationId) {
+    const response = await axiosInstance.delete(
+        `/api/applications/${applicationId}`,
+    );
+    return response.data;
+}

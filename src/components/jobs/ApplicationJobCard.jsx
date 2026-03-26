@@ -66,7 +66,11 @@ const ApplicationJobCard = memo(function ApplicationJobCard({
                         >
                             View Job
                         </Link>
-                        {status === "New" && <WithdrawButton />}
+                        {status === "New" && (
+                            <WithdrawButton
+                                applicationId={applicationData.id}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

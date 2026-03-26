@@ -14,7 +14,7 @@ const JobCard = memo(function JobCard({
     role,
     jobSeekerApplicationData = [],
 }) {
-    const { exist, status } = applicationJobChecking(
+    const { exist, status, applicationId } = applicationJobChecking(
         jobSeekerApplicationData,
         job.id,
     );
@@ -25,7 +25,7 @@ const JobCard = memo(function JobCard({
 
         return exist ? (
             status === "New" ? (
-                <WithdrawButton />
+                <WithdrawButton applicationId={applicationId} />
             ) : (
                 <button
                     className={`btn text-primary-foreground w-full cursor-not-allowed ${buttonConfig.className} whitespace-nowrap`}

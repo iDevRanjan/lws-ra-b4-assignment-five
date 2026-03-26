@@ -5,6 +5,7 @@ import {
     updateJobSeekerAvatar,
     updateJobSeekerProfile,
     updateJobSeekerResume,
+    withdrawApplication,
 } from "./userApi";
 import { queryClient } from "./queryClient";
 import { QUERY_KEYS } from "../utils/constants";
@@ -44,6 +45,17 @@ export function applyAJobMutationOption(jobId) {
     return mutationOptions({
         mutationFn: (coverLetterFormData) =>
             applyAJob(coverLetterFormData, jobId),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.jobSeekerApplications],
+            });
+        },
+    });
+}
+
+export function withdrawApplicationMutationOption(applicationId) {
+    return mutationOptions({
+        mutationFn: () => withdrawApplication(applicationId),
         onSuccess: async () => {
             await queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.jobSeekerApplications],

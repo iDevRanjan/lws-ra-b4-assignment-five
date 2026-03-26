@@ -8,5 +8,6 @@ export function applicationJobChecking(applicationJobs, jobId) {
     return {
         exist: Boolean(application),
         status: application?.status,
+        applicationId: application?.id,
     };
 }

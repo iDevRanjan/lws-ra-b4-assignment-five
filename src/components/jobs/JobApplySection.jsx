@@ -11,7 +11,7 @@ export default function JobApplySection({
     jobId,
 }) {
     const { authData } = useAuth();
-    const { exist, status } = applicationJobChecking(
+    const { exist, status, applicationId } = applicationJobChecking(
         jobSeekerApplicationData,
         jobDetailsData.id,
     );
@@ -25,7 +25,7 @@ export default function JobApplySection({
 
         return exist ? (
             status === "New" ? (
-                <WithdrawButton />
+                <WithdrawButton applicationId={applicationId} />
             ) : (
                 <button
                     className={`btn text-primary-foreground w-full cursor-not-allowed ${buttonConfig.className} whitespace-nowrap`}

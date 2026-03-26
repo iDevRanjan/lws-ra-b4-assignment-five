@@ -11,3 +11,27 @@ export async function getJobSeekerApplications(params) {
     );
     return response.data;
 }
+
+export async function updateJobSeekerAvatar(avatarFormData) {
+    const response = await axiosInstance.post(
+        "/api/users/profile-picture",
+        avatarFormData,
+    );
+    return response.data;
+}
+
+export async function updateJobSeekerResume(resumeFormData) {
+    const response = await axiosInstance.post(
+        "/api/users/resume",
+        resumeFormData,
+    );
+    return response.data;
+}
+
+export async function updateJobSeekerProfile(profileFormData) {
+    const response = await axiosInstance.put(
+        "/api/users/profile",
+        profileFormData,
+    );
+    return response.data;
+}

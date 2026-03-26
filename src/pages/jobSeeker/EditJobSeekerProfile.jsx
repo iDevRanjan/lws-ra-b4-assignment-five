@@ -7,7 +7,6 @@ import {
     Save,
     Trash2,
     Upload,
-    User,
     X,
 } from "lucide-react";
 import { useProfile } from "../../hooks/useProfile";
@@ -232,6 +231,8 @@ export default function EditJobSeekerProfile() {
 
     async function onSubmit(formData) {
         const isAnyFieldChange = Object.keys(dirtyFields).length > 0;
+        const hasNewAvatar = !!uploadImageRef.current;
+        const hasNewResume = !!uploadResumeRef.current;
 
         if (
             !isAnyFieldChange &&
@@ -242,78 +243,91 @@ export default function EditJobSeekerProfile() {
             return;
         }
 
-        const updatedData = Object.keys(dirtyFields).reduce((acc, key) => {
-            acc[key] = formData[key];
-            return acc;
-        }, {});
-
-        if (updatedData.skills) {
-            updatedData.skills = updatedData.skills.map((skill) => skill.value);
-        }
-
-        if (updatedData.experience) {
-            updatedData.experience = updatedData.experience.map((exp) => ({
-                ...exp,
-                startDate: exp.startDate
-                    ? new Date(exp.startDate).toISOString()
-                    : null,
-                endDate: exp.endDate
-                    ? new Date(exp.endDate).toISOString()
-                    : null,
-            }));
-        }
-
-        if (updatedData.education) {
-            updatedData.education = updatedData.education.map((edu) => ({
-                ...edu,
-                startDate: edu.startDate
-                    ? new Date(String(edu.startDate)).toISOString()
-                    : null,
-                endDate: edu.endDate
-                    ? new Date(String(edu.endDate)).toISOString()
-                    : null,
-            }));
-        }
-
-        const ignoredKeys = [
-            "id",
-            "email",
-            "role",
-            "location",
-            "resumeUrl",
-            "resumeOriginalName",
-            "resumeSize",
-            "resumeUploadDate",
-            "profilePictureUrl",
-            "createdAt",
-            "updatedAt",
-        ];
-
-        for (const key of ignoredKeys) {
-            delete updatedData[key];
-        }
-
         const updatePromises = [];
         const loadingToast = toast.loading("Updating profile...");
 
         try {
-            if (uploadImageRef.current) {
+            if (hasNewAvatar) {
                 const avatarFormData = new FormData();
                 avatarFormData.append("profilePicture", uploadImageRef.current);
+
                 updatePromises.push(mutateAvatarAsync(avatarFormData));
             }
 
-            if (uploadResumeRef.current) {
+            if (hasNewResume) {
                 const resumeFormData = new FormData();
                 resumeFormData.append("resume", uploadResumeRef.current);
+
                 updatePromises.push(mutateResumeAsync(resumeFormData));
             }
 
             if (isAnyFieldChange) {
+                const updatedData = Object.keys(dirtyFields).reduce(
+                    (acc, key) => {
+                        acc[key] = formData[key];
+                        return acc;
+                    },
+                    {},
+                );
+
+                if (updatedData.skills) {
+                    updatedData.skills = updatedData.skills.map(
+                        (skill) => skill.value,
+                    );
+                }
+
+                if (updatedData.experience) {
+                    updatedData.experience = updatedData.experience.map(
+                        (exp) => ({
+                            ...exp,
+                            startDate: exp.startDate
+                                ? new Date(exp.startDate).toISOString()
+                                : null,
+                            endDate: exp.endDate
+                                ? new Date(exp.endDate).toISOString()
+                                : null,
+                        }),
+                    );
+                }
+
+                if (updatedData.education) {
+                    updatedData.education = updatedData.education.map(
+                        (edu) => ({
+                            ...edu,
+                            startDate: edu.startDate
+                                ? new Date(String(edu.startDate)).toISOString()
+                                : null,
+                            endDate: edu.endDate
+                                ? new Date(String(edu.endDate)).toISOString()
+                                : null,
+                        }),
+                    );
+                }
+
+                const ignoredKeys = [
+                    "id",
+                    "email",
+                    "role",
+                    "location",
+                    "resumeUrl",
+                    "resumeOriginalName",
+                    "resumeSize",
+                    "resumeUploadDate",
+                    "profilePictureUrl",
+                    "createdAt",
+                    "updatedAt",
+                ];
+
+                for (const key of ignoredKeys) {
+                    delete updatedData[key];
+                }
+
                 updatePromises.push(mutateProfileAsync(updatedData));
             }
 
             await Promise.all(updatePromises);
+
+            toast.success("Profile updated successfully", { id: loadingToast });
 
             await queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.clientProfile, "USER"],
@@ -322,8 +336,6 @@ export default function EditJobSeekerProfile() {
             uploadImageRef.current = null;
             uploadResumeRef.current = null;
             reset(formData);
-
-            toast.success("Profile updated successfully", { id: loadingToast });
         } catch (error) {
             toast.error(`Update failed: ${error.message}`, {
                 id: loadingToast,

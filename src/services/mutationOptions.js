@@ -1,10 +1,13 @@
 import { mutationOptions } from "@tanstack/react-query";
 import { applicationLogin, clientRegister } from "./authApi";
 import {
+    applyAJob,
     updateJobSeekerAvatar,
     updateJobSeekerProfile,
     updateJobSeekerResume,
 } from "./userApi";
+import { queryClient } from "./queryClient";
+import { QUERY_KEYS } from "../utils/constants";
 
 export function applicationLoginMutationOption() {
     return mutationOptions({
@@ -34,5 +37,17 @@ export function jobSeekerProfileUpdateMutationOption() {
     return mutationOptions({
         mutationFn: (profileFormData) =>
             updateJobSeekerProfile(profileFormData),
+    });
+}
+
+export function applyAJobMutationOption(jobId) {
+    return mutationOptions({
+        mutationFn: (coverLetterFormData) =>
+            applyAJob(coverLetterFormData, jobId),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.jobSeekerApplications],
+            });
+        },
     });
 }

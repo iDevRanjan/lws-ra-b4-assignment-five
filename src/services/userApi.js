@@ -35,3 +35,11 @@ export async function updateJobSeekerProfile(profileFormData) {
     );
     return response.data;
 }
+
+export async function applyAJob(coverLetterFormData, jobId) {
+    const response = await axiosInstance.post(
+        `/api/applications/jobs/${jobId}/apply`,
+        coverLetterFormData,
+    );
+    return response.data;
+}

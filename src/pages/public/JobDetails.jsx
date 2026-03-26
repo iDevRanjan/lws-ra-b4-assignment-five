@@ -49,6 +49,7 @@ export default function JobDetails() {
                         jobSeekerApplicationData={
                             jobSeekerApplicationData?.data
                         }
+                        jobId={jobDetails.data.id}
                     />
                     <CompanyInfo companyInfo={jobDetails.data.company} />
                     <ShareJob />

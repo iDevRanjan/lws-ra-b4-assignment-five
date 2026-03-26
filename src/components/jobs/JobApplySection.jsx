@@ -8,6 +8,7 @@ import { getStatusConfig } from "../../utils/getStatusConfig";
 export default function JobApplySection({
     jobDetailsData,
     jobSeekerApplicationData = [],
+    jobId,
 }) {
     const { authData } = useAuth();
     const { exist, status } = applicationJobChecking(
@@ -33,7 +34,7 @@ export default function JobApplySection({
                 </button>
             )
         ) : (
-            <ApplyNowButton />
+            <ApplyNowButton jobId={jobId} />
         );
     }
 

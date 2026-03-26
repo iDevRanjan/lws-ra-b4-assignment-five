@@ -34,7 +34,7 @@ const JobCard = memo(function JobCard({
                 </button>
             )
         ) : (
-            <ApplyNowButton />
+            <ApplyNowButton jobId={job.id} />
         );
     }
 

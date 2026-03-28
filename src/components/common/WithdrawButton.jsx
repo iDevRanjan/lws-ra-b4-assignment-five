@@ -9,6 +9,9 @@ export default function WithdrawButton({ applicationId }) {
     );
 
     function handleClick() {
+        if (!confirm("Are you sure you want to withdraw this application?"))
+            return;
+
         mutateWithdrawApplication(undefined, {
             onSuccess: () => {
                 toast.success("Application withdrawn successfully!");

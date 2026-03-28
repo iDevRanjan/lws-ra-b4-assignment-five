@@ -4,7 +4,7 @@ export default function JobSeekerAvatar({
     jobSeekerProfileData = {},
     size = 5,
 }) {
-    const URL = jobSeekerProfileData.profilePictureUrl?.startsWith("http")
+    const imageUrl = jobSeekerProfileData.profilePictureUrl?.startsWith("http")
         ? jobSeekerProfileData.profilePictureUrl
         : `${import.meta.env.VITE_API_BASE_URL}${jobSeekerProfileData.profilePictureUrl}`;
 
@@ -20,7 +20,7 @@ export default function JobSeekerAvatar({
             {jobSeekerProfileData.profilePictureUrl && (
                 <img
                     key={jobSeekerProfileData.name}
-                    src={URL}
+                    src={imageUrl}
                     alt={jobSeekerProfileData.name}
                     onError={(event) => {
                         event.target.style.display = "none";

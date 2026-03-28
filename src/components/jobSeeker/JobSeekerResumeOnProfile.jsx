@@ -3,6 +3,10 @@ import { Link } from "react-router";
 import { formatDate } from "../../utils/formatDate";
 
 export default function JobSeekerResumeOnProfile({ profileData = {} }) {
+    const resumeUrl = profileData.resumeUrl?.startsWith("http")
+        ? profileData.resumeUrl
+        : `${import.meta.env.VITE_API_BASE_URL}${profileData.resumeUrl}`;
+
     return (
         <div className="card p-6">
             <h3 className="mb-4 text-lg font-semibold">Resume</h3>
@@ -23,15 +27,17 @@ export default function JobSeekerResumeOnProfile({ profileData = {} }) {
                             </p>
                         </div>
                     </div>
-                    <div className="flex gap-2">
-                        <Link
-                            to={`${import.meta.env.VITE_API_BASE_URL}${profileData.resumeUrl ?? "#"}`}
-                            className="btn btn-outline h-9 w-full text-xs"
-                        >
-                            <Download className="mr-2 h-3 w-3" />
-                            Download
-                        </Link>
-                    </div>
+                    {profileData.resumeUrl && (
+                        <div className="flex gap-2">
+                            <Link
+                                to={resumeUrl}
+                                className="btn btn-outline h-9 w-full text-xs"
+                            >
+                                <Download className="mr-2 h-3 w-3" />
+                                Download
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 <Link
                     to="/edit-jobseeker-profile"

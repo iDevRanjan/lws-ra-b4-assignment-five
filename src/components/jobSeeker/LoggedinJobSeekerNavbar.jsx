@@ -6,19 +6,20 @@ import JobSeekerAvatar from "../common/JobSeekerAvatar";
 export default function LoggedinJobSeekerNavbar({ jobSeekerProfileData }) {
     const [open, setOpen] = useState(false);
 
+    const navLinkClass = ({ isActive }) =>
+        `text-sm font-medium transition-colors ${
+            isActive
+                ? "text-primary"
+                : "text-muted-foreground hover:text-primary"
+        }`;
+
     return (
         <>
             <nav className="hidden items-center gap-6 md:flex">
-                <NavLink
-                    to="jobseeker-dashboard"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
+                <NavLink to="jobseeker-dashboard" className={navLinkClass}>
                     Dashboard
                 </NavLink>
-                <NavLink
-                    to="jobseeker-applications"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
+                <NavLink to="jobseeker-applications" className={navLinkClass}>
                     My Applications
                 </NavLink>
             </nav>

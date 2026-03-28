@@ -12,7 +12,7 @@ export default function ExestingClient({ email }) {
     }
 
     return (
-        <main className="container mx-auto flex h-[80vh] items-center justify-center px-4">
+        <main className="container mx-auto mt-16 flex items-center justify-center px-4">
             <div className="card w-full max-w-md rounded-2xl border bg-white p-8 text-center shadow-lg">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                     <Home className="h-8 w-8 text-green-600" />

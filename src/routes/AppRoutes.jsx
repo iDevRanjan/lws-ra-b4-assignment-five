@@ -22,6 +22,7 @@ import JobSeekerApplications from "../pages/jobSeeker/JobSeekerApplications";
 import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
 import { authMiddleware } from "../services/authMiddleware";
 import EditJobSeekerProfile from "../pages/jobSeeker/EditJobSeekerProfile";
+import CompanyDashboard from "../pages/company/CompanyDashboard";
 
 const router = createBrowserRouter([
     {
@@ -96,24 +97,24 @@ const router = createBrowserRouter([
                         loader: roleBasedLoader,
                         children: [
                             {
-                                path: "/company-dashboard",
-                                // element: <CompanyDashboard />,
+                                path: "company-dashboard",
+                                element: <CompanyDashboard />,
                             },
                             {
-                                path: "/edit-company-profile",
-                                // element: <EditCompanyProfile />,
-                            },
-                            {
-                                path: "/create-job",
-                                // element: <CreateJob />,
-                            },
-                            {
-                                path: "/manage-jobs",
+                                path: "manage-jobs",
                                 // element: <ManageJobs />,
                             },
                             {
-                                path: "/applicants",
+                                path: "applicants",
                                 // element: <Applicants />,
+                            },
+                            {
+                                path: "edit-company-profile",
+                                // element: <EditCompanyProfile />,
+                            },
+                            {
+                                path: "create-job",
+                                // element: <CreateJob />,
                             },
                         ],
                     },

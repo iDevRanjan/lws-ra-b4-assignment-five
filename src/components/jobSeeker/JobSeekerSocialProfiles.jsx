@@ -17,10 +17,7 @@ export default function JobSeekerSocialProfiles({ profileData = {} }) {
                     to={`${profileData.githubUrl ?? "#"}`}
                     className="hover:bg-accent flex items-center gap-3 rounded-md p-2 transition-colors"
                 >
-                    <Github
-                        data-lucide="github"
-                        className="text-muted-foreground h-5 w-5"
-                    />
+                    <Github className="text-muted-foreground h-5 w-5" />
                     <span className="text-sm font-medium">GitHub</span>
                 </Link>
                 <Link

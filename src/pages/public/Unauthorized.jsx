@@ -5,7 +5,7 @@ export default function Unauthorized() {
     const navigate = useNavigate();
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4">
+        <main className="container mx-auto mt-16 flex flex-col items-center justify-center px-4">
             <div className="mb-6 text-red-500">
                 <ShieldAlert size={80} strokeWidth={1.5} />
             </div>

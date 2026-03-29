@@ -6,6 +6,7 @@ import {
     MapPin,
     Users,
 } from "lucide-react";
+import { formatDate } from "../../utils/formatDate";
 
 export default function JobOverview({ jobDetailsData }) {
     return (
@@ -69,7 +70,7 @@ export default function JobOverview({ jobDetailsData }) {
                             Application Deadline
                         </p>
                         <p className="font-medium">
-                            {jobDetailsData.deadline ?? "N/A"}
+                            {formatDate(jobDetailsData.deadline) ?? "N/A"}
                         </p>
                     </div>
                 </div>

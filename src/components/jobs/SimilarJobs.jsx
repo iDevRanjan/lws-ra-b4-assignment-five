@@ -13,8 +13,7 @@ export default function SimilarJobs({ jobId }) {
         refetch,
     } = useQuery(getSimilarJobsQueryOption(jobId));
 
-    const isSimilarJobsAvailable =
-        similarJobsData?.success && similarJobsData?.data.length > 0;
+    const isSimilarJobsAvailable = similarJobsData?.success;
 
     if (isError) {
         return (
@@ -50,53 +49,63 @@ export default function SimilarJobs({ jobId }) {
         >
             <h2 className="mb-4 text-xl font-semibold">Similar Jobs</h2>
             {isPending && <SimilarJobSkeleton />}
-            {!isPending && isSimilarJobsAvailable && (
-                <div className="space-y-4">
-                    {similarJobsData?.data.map((similarJobData) => (
-                        <article
-                            key={similarJobData.id}
-                            className="border-border border-b pb-4 last:border-0 last:pb-0"
-                        >
-                            <div className="flex gap-4">
-                                <div className="shrink-0">
-                                    <CompanyAvatar
-                                        companyInfo={similarJobData.company}
-                                        size={12}
-                                    />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                    <h3 className="mb-1 font-semibold">
-                                        <Link
-                                            to={`/jobs/${similarJobData.slug}`}
-                                            className="hover:underline"
-                                        >
-                                            {similarJobData.title}
-                                        </Link>
-                                    </h3>
-                                    <p className="text-muted-foreground mb-2 text-sm">
-                                        {similarJobData.company.name} •{" "}
-                                        {similarJobData.location} •{" "}
-                                        {similarJobData.workMode}
-                                    </p>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-primary text-sm font-medium">
-                                            ${similarJobData.salaryMin / 1000}k
-                                            - ${similarJobData.salaryMax / 1000}
-                                            k
-                                        </span>
-                                        <Link
-                                            to={`/jobs/${similarJobData.slug}`}
-                                            className="text-primary text-sm hover:underline"
-                                        >
-                                            View Details
-                                        </Link>
+            {!isPending &&
+                isSimilarJobsAvailable &&
+                (similarJobsData.data.length > 0 ? (
+                    <div className="space-y-4">
+                        {similarJobsData?.data.map((similarJobData) => (
+                            <article
+                                key={similarJobData.id}
+                                className="border-border border-b pb-4 last:border-0 last:pb-0"
+                            >
+                                <div className="flex gap-4">
+                                    <div className="shrink-0">
+                                        <CompanyAvatar
+                                            companyInfo={similarJobData.company}
+                                            size={12}
+                                        />
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                        <h3 className="mb-1 font-semibold">
+                                            <Link
+                                                to={`/jobs/${similarJobData.slug}`}
+                                                className="hover:underline"
+                                            >
+                                                {similarJobData.title}
+                                            </Link>
+                                        </h3>
+                                        <p className="text-muted-foreground mb-2 text-sm">
+                                            {similarJobData.company.name} •{" "}
+                                            {similarJobData.location} •{" "}
+                                            {similarJobData.workMode}
+                                        </p>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-primary text-sm font-medium">
+                                                $
+                                                {similarJobData.salaryMin /
+                                                    1000}
+                                                k - $
+                                                {similarJobData.salaryMax /
+                                                    1000}
+                                                k
+                                            </span>
+                                            <Link
+                                                to={`/jobs/${similarJobData.slug}`}
+                                                className="text-primary text-sm hover:underline"
+                                            >
+                                                View Details
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            )}
+                            </article>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-muted-foreground py-4 text-center">
+                        No similar jobs are available
+                    </p>
+                ))}
         </div>
     );
 }

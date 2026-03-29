@@ -1,4 +1,4 @@
-import SortDropdownMenu from "../common/SortDropdownMenu";
+import ActionSelectMenu from "../common/ActionSelectMenu";
 import { jobSortingOptionData } from "../../data/jobSortingOptionData";
 import { useQueryObject } from "../../hooks/useQueryObject";
 
@@ -15,10 +15,10 @@ export default function JobSearchingResultsHeader({ displayedJobsCount }) {
             </div>
             <div className="flex items-center gap-2">
                 <span className="text-muted-foreground text-sm">Sort by:</span>
-                <SortDropdownMenu
+                <ActionSelectMenu
                     selectTitle="Job Sorting"
                     itemsData={jobSortingOptionData}
-                    handleSetQuerySort={handleSetQuerySort}
+                    onValueChange={handleSetQuerySort}
                 />
             </div>
         </div>

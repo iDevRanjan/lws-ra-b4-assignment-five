@@ -3,7 +3,7 @@ import { applicationSortingOptionData } from "../../data/applicationSortingOptio
 import { getApplicationParams } from "../../utils/getApplicationParams";
 import { useDebounce } from "../../hooks/useDebounce";
 import FiltersApplications from "./FiltersApplications";
-import SortDropdownMenu from "../common/SortDropdownMenu";
+import ActionSelectMenu from "../common/ActionSelectMenu";
 import { initialApplicationQueryObject } from "../../data/initialApplicationQueryObject";
 import { queryChecking } from "../../utils/queryChecking";
 import toast from "react-hot-toast";
@@ -83,10 +83,10 @@ export default function ApplicationsContainer({
                         <span className="text-muted-foreground text-sm">
                             Sort by:
                         </span>
-                        <SortDropdownMenu
+                        <ActionSelectMenu
                             selectTitle="Applications Sorting"
                             itemsData={applicationSortingOptionData}
-                            handleSetQuerySort={handleSetApplicationQuerySort}
+                            onValueChange={handleSetApplicationQuerySort}
                         />
                     </div>
                 </div>

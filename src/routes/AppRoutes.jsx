@@ -5,7 +5,9 @@ import Home from "../pages/public/Home";
 import QueryObjectProvider from "../providers/QueryObjectProvider";
 import JobDetails from "../pages/public/JobDetails";
 import {
+    getApplicantProfileLoader,
     getCompanyBySlugLoader,
+    getCompanyDashboardStatsLoader,
     getJobBySlugLoader,
     publicLoader,
     roleBasedLoader,
@@ -23,6 +25,7 @@ import JobSeekerProfile from "../pages/jobSeeker/JobSeekerProfile";
 import { authMiddleware } from "../services/authMiddleware";
 import EditJobSeekerProfile from "../pages/jobSeeker/EditJobSeekerProfile";
 import CompanyDashboard from "../pages/company/CompanyDashboard";
+import ApplicantProfile from "../pages/company/ApplicantProfile";
 
 const router = createBrowserRouter([
     {
@@ -99,6 +102,12 @@ const router = createBrowserRouter([
                             {
                                 path: "company-dashboard",
                                 element: <CompanyDashboard />,
+                                loader: getCompanyDashboardStatsLoader,
+                            },
+                            {
+                                path: "applicants/:applicantId",
+                                element: <ApplicantProfile />,
+                                loader: getApplicantProfileLoader,
                             },
                             {
                                 path: "manage-jobs",

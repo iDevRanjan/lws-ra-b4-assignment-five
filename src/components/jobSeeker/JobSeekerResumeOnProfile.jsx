@@ -29,13 +29,15 @@ export default function JobSeekerResumeOnProfile({ profileData = {} }) {
                     </div>
                     {profileData.resumeUrl && (
                         <div className="flex gap-2">
-                            <Link
-                                to={resumeUrl}
+                            <a
+                                href={resumeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="btn btn-outline h-9 w-full text-xs"
                             >
                                 <Download className="mr-2 h-3 w-3" />
                                 Download
-                            </Link>
+                            </a>
                         </div>
                     )}
                 </div>

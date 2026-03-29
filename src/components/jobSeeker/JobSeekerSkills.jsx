@@ -11,7 +11,7 @@ export default function JobSeekerSkills({ profileDataSkills = [] }) {
                     ))
                 ) : (
                     <p className="text-muted-foreground py-4 text-center">
-                        You have no skills
+                        No skills
                     </p>
                 )}
             </div>

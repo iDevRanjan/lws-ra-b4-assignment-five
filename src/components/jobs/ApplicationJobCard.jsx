@@ -62,7 +62,7 @@ const ApplicationJobCard = memo(function ApplicationJobCard({
                     <div className="mt-4 flex max-w-fit items-center gap-2">
                         <Link
                             to={`/jobs/${applicationData.job.slug}`}
-                            className="btn btn-outline h-8 min-h-0 w-full cursor-pointer px-4 text-xs"
+                            className="btn btn-outline h-auto! w-full cursor-pointer whitespace-nowrap"
                         >
                             View Job
                         </Link>

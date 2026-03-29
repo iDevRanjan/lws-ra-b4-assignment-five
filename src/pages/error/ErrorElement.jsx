@@ -8,7 +8,12 @@ export default function ErrorElement() {
     return (
         <div className="flex flex-col items-center gap-5 py-20 text-center">
             <h1 className="text-2xl font-bold">Oops! Something went wrong.</h1>
-            <p>{error?.statusText || error?.message || "Page not found"}</p>
+            <p>
+                {error.response?.data?.message ||
+                    error?.statusText ||
+                    error?.message ||
+                    "Page not found"}
+            </p>
             <button
                 onClick={() => navigate("/")}
                 className="btn btn-primary flex items-center justify-center gap-2 py-2.5"

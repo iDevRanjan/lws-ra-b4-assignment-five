@@ -7,8 +7,12 @@ import {
     getSimilarJobs,
 } from "./jobApi";
 import {
+    getApplicantProfile,
+    getCompanyApplicants,
     getCompanyBySlug,
+    getCompanyDashboardStats,
     getCompanyOpenPositions,
+    getCompanyOpenPositionsForOwn,
     getCompanyProfile,
 } from "./companyApi";
 import { getJobSeekerApplications, getUserProfile } from "./userApi";
@@ -99,5 +103,33 @@ export function getRecommendedJobsQueryOption() {
     return queryOptions({
         queryKey: [QUERY_KEYS.recommendedJobs],
         queryFn: getRecommendedJobs,
+    });
+}
+
+export function getCompanyDashboardStatsQueryOption() {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.companyDashboardStats],
+        queryFn: getCompanyDashboardStats,
+    });
+}
+
+export function getCompanyOpenPositionsForOwnQueryOption(params) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.companyOpenPositionsForOwn, params],
+        queryFn: () => getCompanyOpenPositionsForOwn(params),
+    });
+}
+
+export function getCompanyApplicantsQueryOption(params) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.companyApplicants, params],
+        queryFn: () => getCompanyApplicants(params),
+    });
+}
+
+export function getApplicantProfileQueryOption(params) {
+    return queryOptions({
+        queryKey: [QUERY_KEYS.applicantProfile, params],
+        queryFn: () => getApplicantProfile(params),
     });
 }

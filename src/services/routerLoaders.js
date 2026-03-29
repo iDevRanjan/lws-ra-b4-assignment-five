@@ -2,9 +2,12 @@ import { redirect } from "react-router";
 import { authContext } from "../context";
 import { queryClient } from "./queryClient";
 import {
+    getApplicantProfileQueryOption,
     getCompanyBySlugQueryOption,
+    getCompanyDashboardStatsQueryOption,
     getJobBySlugQueryOption,
 } from "./queryOptions";
+import { store } from "../store";
 
 export async function getJobBySlugLoader({ params }) {
     if (!params.jobSlug) throw new Error("No job slug provided");
@@ -37,4 +40,21 @@ export async function roleBasedLoader({ context }) {
     if (!authMiddlewareData.isLoggedin) throw redirect("/login");
 
     return { ...authMiddlewareData };
+}
+
+export async function getCompanyDashboardStatsLoader() {
+    const authData = store.getState().authData;
+
+    if (authData.role === "COMPANY")
+        await queryClient.ensureQueryData(
+            getCompanyDashboardStatsQueryOption(),
+        );
+}
+
+export async function getApplicantProfileLoader({ params }) {
+    if (!params.applicantId) throw new Error("No applicant id provided");
+
+    await queryClient.ensureQueryData(
+        getApplicantProfileQueryOption(params.applicantId),
+    );
 }

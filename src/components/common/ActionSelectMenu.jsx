@@ -1,14 +1,16 @@
-export default function SortDropdownMenu({
+export default function ActionSelectMenu({
     selectTitle,
     itemsData,
-    handleSetQuerySort,
+    onValueChange,
+    defaultSelect,
+    disabled = false,
 }) {
     function handleChange(event) {
-        handleSetQuerySort(event.target.value);
+        onValueChange(event.target.value);
     }
 
     return (
-        <select name={selectTitle} onChange={handleChange}>
+        <select name={selectTitle} onChange={handleChange} disabled={disabled}>
             <button>
                 <selectedcontent></selectedcontent>
                 <svg
@@ -27,6 +29,11 @@ export default function SortDropdownMenu({
                 </svg>
             </button>
             <div className="option-container">
+                {defaultSelect && (
+                    <option value="" disabled selected>
+                        {defaultSelect}
+                    </option>
+                )}
                 {itemsData?.map((itemData) => (
                     <option key={itemData.id} value={itemData.value}>
                         <div>

@@ -9,6 +9,7 @@ import {
 } from "./userApi";
 import { queryClient } from "./queryClient";
 import { QUERY_KEYS } from "../utils/constants";
+import { applicationStatusUpdate } from "./companyApi";
 
 export function applicationLoginMutationOption() {
     return mutationOptions({
@@ -59,6 +60,18 @@ export function withdrawApplicationMutationOption(applicationId) {
         onSuccess: async () => {
             await queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.jobSeekerApplications],
+            });
+        },
+    });
+}
+
+export function applicationStatusUpdateMutationOption(applicationId) {
+    return mutationOptions({
+        mutationFn: (payload) =>
+            applicationStatusUpdate(applicationId, payload),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.companyApplicants],
             });
         },
     });

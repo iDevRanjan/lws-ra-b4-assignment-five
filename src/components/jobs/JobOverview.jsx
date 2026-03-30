@@ -83,7 +83,7 @@ export default function JobOverview({ jobDetailsData }) {
                             Applicants
                         </p>
                         <p className="font-medium">
-                            {jobDetailsData.applicants} applications
+                            {jobDetailsData.applicants}
                         </p>
                     </div>
                 </div>

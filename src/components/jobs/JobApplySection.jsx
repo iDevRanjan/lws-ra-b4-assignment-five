@@ -23,6 +23,15 @@ export default function JobApplySection({
                 <p className="text-center">Companies cannot apply for jobs!</p>
             );
 
+        if (jobDetailsData.status !== "Active") {
+            return (
+                <p className="text-center">
+                    We are no longer hiring for this role, but feel free to
+                    explore our other open positions.
+                </p>
+            );
+        }
+
         return exist ? (
             status === "New" ? (
                 <WithdrawButton applicationId={applicationId} />

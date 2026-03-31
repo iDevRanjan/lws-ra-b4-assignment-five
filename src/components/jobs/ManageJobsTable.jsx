@@ -1,5 +1,9 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCompanyJobMutationOption } from "../../services/mutationOptions";
 import ManageJobsTableRowSkeleton from "../skeletons/ManageJobsTableRowSkeleton";
 import ManageJobsTableRow from "./ManageJobsTableRow";
+import toast from "react-hot-toast";
+import { QUERY_KEYS } from "../../utils/constants";
 
 export default function ManageJobsTable({
     isPending,
@@ -10,7 +14,16 @@ export default function ManageJobsTable({
     selectedItems = [],
     onSelectedItems,
 }) {
+    const { isPending: isDeleting, mutateAsync: mutateDeleteJobAsync } =
+        useMutation(deleteCompanyJobMutationOption());
+
+    const queryClient = useQueryClient();
     const openPositionsForOwnData = openPositionsForOwn?.data ?? [];
+    const isAllItemSelected =
+        openPositionsForOwnData.length > 0 &&
+        openPositionsForOwnData.every((openPositionForOwn) =>
+            selectedItems.includes(openPositionForOwn.id),
+        );
 
     function handleSelectedItems(event) {
         const isTopCheckboxChecked = event.target.checked;
@@ -21,11 +34,24 @@ export default function ManageJobsTable({
         onSelectedItems(isTopCheckboxChecked ? selectedItemsArray : []);
     }
 
-    const isAllItemSelected =
-        openPositionsForOwnData.length > 0 &&
-        openPositionsForOwnData.every((openPositionForOwn) =>
-            selectedItems.includes(openPositionForOwn.id),
-        );
+    async function handleDeleteCompanyJob(applicationId) {
+        if (!confirm("Are you sure you want to delete this job?")) return;
+
+        try {
+            await mutateDeleteJobAsync(applicationId);
+            toast.success("Jobs deleted successfully!");
+            await queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.companyOpenPositionsForOwn],
+            });
+
+            const hasItem = selectedItems.includes(applicationId);
+            if (hasItem) onSelectedItems(applicationId);
+        } catch (error) {
+            const errorMessage =
+                error?.response?.data?.message || error.message;
+            toast.error(`Delete failed: ${errorMessage}`);
+        }
+    }
 
     return (
         <div
@@ -34,32 +60,35 @@ export default function ManageJobsTable({
                 opacity: isPlaceholderData ? 0.5 : 1,
             }}
         >
-            <table className="w-full">
+            <table className="w-full text-center">
                 <thead className="border-border bg-muted border-b">
                     <tr>
                         <th className="px-6 py-4 text-left text-sm font-medium">
-                            <input
-                                type="checkbox"
-                                checked={isAllItemSelected}
-                                onChange={handleSelectedItems}
-                            />
+                            <div className="flex items-center justify-center">
+                                <input
+                                    type="checkbox"
+                                    checked={isAllItemSelected}
+                                    onChange={handleSelectedItems}
+                                    className="accent-primary size-4 cursor-pointer"
+                                />
+                            </div>
                         </th>
-                        <th className="px-6 py-4 text-left text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Job Title
                         </th>
-                        <th className="px-6 py-4 text-left text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Status
                         </th>
-                        <th className="px-6 py-4 text-left text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Applicants
                         </th>
-                        <th className="px-6 py-4 text-left text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Posted Date
                         </th>
-                        <th className="px-6 py-4 text-left text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Expires
                         </th>
-                        <th className="px-6 py-4 text-right text-sm font-medium">
+                        <th className="px-6 py-4 text-sm font-medium">
                             Actions
                         </th>
                     </tr>
@@ -87,6 +116,10 @@ export default function ManageJobsTable({
                                         }
                                         selectedItems={selectedItems}
                                         onSelectedItems={onSelectedItems}
+                                        onDeleteCompanyJob={
+                                            handleDeleteCompanyJob
+                                        }
+                                        isDeleting={isDeleting}
                                     />
                                 ),
                             )

@@ -9,7 +9,11 @@ import {
 } from "./userApi";
 import { queryClient } from "./queryClient";
 import { QUERY_KEYS } from "../utils/constants";
-import { applicationStatusUpdate, updateCompanyJobStatus } from "./companyApi";
+import {
+    applicationStatusUpdate,
+    deleteCompanyJob,
+    updateCompanyJobStatus,
+} from "./companyApi";
 
 export function applicationLoginMutationOption() {
     return mutationOptions({
@@ -81,5 +85,11 @@ export function updateCompanyJobStatusMutationOption() {
     return mutationOptions({
         mutationFn: ({ applicationId, payload }) =>
             updateCompanyJobStatus(applicationId, payload),
+    });
+}
+
+export function deleteCompanyJobMutationOption() {
+    return mutationOptions({
+        mutationFn: (applicationId) => deleteCompanyJob(applicationId),
     });
 }

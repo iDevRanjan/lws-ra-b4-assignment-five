@@ -9,7 +9,6 @@ export default function ManageJobsTable({
     isPlaceholderData,
     selectedItems = [],
     onSelectedItems,
-    page,
 }) {
     const openPositionsForOwnData = openPositionsForOwn?.data ?? [];
 
@@ -40,7 +39,6 @@ export default function ManageJobsTable({
                     <tr>
                         <th className="px-6 py-4 text-left text-sm font-medium">
                             <input
-                                key={page}
                                 type="checkbox"
                                 checked={isAllItemSelected}
                                 onChange={handleSelectedItems}

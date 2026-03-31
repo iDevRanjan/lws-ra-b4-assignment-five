@@ -31,6 +31,12 @@ export default function ManageJobs() {
     const totalPages = openPositionsForOwn?.totalPages ?? 0;
 
     const paginationArray = getPaginationRange(page, totalPages);
+    const selectedDetails =
+        openPositionsForOwn?.data.flatMap((item) =>
+            selectedItems.includes(item.id)
+                ? [{ id: item.id, status: item.status }]
+                : [],
+        ) ?? [];
 
     function onSelectedItems(selectedId) {
         if (Array.isArray(selectedId)) {
@@ -47,11 +53,15 @@ export default function ManageJobs() {
         );
     }
 
+    function resetSelectedItems() {
+        setSelectedItems([]);
+    }
+
     function handlePageChange(value) {
         setPage((prev) => {
             return typeof value === "function" ? value(prev) : value;
         });
-        setSelectedItems([]);
+        resetSelectedItems();
     }
 
     return (
@@ -159,7 +169,11 @@ export default function ManageJobs() {
                     page={page}
                 />
                 {selectedItems.length > 0 && (
-                    <BulkJobActions selectedItems={selectedItems} />
+                    <BulkJobActions
+                        selectedItems={selectedItems}
+                        selectedDetails={selectedDetails}
+                        resetSelectedItems={resetSelectedItems}
+                    />
                 )}
                 <div className="border-border border-t p-4">
                     <div className="flex items-center justify-between">

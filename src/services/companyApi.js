@@ -61,3 +61,8 @@ export async function updateCompanyJobStatus(applicationId, payload) {
     );
     return response.data;
 }
+
+export async function deleteCompanyJob(applicationId) {
+    const response = await axiosInstance.delete(`/api/jobs/${applicationId}`);
+    return response.data;
+}

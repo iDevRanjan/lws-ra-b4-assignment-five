@@ -1,7 +1,7 @@
 import { Lightbulb } from "lucide-react";
 import DashboardStats from "../../components/company/DashboardStats";
 import RecentApplicantsContainer from "../../components/company/RecentApplicantsContainer";
-import RecentJobsContainer from "../../components/company/RecentJobsContainer";
+import RecentJobsContainer from "../../components/jobs/RecentJobsContainer";
 import CompanyQuickActions from "../../components/company/CompanyQuickActions";
 
 export default function CompanyDashboard() {

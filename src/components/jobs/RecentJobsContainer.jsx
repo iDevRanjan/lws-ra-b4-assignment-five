@@ -3,7 +3,6 @@ import RecentJobsCard from "./RecentJobsCard";
 import { getCompanyOpenPositionsForOwnQueryOption } from "../../services/queryOptions";
 import RecentJobsCardSkeleton from "../skeletons/RecentJobsCardSkeleton";
 import { Link } from "react-router";
-import OpenPositions from "./OpenPositions";
 
 export default function RecentJobsContainer() {
     const {
@@ -11,7 +10,7 @@ export default function RecentJobsContainer() {
         isError,
         error,
         data: openPositionsForOwn,
-    } = useQuery(getCompanyOpenPositionsForOwnQueryOption("limit=5"));
+    } = useQuery(getCompanyOpenPositionsForOwnQueryOption(1, ""));
 
     return (
         <div className="card">

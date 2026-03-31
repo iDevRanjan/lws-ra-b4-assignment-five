@@ -26,6 +26,7 @@ import { authMiddleware } from "../services/authMiddleware";
 import EditJobSeekerProfile from "../pages/jobSeeker/EditJobSeekerProfile";
 import CompanyDashboard from "../pages/company/CompanyDashboard";
 import ApplicantProfile from "../pages/company/ApplicantProfile";
+import ManageJobs from "../pages/company/ManageJobs";
 
 const router = createBrowserRouter([
     {
@@ -111,7 +112,7 @@ const router = createBrowserRouter([
                             },
                             {
                                 path: "manage-jobs",
-                                // element: <ManageJobs />,
+                                element: <ManageJobs />,
                             },
                             {
                                 path: "applicants",

@@ -25,9 +25,13 @@ export default function JobDescription({ jobDetailsData }) {
                     What We Offer
                 </h3>
                 <ul className="text-muted-foreground list-inside list-disc space-y-2">
-                    {sanitizedJobBenefits?.map((benefits) => (
-                        <li key={benefits}>{benefits}</li>
-                    ))}
+                    {sanitizedJobBenefits?.length > 0 ? (
+                        sanitizedJobBenefits?.map((benefits) => (
+                            <li key={benefits}>{benefits}</li>
+                        ))
+                    ) : (
+                        <p>Benefits not specified for this job.</p>
+                    )}
                 </ul>
             </div>
         </div>

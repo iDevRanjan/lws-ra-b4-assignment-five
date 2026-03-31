@@ -9,7 +9,7 @@ import {
 } from "./userApi";
 import { queryClient } from "./queryClient";
 import { QUERY_KEYS } from "../utils/constants";
-import { applicationStatusUpdate } from "./companyApi";
+import { applicationStatusUpdate, updateCompanyJobStatus } from "./companyApi";
 
 export function applicationLoginMutationOption() {
     return mutationOptions({
@@ -74,5 +74,12 @@ export function applicationStatusUpdateMutationOption(applicationId) {
                 queryKey: [QUERY_KEYS.companyApplicants],
             });
         },
+    });
+}
+
+export function updateCompanyJobStatusMutationOption() {
+    return mutationOptions({
+        mutationFn: ({ applicationId, payload }) =>
+            updateCompanyJobStatus(applicationId, payload),
     });
 }

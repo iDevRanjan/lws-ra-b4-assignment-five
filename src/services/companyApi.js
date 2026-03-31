@@ -27,9 +27,9 @@ export async function getCompanyDashboardStats() {
     return response.data;
 }
 
-export async function getCompanyOpenPositionsForOwn(params) {
+export async function getCompanyOpenPositionsForOwn(pageParam, params) {
     const response = await axiosInstance.get(
-        `/api/companies/jobs${params ? `?${params}` : ""}`,
+        `/api/companies/jobs?page=${pageParam}&limit=5${params ? `&${params}` : ""}`,
     );
     return response.data;
 }
@@ -49,6 +49,14 @@ export async function getApplicantProfile(applicantId) {
 export async function applicationStatusUpdate(applicationId, payload) {
     const response = await axiosInstance.patch(
         `/api/applications/${applicationId}/status`,
+        payload,
+    );
+    return response.data;
+}
+
+export async function updateCompanyJobStatus(applicationId, payload) {
+    const response = await axiosInstance.put(
+        `/api/jobs/${applicationId}`,
         payload,
     );
     return response.data;

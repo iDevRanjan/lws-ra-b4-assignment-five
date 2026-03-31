@@ -113,10 +113,10 @@ export function getCompanyDashboardStatsQueryOption() {
     });
 }
 
-export function getCompanyOpenPositionsForOwnQueryOption(params) {
+export function getCompanyOpenPositionsForOwnQueryOption(pageParam, params) {
     return queryOptions({
-        queryKey: [QUERY_KEYS.companyOpenPositionsForOwn, params],
-        queryFn: () => getCompanyOpenPositionsForOwn(params),
+        queryKey: [QUERY_KEYS.companyOpenPositionsForOwn, pageParam, params],
+        queryFn: () => getCompanyOpenPositionsForOwn(pageParam, params),
     });
 }
 

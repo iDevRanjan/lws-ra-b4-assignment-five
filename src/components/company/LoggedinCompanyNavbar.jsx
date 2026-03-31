@@ -17,13 +17,13 @@ export default function LoggedinCompanyNavbar({ companyProfileData }) {
                     Dashboard
                 </NavLink>
                 <NavLink
-                    to="#"
+                    to="manage-jobs"
                     className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                     Manage Jobs
                 </NavLink>
                 <NavLink
-                    to="#"
+                    to="applicants"
                     className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                     Applicants
@@ -53,7 +53,7 @@ export default function LoggedinCompanyNavbar({ companyProfileData }) {
                     {open && (
                         <NavbarNavigationMenu
                             toProfile="login"
-                            toDashboard="company-register"
+                            toDashboard="company-dashboard"
                         />
                     )}
                 </button>

@@ -34,9 +34,9 @@ export async function getCompanyOpenPositionsForOwn(pageParam, params) {
     return response.data;
 }
 
-export async function getCompanyApplicants(params) {
+export async function getCompanyApplicants(pageParam, params) {
     const response = await axiosInstance.get(
-        `/api/companies/applicants${params ? `?${params}` : ""}`,
+        `/api/companies/applicants?page=${pageParam}&limit=5${params ? `&${params}` : ""}`,
     );
     return response.data;
 }

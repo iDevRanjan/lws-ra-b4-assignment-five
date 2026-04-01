@@ -123,7 +123,17 @@ export function getCompanyOpenPositionsForOwnQueryOption(pageParam, params) {
 export function getCompanyApplicantsQueryOption(params) {
     return queryOptions({
         queryKey: [QUERY_KEYS.companyApplicants, params],
-        queryFn: () => getCompanyApplicants(params),
+        queryFn: ({ pageParam }) => getCompanyApplicants(pageParam, params),
+        initialPageParam: 1,
+        placeholderData: keepPreviousData,
+
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.data.length === 0) {
+                return undefined;
+            }
+
+            return allPages.length + 1;
+        },
     });
 }
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import RecentApplicantsCard from "./RecentApplicantsCard";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCompanyApplicantsQueryOption } from "../../services/queryOptions";
 import RecentApplicantsCardSkeleton from "../skeletons/RecentApplicantsCardSkeleton";
 
@@ -10,7 +10,9 @@ export default function RecentApplicantsContainer() {
         isError,
         error,
         data: companyApplicants,
-    } = useQuery(getCompanyApplicantsQueryOption("limit=5"));
+    } = useInfiniteQuery(getCompanyApplicantsQueryOption(""));
+
+    const companyApplicantsData = companyApplicants?.pages[0] ?? {};
 
     return (
         <div className="card">
@@ -32,9 +34,9 @@ export default function RecentApplicantsContainer() {
                         {error.message}
                     </p>
                 )}
-                {companyApplicants?.success &&
-                    (companyApplicants.data.length > 0 ? (
-                        companyApplicants.data.map((companyApplicant) => (
+                {companyApplicantsData?.success &&
+                    (companyApplicantsData.data.length > 0 ? (
+                        companyApplicantsData.data.map((companyApplicant) => (
                             <RecentApplicantsCard
                                 key={companyApplicant.id}
                                 companyApplicantData={companyApplicant}

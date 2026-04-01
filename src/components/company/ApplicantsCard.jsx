@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
 import toast from "react-hot-toast";
 
-export default function RecentApplicantsCard({ companyApplicantData }) {
+export default function ApplicantsCard({ companyApplicantData }) {
     const [showModal, setShowModal] = useState(false);
     const { isPending, mutate: mutateApplicantStatus } = useMutation(
         applicationStatusUpdateMutationOption(companyApplicantData.id),

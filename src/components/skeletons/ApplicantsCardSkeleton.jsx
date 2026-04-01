@@ -1,4 +1,4 @@
-export default function RecentApplicantsCardSkeleton() {
+export default function ApplicantsCardSkeleton() {
     return (
         <article className="p-6">
             <div className="flex flex-col gap-6 md:flex-row">

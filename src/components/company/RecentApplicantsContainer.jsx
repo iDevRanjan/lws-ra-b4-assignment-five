@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import RecentApplicantsCard from "./RecentApplicantsCard";
+import ApplicantsCard from "./ApplicantsCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCompanyApplicantsQueryOption } from "../../services/queryOptions";
-import RecentApplicantsCardSkeleton from "../skeletons/RecentApplicantsCardSkeleton";
+import ApplicantsCardSkeleton from "../skeletons/ApplicantsCardSkeleton";
 
 export default function RecentApplicantsContainer() {
     const {
@@ -28,7 +28,7 @@ export default function RecentApplicantsContainer() {
                 </div>
             </div>
             <div className="divide-border divide-y">
-                {isPending && <RecentApplicantsCardSkeleton />}
+                {isPending && <ApplicantsCardSkeleton />}
                 {isError && (
                     <p className="py-4 text-center text-red-600">
                         {error.message}
@@ -37,7 +37,7 @@ export default function RecentApplicantsContainer() {
                 {companyApplicantsData?.success &&
                     (companyApplicantsData.data.length > 0 ? (
                         companyApplicantsData.data.map((companyApplicant) => (
-                            <RecentApplicantsCard
+                            <ApplicantsCard
                                 key={companyApplicant.id}
                                 companyApplicantData={companyApplicant}
                             />

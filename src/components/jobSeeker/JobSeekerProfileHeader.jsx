@@ -3,7 +3,7 @@ import { formatDate } from "../../utils/formatDate";
 import JobSeekerAvatar from "../common/JobSeekerAvatar";
 import { Link } from "react-router";
 
-export default function JobSeekerProfileHeader({ profileData = {} }) {
+export default function JobSeekerProfileHeader({ profileData = {}, role }) {
     return (
         <div className="card mb-8 p-8">
             <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
@@ -38,13 +38,15 @@ export default function JobSeekerProfileHeader({ profileData = {} }) {
                                 </span>
                             </div>
                         </div>
-                        <Link
-                            to="/edit-jobseeker-profile"
-                            className="btn btn-primary"
-                        >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit Profile
-                        </Link>
+                        {role === "USER" && (
+                            <Link
+                                to="/edit-jobseeker-profile"
+                                className="btn btn-primary"
+                            >
+                                <Edit className="mr-2 h-4 w-4" />
+                                Edit Profile
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

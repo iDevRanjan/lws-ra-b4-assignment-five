@@ -17,7 +17,10 @@ export default function ApplicantProfile() {
 
     return (
         <main className="container mx-auto px-4 py-8">
-            <JobSeekerProfileHeader profileData={applicantProfile?.data} />
+            <JobSeekerProfileHeader
+                profileData={applicantProfile?.data}
+                role="COMPANY"
+            />
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 <div className="space-y-6 lg:col-span-2">
                     <div className="card p-6">

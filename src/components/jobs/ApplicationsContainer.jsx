@@ -80,7 +80,7 @@ export default function ApplicationsContainer({
             <div className="space-y-4 lg:col-span-3">
                 <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                     <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">
+                        <span className="text-muted-foreground text-sm whitespace-nowrap">
                             Sort by:
                         </span>
                         <ActionSelectMenu

@@ -6,8 +6,10 @@ import { getPaginationRange } from "../../utils/getPaginationRange";
 import ManageJobsTable from "../../components/jobs/ManageJobsTable";
 import Pagination from "../../components/common/Pagination";
 import BulkJobActions from "../../components/jobs/BulkJobActions";
+import ManageJobsSearchAndFilter from "../../components/jobs/ManageJobsSearchAndFilter";
 
 export default function ManageJobs() {
+    const [params, setParams] = useState("");
     const [page, setPage] = useState(1);
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -18,7 +20,7 @@ export default function ManageJobs() {
         isPlaceholderData,
         data: openPositionsForOwn,
     } = useQuery({
-        ...getCompanyOpenPositionsForOwnQueryOption(page, ""),
+        ...getCompanyOpenPositionsForOwnQueryOption(page, params),
         placeholderData: keepPreviousData,
     });
 
@@ -38,6 +40,10 @@ export default function ManageJobs() {
                 : [],
         ) ?? [];
 
+    function handleQueryParams(queryParams) {
+        setParams(queryParams);
+    }
+
     function onSelectedItems(selectedId) {
         if (Array.isArray(selectedId)) {
             setSelectedItems(selectedId);
@@ -53,15 +59,11 @@ export default function ManageJobs() {
         );
     }
 
-    function resetSelectedItems() {
-        setSelectedItems([]);
-    }
-
     function handlePageChange(value) {
         setPage((prev) => {
             return typeof value === "function" ? value(prev) : value;
         });
-        resetSelectedItems();
+        setSelectedItems([]);
     }
 
     return (
@@ -80,83 +82,12 @@ export default function ManageJobs() {
                     </a>
                 </div>
             </div>
-            {/* Filters and Search */}
-            <div className="card mb-6 p-4">
-                <div className="flex flex-col gap-4 md:flex-row">
-                    <div className="flex-1">
-                        <div className="relative">
-                            <i
-                                data-lucide="search"
-                                className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
-                            />
-                            <input
-                                type="search"
-                                placeholder="Search jobs by title, location..."
-                                className="input pl-10"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        <div className="relative">
-                            <button className="btn btn-outline">
-                                <i
-                                    data-lucide="filter"
-                                    className="mr-2 h-4 w-4"
-                                />
-                                Status
-                                <i
-                                    data-lucide="chevron-down"
-                                    className="ml-2 h-4 w-4"
-                                />
-                            </button>
-                            <div
-                                id="statusFilter"
-                                className="card absolute top-full right-0 z-10 mt-2 hidden w-48 p-2 shadow-lg"
-                            >
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    All Status
-                                </button>
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    New
-                                </button>
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    Hired
-                                </button>
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    Shortlisted
-                                </button>
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    Rejected
-                                </button>
-                            </div>
-                        </div>
-                        <div className="relative">
-                            <button className="btn btn-outline">
-                                <i
-                                    data-lucide="arrow-up-down"
-                                    className="mr-2 h-4 w-4"
-                                />
-                                Sort
-                                <i
-                                    data-lucide="chevron-down"
-                                    className="ml-2 h-4 w-4"
-                                />
-                            </button>
-                            <div
-                                id="sortFilter"
-                                className="card absolute top-full right-0 z-10 mt-2 hidden w-48 p-2 shadow-lg"
-                            >
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    Newest First
-                                </button>
-                                <button className="hover:bg-accent w-full rounded px-3 py-2 text-left text-sm">
-                                    Oldest First
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ManageJobsSearchAndFilter
+                queryParamsProps={params}
+                handleQueryParams={handleQueryParams}
+                resetPage={() => setPage(1)}
+                resetSelectedItems={() => setSelectedItems([])}
+            />
             <div className="card overflow-hidden">
                 <ManageJobsTable
                     isPending={isPending}
@@ -172,7 +103,7 @@ export default function ManageJobs() {
                     <BulkJobActions
                         selectedItems={selectedItems}
                         selectedDetails={selectedDetails}
-                        resetSelectedItems={resetSelectedItems}
+                        resetSelectedItems={() => setSelectedItems([])}
                     />
                 )}
                 <div className="border-border border-t p-4">

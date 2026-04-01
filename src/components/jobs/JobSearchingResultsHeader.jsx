@@ -14,7 +14,9 @@ export default function JobSearchingResultsHeader({ displayedJobsCount }) {
                 </p>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-sm">Sort by:</span>
+                <span className="text-muted-foreground text-sm whitespace-nowrap">
+                    Sort by:
+                </span>
                 <ActionSelectMenu
                     selectTitle="Job Sorting"
                     itemsData={jobSortingOptionData}

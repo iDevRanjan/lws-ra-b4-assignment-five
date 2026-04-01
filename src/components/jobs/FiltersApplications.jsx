@@ -1,16 +1,8 @@
 import { RotateCcw } from "lucide-react";
 import { statusFiltersData } from "../../data/statusFiltersData";
 import { dateFiltersData } from "../../data/dateFiltersData";
-import ApplicationsFilterItem from "./ApplicationsFilterItem";
-
-function FilterSection({ title, children }) {
-    return (
-        <div className="mb-6">
-            <h3 className="mb-3 text-sm font-medium">{title}</h3>
-            <div className="space-y-2">{children}</div>
-        </div>
-    );
-}
+import FilterItem from "../common/FilterItem";
+import FilterSection from "../common/FilterSection";
 
 export default function FiltersApplications({
     handleSetApplicationQueryFilter,
@@ -26,15 +18,13 @@ export default function FiltersApplications({
                     title="Application Status"
                 >
                     {statusFiltersData.map((item) => (
-                        <ApplicationsFilterItem
+                        <FilterItem
                             key={item.id}
                             label={item.name}
                             type="checkbox"
                             name="status"
                             value={item.value}
-                            handleSetApplicationQueryFilter={
-                                handleSetApplicationQueryFilter
-                            }
+                            onQueryFilter={handleSetApplicationQueryFilter}
                         />
                     ))}
                 </FilterSection>
@@ -43,16 +33,14 @@ export default function FiltersApplications({
                     title="Application Date"
                 >
                     {dateFiltersData.map((item) => (
-                        <ApplicationsFilterItem
+                        <FilterItem
                             key={item.id}
                             id={item.id}
                             label={item.name}
                             value={item.value}
                             type="radio"
                             name="date"
-                            handleSetApplicationQueryFilter={
-                                handleSetApplicationQueryFilter
-                            }
+                            onQueryFilter={handleSetApplicationQueryFilter}
                         />
                     ))}
                 </FilterSection>

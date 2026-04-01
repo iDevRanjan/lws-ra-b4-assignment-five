@@ -1,13 +1,13 @@
-export default function ApplicationsFilterItem({
+export default function FilterItem({
     label,
     type = "checkbox",
     name,
     value,
-    handleSetApplicationQueryFilter,
+    onQueryFilter,
 }) {
     function handleChange(event) {
         const { name, value } = event.target;
-        handleSetApplicationQueryFilter({ name, value });
+        onQueryFilter({ name, value });
     }
 
     return (

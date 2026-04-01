@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Archive, PauseCircle, Trash2, XCircle } from "lucide-react";
+import { Archive, CheckCircle2, Trash2, XCircle } from "lucide-react";
 import {
     deleteCompanyJobMutationOption,
     updateCompanyJobStatusMutationOption,
@@ -103,7 +103,7 @@ export default function BulkJobActions({
                         disabled={isWorking}
                         className="btn btn-outline h-9 text-sm text-green-600 hover:bg-green-50 disabled:opacity-50"
                     >
-                        <Archive className="mr-2 h-3 w-3" />
+                        <CheckCircle2 className="mr-2 h-3 w-3" />
                         Activate
                     </button>
                     <button
@@ -111,7 +111,7 @@ export default function BulkJobActions({
                         disabled={isWorking}
                         className="btn btn-outline h-9 text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-50"
                     >
-                        <PauseCircle className="mr-2 h-3 w-3" />
+                        <Archive className="mr-2 h-3 w-3" />
                         Archived
                     </button>
                     <button

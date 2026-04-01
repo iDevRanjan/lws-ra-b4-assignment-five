@@ -1,4 +1,4 @@
-export const ApplicationsStatusFiltersData = [
+export const statusFiltersData = [
     {
         id: 1,
         name: "All",
@@ -6,17 +6,27 @@ export const ApplicationsStatusFiltersData = [
     },
     {
         id: 2,
+        value: "New",
+        name: "New",
+    },
+    {
+        id: 3,
         value: "Interviewed",
         name: "Interviewed",
     },
     {
-        id: 3,
+        id: 4,
         value: "Shortlisted",
         name: "Shortlisted",
     },
     {
-        id: 4,
+        id: 5,
         value: "Rejected",
         name: "Rejected",
+    },
+    {
+        id: 6,
+        value: "Hired",
+        name: "Hired",
     },
 ];

@@ -32,7 +32,7 @@ export default function ApplicationsContainer({
                     draft.status.push(value);
                 }
             } else if (name === "date") {
-                draft.date = value;
+                draft.date = value !== "all" ? value : "";
             }
         });
     }

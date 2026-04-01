@@ -1,6 +1,6 @@
 import { RotateCcw } from "lucide-react";
-import { ApplicationsStatusFiltersData } from "../../data/ApplicationsStatusFiltersData";
-import { ApplicationsDateFiltersData } from "../../data/ApplicationsDateFiltersData";
+import { statusFiltersData } from "../../data/statusFiltersData";
+import { dateFiltersData } from "../../data/dateFiltersData";
 import ApplicationsFilterItem from "./ApplicationsFilterItem";
 
 function FilterSection({ title, children }) {
@@ -25,7 +25,7 @@ export default function FiltersApplications({
                     key={`status-${resetFiltersKey}`}
                     title="Application Status"
                 >
-                    {ApplicationsStatusFiltersData.map((item) => (
+                    {statusFiltersData.map((item) => (
                         <ApplicationsFilterItem
                             key={item.id}
                             label={item.name}
@@ -42,7 +42,7 @@ export default function FiltersApplications({
                     key={`date-${resetFiltersKey}`}
                     title="Application Date"
                 >
-                    {ApplicationsDateFiltersData.map((item) => (
+                    {dateFiltersData.map((item) => (
                         <ApplicationsFilterItem
                             key={item.id}
                             id={item.id}

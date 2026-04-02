@@ -14,7 +14,7 @@ import { formatDateForInput } from "../../utils/formatDateForInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     createCompanyJobMutationOption,
-    updateCompanyJobStatusMutationOption,
+    updateCompanyJobMutationOption,
 } from "../../services/mutationOptions";
 import { QUERY_KEYS } from "../../utils/constants";
 
@@ -24,7 +24,7 @@ export default function CreateAndEditJob() {
     const { isPending: isCreating, mutateAsync: mutateCreateJobAsync } =
         useMutation(createCompanyJobMutationOption());
     const { isPending: isUpdating, mutateAsync: mutateEditJobAsync } =
-        useMutation(updateCompanyJobStatusMutationOption());
+        useMutation(updateCompanyJobMutationOption());
 
     const queryClient = useQueryClient();
     const jobData = data?.jobData ?? {};

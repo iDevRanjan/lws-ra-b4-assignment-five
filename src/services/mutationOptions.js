@@ -13,7 +13,7 @@ import {
     applicationStatusUpdate,
     createCompanyJob,
     deleteCompanyJob,
-    updateCompanyJobStatus,
+    updateCompanyJob,
 } from "./companyApi";
 
 export function applicationLoginMutationOption() {
@@ -83,10 +83,10 @@ export function createCompanyJobMutationOption() {
     });
 }
 
-export function updateCompanyJobStatusMutationOption() {
+export function updateCompanyJobMutationOption() {
     return mutationOptions({
         mutationFn: ({ applicationId, payload }) =>
-            updateCompanyJobStatus(applicationId, payload),
+            updateCompanyJob(applicationId, payload),
     });
 }
 

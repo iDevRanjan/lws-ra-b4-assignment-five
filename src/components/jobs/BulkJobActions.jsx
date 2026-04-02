@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Archive, CheckCircle2, Trash2, XCircle } from "lucide-react";
 import {
     deleteCompanyJobMutationOption,
-    updateCompanyJobStatusMutationOption,
+    updateCompanyJobMutationOption,
 } from "../../services/mutationOptions";
 import { QUERY_KEYS } from "../../utils/constants";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ export default function BulkJobActions({
     resetSelectedItems,
 }) {
     const { isPending: isUpdating, mutateAsync: mutateUpdateJobStatusAsync } =
-        useMutation(updateCompanyJobStatusMutationOption());
+        useMutation(updateCompanyJobMutationOption());
     const { isPending: isDeleting, mutateAsync: mutateDeleteJobAsync } =
         useMutation(deleteCompanyJobMutationOption());
 

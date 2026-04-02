@@ -59,7 +59,7 @@ export async function createCompanyJob(payload) {
     return response.data;
 }
 
-export async function updateCompanyJobStatus(applicationId, payload) {
+export async function updateCompanyJob(applicationId, payload) {
     const response = await axiosInstance.put(
         `/api/jobs/${applicationId}`,
         payload,

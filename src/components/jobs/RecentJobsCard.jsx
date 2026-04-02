@@ -51,10 +51,13 @@ export default function RecentJobsCard({ openPositionForOwnData }) {
                         <Eye className="mr-1 h-3 w-3" />
                         View
                     </Link>
-                    <button className="btn btn-outline h-8 cursor-pointer text-xs">
+                    <Link
+                        to={`/manage-jobs/edit/${openPositionForOwnData.slug}`}
+                        className="btn btn-outline h-8 text-xs"
+                    >
                         <Edit className="mr-1 h-3 w-3" />
                         Edit
-                    </button>
+                    </Link>
                 </div>
             </div>
         </article>

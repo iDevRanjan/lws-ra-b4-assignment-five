@@ -27,10 +27,10 @@ export default function CreateAndEditJob() {
         useMutation(updateCompanyJobMutationOption());
 
     const queryClient = useQueryClient();
+    const skillInputRef = useRef(null);
+
     const jobData = data?.jobData ?? {};
     const isEditMode = data?.isEditMode ?? false;
-
-    const skillInputRef = useRef(null);
 
     const {
         register,
@@ -129,7 +129,7 @@ export default function CreateAndEditJob() {
                 await Promise.all([
                     queryClient.invalidateQueries({
                         queryKey: [QUERY_KEYS.companyOpenPositionsForOwn],
-                        refetchType: "all",
+                        refetchType: "all", // Learn more about `refetchType`: https://tanstack.com/query/latest/docs/reference/QueryClient#queryclientinvalidatequeries
                     }),
                     queryClient.invalidateQueries({
                         queryKey: [QUERY_KEYS.jobBySlug, slug],

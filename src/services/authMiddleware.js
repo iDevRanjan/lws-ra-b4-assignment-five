@@ -34,3 +34,5 @@ export async function authMiddleware({ context }, next) {
 
     return next();
 }
+
+// Learn more about React Router Middleware: https://reactrouter.com/how-to/middleware

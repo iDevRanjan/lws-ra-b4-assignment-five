@@ -7,30 +7,28 @@ import NavbarNavigationMenu from "../common/NavbarNavigationMenu";
 export default function LoggedinCompanyNavbar({ companyProfileData }) {
     const [open, setOpen] = useState(false);
 
+    const navLinkClass = ({ isActive }) =>
+        `text-sm font-medium transition-colors ${
+            isActive
+                ? "text-primary"
+                : "text-muted-foreground hover:text-primary"
+        }`;
+
     return (
         <>
             <nav className="hidden items-center gap-6 md:flex">
-                <NavLink
-                    to="company-dashboard"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
+                <NavLink to="company-dashboard" className={navLinkClass}>
                     Dashboard
                 </NavLink>
-                <NavLink
-                    to="manage-jobs"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
+                <NavLink to="manage-jobs" className={navLinkClass}>
                     Manage Jobs
                 </NavLink>
-                <NavLink
-                    to="applicants"
-                    className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
+                <NavLink to="applicants" className={navLinkClass}>
                     Applicants
                 </NavLink>
             </nav>
             <div className="flex items-center gap-4">
-                <Link to="#" className="btn btn-primary">
+                <Link to="manage-jobs/create" className="btn btn-primary">
                     <Plus className="mr-2 h-4 w-4" />
                     Post Job
                 </Link>

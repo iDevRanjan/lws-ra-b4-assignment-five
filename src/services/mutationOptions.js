@@ -69,15 +69,10 @@ export function withdrawApplicationMutationOption(applicationId) {
     });
 }
 
-export function applicationStatusUpdateMutationOption(applicationId) {
+export function applicationStatusUpdateMutationOption() {
     return mutationOptions({
-        mutationFn: (payload) =>
+        mutationFn: ({ applicationId, payload }) =>
             applicationStatusUpdate(applicationId, payload),
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.companyApplicants],
-            });
-        },
     });
 }
 

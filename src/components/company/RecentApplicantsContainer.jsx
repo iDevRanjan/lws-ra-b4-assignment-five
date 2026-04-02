@@ -1,8 +1,15 @@
 import { Link } from "react-router";
 import ApplicantsCard from "./ApplicantsCard";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+    useInfiniteQuery,
+    useMutation,
+    useQueryClient,
+} from "@tanstack/react-query";
 import { getCompanyApplicantsQueryOption } from "../../services/queryOptions";
 import ApplicantsCardSkeleton from "../skeletons/ApplicantsCardSkeleton";
+import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
+import toast from "react-hot-toast";
+import { QUERY_KEYS } from "../../utils/constants";
 
 export default function RecentApplicantsContainer() {
     const {
@@ -11,8 +18,34 @@ export default function RecentApplicantsContainer() {
         error,
         data: companyApplicants,
     } = useInfiniteQuery(getCompanyApplicantsQueryOption(""));
+    const { isPending: isUpdating, mutateAsync: mutateApplicantStatusAsync } =
+        useMutation(applicationStatusUpdateMutationOption());
 
+    const queryClient = useQueryClient();
     const companyApplicantsData = companyApplicants?.pages[0] ?? {};
+
+    async function handleApplicantStatusUpdate(applicationId, type) {
+        try {
+            const responseData = await mutateApplicantStatusAsync({
+                applicationId,
+                payload: {
+                    status: type,
+                },
+            });
+            toast.success(
+                `Status updated to ${responseData?.data.status || "new status"}!`,
+            );
+            await queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.companyApplicants],
+            });
+        } catch (error) {
+            toast.error(
+                error?.response?.data?.message ||
+                    error.message ||
+                    "Failed to update",
+            );
+        }
+    }
 
     return (
         <div className="card">
@@ -41,6 +74,10 @@ export default function RecentApplicantsContainer() {
                                 key={companyApplicant.id}
                                 companyApplicantData={companyApplicant}
                                 isCard={false}
+                                onApplicantStatusUpdate={
+                                    handleApplicantStatusUpdate
+                                }
+                                isUpdating={isUpdating}
                             />
                         ))
                     ) : (

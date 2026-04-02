@@ -8,15 +8,14 @@ import { createPortal } from "react-dom";
 import CoverLetterModal from "./CoverLetterModal";
 import ActionSelectMenu from "../common/ActionSelectMenu";
 import { applicantStatusMap } from "../../data/applicantStatusMap";
-import { useMutation } from "@tanstack/react-query";
-import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
-import toast from "react-hot-toast";
 
-export default function ApplicantsCard({ companyApplicantData, isCard }) {
+export default function ApplicantsCard({
+    companyApplicantData,
+    isCard,
+    onApplicantStatusUpdate,
+    isUpdating,
+}) {
     const [showModal, setShowModal] = useState(false);
-    const { isPending, mutate: mutateApplicantStatus } = useMutation(
-        applicationStatusUpdateMutationOption(companyApplicantData.id),
-    );
 
     const resumeUrl = companyApplicantData.resumeUrl?.startsWith("http")
         ? companyApplicantData.resumeUrl
@@ -26,28 +25,9 @@ export default function ApplicantsCard({ companyApplicantData, isCard }) {
     const badgeConfig = getStatusConfig(status);
     const applicantStatusItemsData = applicantStatusMap[status] ?? [];
 
-    function handleStatusUpdate(data) {
+    function handleValueChange(data) {
         if (!data) return;
-
-        mutateApplicantStatus(
-            {
-                status: data,
-            },
-            {
-                onSuccess: (responseData) => {
-                    toast.success(
-                        `Status updated to ${responseData?.data.status || "new status"}!`,
-                    );
-                },
-                onError: (error) => {
-                    toast.error(
-                        error?.response?.data?.message ||
-                            error.message ||
-                            "Failed to update",
-                    );
-                },
-            },
-        );
+        onApplicantStatusUpdate(companyApplicantData.id, data);
     }
 
     return (
@@ -129,9 +109,9 @@ export default function ApplicantsCard({ companyApplicantData, isCard }) {
                                 <ActionSelectMenu
                                     selectTitle="Update Applicant Status"
                                     itemsData={applicantStatusItemsData}
-                                    onValueChange={handleStatusUpdate}
+                                    onValueChange={handleValueChange}
                                     defaultSelect="Applicant Status"
-                                    disabled={isPending}
+                                    disabled={isUpdating}
                                 />
                             </div>
                         )}

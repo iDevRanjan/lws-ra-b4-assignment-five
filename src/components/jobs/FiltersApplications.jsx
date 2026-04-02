@@ -35,7 +35,6 @@ export default function FiltersApplications({
                     {dateFiltersData.map((item) => (
                         <FilterItem
                             key={item.id}
-                            id={item.id}
                             label={item.name}
                             value={item.value}
                             type="radio"

@@ -1,7 +1,7 @@
 import SearchInput from "../common/SearchInput";
 import JobFiltersContainer from "./JobFiltersContainer";
 import { useQueryObject } from "../../hooks/useQueryObject";
-import { getJobParams } from "../../utils/getJobParams";
+import { getQueryParams } from "../../utils/getQueryParams";
 import { useDebounce } from "../../hooks/useDebounce";
 
 export default function JobSearchAndFilter({
@@ -16,7 +16,7 @@ export default function JobSearchAndFilter({
     } = useQueryObject();
 
     function generateQueryPath() {
-        const jobParams = getJobParams(queryObject);
+        const jobParams = getQueryParams(queryObject);
         if (jobParams === queryParamsProps) return;
         handleQueryParams(jobParams);
     }

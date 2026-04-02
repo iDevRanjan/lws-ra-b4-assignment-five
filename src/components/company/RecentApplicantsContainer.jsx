@@ -28,7 +28,7 @@ export default function RecentApplicantsContainer() {
                 </div>
             </div>
             <div className="divide-border divide-y">
-                {isPending && <ApplicantsCardSkeleton />}
+                {isPending && <ApplicantsCardSkeleton isCard={false} />}
                 {isError && (
                     <p className="py-4 text-center text-red-600">
                         {error.message}
@@ -40,6 +40,7 @@ export default function RecentApplicantsContainer() {
                             <ApplicantsCard
                                 key={companyApplicant.id}
                                 companyApplicantData={companyApplicant}
+                                isCard={false}
                             />
                         ))
                     ) : (

@@ -1,6 +1,6 @@
-export default function ApplicantsCardSkeleton() {
+export default function ApplicantsCardSkeleton({ isCard }) {
     return (
-        <article className="p-6">
+        <article className={`p-6 ${isCard ? "card" : ""}`}>
             <div className="flex flex-col gap-6 md:flex-row">
                 <div className="shrink-0">
                     <div className="skeleton h-16 w-16 rounded-full" />

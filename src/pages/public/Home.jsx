@@ -33,7 +33,6 @@ export default function Home() {
 
     const createPageData = {
         totalJobsCount: pageDetails.count ?? 0,
-        currentPage: pageDetails.currentPage ?? 0,
         displayedJobsCount:
             allJobsData?.pages.reduce((acc, crr) => crr.data.length + acc, 0) ??
             0,

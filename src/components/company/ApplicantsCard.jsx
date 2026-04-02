@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
 import toast from "react-hot-toast";
 
-export default function ApplicantsCard({ companyApplicantData }) {
+export default function ApplicantsCard({ companyApplicantData, isCard }) {
     const [showModal, setShowModal] = useState(false);
     const { isPending, mutate: mutateApplicantStatus } = useMutation(
         applicationStatusUpdateMutationOption(companyApplicantData.id),
@@ -51,7 +51,9 @@ export default function ApplicantsCard({ companyApplicantData }) {
     }
 
     return (
-        <article className="p-6 transition-shadow hover:shadow-md">
+        <article
+            className={`p-6 transition-shadow hover:shadow-md ${isCard ? "card" : ""}`}
+        >
             <div className="flex flex-col gap-6 md:flex-row">
                 <div className="shrink-0">
                     <JobSeekerAvatar

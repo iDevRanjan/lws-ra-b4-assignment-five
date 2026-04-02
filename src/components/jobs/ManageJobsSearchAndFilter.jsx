@@ -5,7 +5,7 @@ import { manageJobsSortingOptionData } from "../../data/manageJobsSortingOptionD
 import { useImmer } from "use-immer";
 import { initialManageJobsQueryObject } from "../../data/initialManageJobsQueryObject";
 import toast from "react-hot-toast";
-import { getJobParams } from "../../utils/getJobParams";
+import { getQueryParams } from "../../utils/getQueryParams";
 import { useDebounce } from "../../hooks/useDebounce";
 
 export default function ManageJobsSearchAndFilter({
@@ -44,7 +44,7 @@ export default function ManageJobsSearchAndFilter({
     }
 
     function generateQueryPath() {
-        const manageJobsParams = getJobParams(manageJobsQueryObject);
+        const manageJobsParams = getQueryParams(manageJobsQueryObject);
         if (manageJobsParams === queryParamsProps) return;
         handleQueryParams(manageJobsParams);
         resetPage();

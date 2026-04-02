@@ -1,6 +1,6 @@
 import { useImmer } from "use-immer";
 import { applicationSortingOptionData } from "../../data/applicationSortingOptionData";
-import { getApplicationParams } from "../../utils/getApplicationParams";
+import { getQueryParams } from "../../utils/getQueryParams";
 import { useDebounce } from "../../hooks/useDebounce";
 import FiltersApplications from "./FiltersApplications";
 import ActionSelectMenu from "../common/ActionSelectMenu";
@@ -61,7 +61,9 @@ export default function ApplicationsContainer({
     }
 
     function generateQueryPath() {
-        const applicationParams = getApplicationParams(applicationQueryObject);
+        const applicationParams = getQueryParams(applicationQueryObject, [
+            "All",
+        ]);
         if (applicationParams === queryParamsProps) return;
         handleQueryParams(applicationParams);
     }

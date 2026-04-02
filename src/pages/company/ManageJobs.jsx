@@ -7,6 +7,7 @@ import ManageJobsTable from "../../components/jobs/ManageJobsTable";
 import Pagination from "../../components/common/Pagination";
 import BulkJobActions from "../../components/jobs/BulkJobActions";
 import ManageJobsSearchAndFilter from "../../components/jobs/ManageJobsSearchAndFilter";
+import { Link } from "react-router";
 
 export default function ManageJobs() {
     const [params, setParams] = useState("");
@@ -76,10 +77,10 @@ export default function ManageJobs() {
                             View and manage all your job postings
                         </p>
                     </div>
-                    <a href="create-job.html" className="btn btn-primary">
+                    <Link to="/manage-jobs/create" className="btn btn-primary">
                         <Plus className="mr-2 h-4 w-4" />
                         Create New Job
-                    </a>
+                    </Link>
                 </div>
             </div>
             <ManageJobsSearchAndFilter

@@ -5,7 +5,7 @@ export default function Field({ label, htmlFor, children, error }) {
                 {label}:
             </label>
             <div className="relative mt-1">{children}</div>
-            {error && <div className="text-red-600">{error.message}</div>}
+            {error && <p className="text-red-600">{error.message}</p>}
         </div>
     );
 }

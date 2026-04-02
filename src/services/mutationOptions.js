@@ -11,6 +11,7 @@ import { queryClient } from "./queryClient";
 import { QUERY_KEYS } from "../utils/constants";
 import {
     applicationStatusUpdate,
+    createCompanyJob,
     deleteCompanyJob,
     updateCompanyJobStatus,
 } from "./companyApi";
@@ -73,6 +74,12 @@ export function applicationStatusUpdateMutationOption() {
     return mutationOptions({
         mutationFn: ({ applicationId, payload }) =>
             applicationStatusUpdate(applicationId, payload),
+    });
+}
+
+export function createCompanyJobMutationOption() {
+    return mutationOptions({
+        mutationFn: (payload) => createCompanyJob(payload),
     });
 }
 

@@ -5,6 +5,7 @@ import Home from "../pages/public/Home";
 import QueryObjectProvider from "../providers/QueryObjectProvider";
 import JobDetails from "../pages/public/JobDetails";
 import {
+    editJobLoader,
     getApplicantProfileLoader,
     getCompanyBySlugLoader,
     getCompanyDashboardStatsLoader,
@@ -28,6 +29,7 @@ import CompanyDashboard from "../pages/company/CompanyDashboard";
 import ApplicantProfile from "../pages/company/ApplicantProfile";
 import ManageJobs from "../pages/company/ManageJobs";
 import Applicants from "../pages/company/Applicants";
+import CreateAndEditJob from "../pages/company/CreateAndEditJob";
 
 const router = createBrowserRouter([
     {
@@ -124,8 +126,13 @@ const router = createBrowserRouter([
                                 // element: <EditCompanyProfile />,
                             },
                             {
-                                path: "create-job",
-                                // element: <CreateJob />,
+                                path: "manage-jobs/create",
+                                element: <CreateAndEditJob />,
+                            },
+                            {
+                                path: "manage-jobs/edit/:jobSlug",
+                                element: <CreateAndEditJob />,
+                                loader: editJobLoader,
                             },
                         ],
                     },

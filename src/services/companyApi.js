@@ -54,6 +54,11 @@ export async function applicationStatusUpdate(applicationId, payload) {
     return response.data;
 }
 
+export async function createCompanyJob(payload) {
+    const response = await axiosInstance.post("/api/jobs", payload);
+    return response.data;
+}
+
 export async function updateCompanyJobStatus(applicationId, payload) {
     const response = await axiosInstance.put(
         `/api/jobs/${applicationId}`,

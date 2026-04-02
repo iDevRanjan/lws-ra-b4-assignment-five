@@ -2,6 +2,7 @@ export default function FormDropdownMenu({
     selectId,
     itemsData,
     required,
+    defaultSelect,
     selectRegister,
 }) {
     return (
@@ -24,6 +25,11 @@ export default function FormDropdownMenu({
                 </svg>
             </button>
             <div className="option-container">
+                {defaultSelect && (
+                    <option value="" disabled selected>
+                        {defaultSelect}
+                    </option>
+                )}
                 {itemsData?.map((itemData) => (
                     <option key={itemData.id} value={itemData.value}>
                         <div>

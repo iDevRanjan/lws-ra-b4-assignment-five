@@ -61,7 +61,7 @@ export default function ManageJobsSearchAndFilter({
                         <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                         <input
                             type="search"
-                            placeholder="Search jobs by title, location..."
+                            placeholder="Search jobs by title..."
                             onChange={handleQueryObjectSearch}
                             className="input pl-10"
                         />

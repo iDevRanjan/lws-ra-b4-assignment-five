@@ -1,5 +1,10 @@
 export function sanitizedStringToArray(string) {
-    if (!string) return;
+    if (!string) return [];
 
-    return string.split("\\n").map((t) => t.replace(/^-\s*/, ""));
+    const result = string
+        .split(/\n|\\n/)
+        .map((item) => item.replace(/^[-•*–]\s*/, "").trim())
+        .filter(Boolean);
+
+    return [...new Set(result)];
 }

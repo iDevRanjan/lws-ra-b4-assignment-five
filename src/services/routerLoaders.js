@@ -58,3 +58,14 @@ export async function getApplicantProfileLoader({ params }) {
         getApplicantProfileQueryOption(params.applicantId),
     );
 }
+
+export async function editJobLoader({ params }) {
+    if (!params.jobSlug)
+        throw new Error("No job slug provided for job editing");
+
+    const response = await queryClient.ensureQueryData(
+        getJobBySlugQueryOption(params.jobSlug),
+    );
+
+    return { jobData: response.data, isEditMode: Boolean(params.jobSlug) };
+}

@@ -69,13 +69,13 @@ export default function ManageJobsTableRow({
             </td>
             <td className="px-6 py-4">
                 <div className="flex items-center justify-end gap-2">
-                    <button
-                        disabled={isDeleting}
-                        className="btn hover:bg-accent size-10 cursor-pointer rounded-full p-2"
+                    <Link
+                        to={`/manage-jobs/edit/${openPositionForOwnData.slug}`}
+                        className="btn hover:bg-accent size-10 rounded-full p-2"
                         title="Edit"
                     >
                         <Edit className="h-4 w-4" />
-                    </button>
+                    </Link>
                     <button
                         onClick={() =>
                             onDeleteCompanyJob(openPositionForOwnData.id)

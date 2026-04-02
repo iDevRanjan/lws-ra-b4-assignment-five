@@ -9,7 +9,7 @@ export default function ErrorElement() {
         <div className="flex flex-col items-center gap-5 py-20 text-center">
             <h1 className="text-2xl font-bold">Oops! Something went wrong.</h1>
             <p>
-                {error.response?.data?.message ||
+                {error?.response?.data?.message ||
                     error?.statusText ||
                     error?.message ||
                     "Page not found"}

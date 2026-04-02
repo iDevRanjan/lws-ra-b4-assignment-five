@@ -16,6 +16,11 @@ export const jobTypeOptionData = [
     },
     {
         id: 4,
+        name: "Freelance",
+        value: "Freelance",
+    },
+    {
+        id: 5,
         name: "Internship",
         value: "Internship",
     },

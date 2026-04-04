@@ -10,42 +10,55 @@ import ApplicantsCardSkeleton from "../skeletons/ApplicantsCardSkeleton";
 import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
 import toast from "react-hot-toast";
 import { QUERY_KEYS } from "../../utils/constants";
+import { useCallback, useState } from "react";
 
 export default function RecentApplicantsContainer() {
+    const [chooseApplicantId, setChooseApplicantId] = useState(null);
+
     const {
         isPending,
         isError,
         error,
         data: companyApplicants,
     } = useInfiniteQuery(getCompanyApplicantsQueryOption(""));
-    const { isPending: isUpdating, mutateAsync: mutateApplicantStatusAsync } =
-        useMutation(applicationStatusUpdateMutationOption());
+    const { mutateAsync: mutateApplicantStatusAsync } = useMutation(
+        applicationStatusUpdateMutationOption(),
+    );
 
     const queryClient = useQueryClient();
     const companyApplicantsData = companyApplicants?.pages[0] ?? {};
 
-    async function handleApplicantStatusUpdate(applicationId, type) {
-        try {
-            const responseData = await mutateApplicantStatusAsync({
-                applicationId,
-                payload: {
-                    status: type,
-                },
-            });
-            toast.success(
-                `Status updated to ${responseData?.data.status || "new status"}!`,
-            );
-            await queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.companyApplicants],
-            });
-        } catch (error) {
-            toast.error(
-                error?.response?.data?.message ||
-                    error.message ||
-                    "Failed to update",
-            );
-        }
-    }
+    const handleApplicantStatusUpdate = useCallback(
+        async (applicationId, type) => {
+            setChooseApplicantId(applicationId);
+
+            try {
+                const responseData = await mutateApplicantStatusAsync({
+                    applicationId,
+                    payload: {
+                        status: type,
+                    },
+                });
+
+                toast.success(
+                    `Status updated to ${responseData?.data.status || "new status"}!`,
+                );
+
+                await queryClient.invalidateQueries({
+                    queryKey: [QUERY_KEYS.companyApplicants],
+                });
+            } catch (error) {
+                toast.error(
+                    error?.response?.data?.message ||
+                        error.message ||
+                        "Failed to update",
+                );
+            } finally {
+                setChooseApplicantId(null);
+            }
+        },
+        [mutateApplicantStatusAsync, queryClient],
+    );
 
     return (
         <div className="card">
@@ -77,7 +90,9 @@ export default function RecentApplicantsContainer() {
                                 onApplicantStatusUpdate={
                                     handleApplicantStatusUpdate
                                 }
-                                isUpdating={isUpdating}
+                                isUpdating={
+                                    chooseApplicantId === companyApplicant.id
+                                }
                             />
                         ))
                     ) : (

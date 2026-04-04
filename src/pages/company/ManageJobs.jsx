@@ -1,13 +1,15 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { getCompanyOpenPositionsForOwnQueryOption } from "../../services/queryOptions";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getPaginationRange } from "../../utils/getPaginationRange";
 import ManageJobsTable from "../../components/jobs/ManageJobsTable";
 import Pagination from "../../components/common/Pagination";
 import BulkJobActions from "../../components/jobs/BulkJobActions";
 import ManageJobsSearchAndFilter from "../../components/jobs/ManageJobsSearchAndFilter";
 import { Link } from "react-router";
+
+const LIMIT = 5;
 
 export default function ManageJobs() {
     const [params, setParams] = useState("");
@@ -24,8 +26,6 @@ export default function ManageJobs() {
         ...getCompanyOpenPositionsForOwnQueryOption(page, params),
         placeholderData: keepPreviousData,
     });
-
-    const LIMIT = 5;
 
     const total = openPositionsForOwn?.count ?? 0;
     const currentCount = openPositionsForOwn?.data.length ?? 0;
@@ -45,20 +45,24 @@ export default function ManageJobs() {
         setParams(queryParams);
     }
 
-    function onSelectedItems(selectedId) {
+    const onSelectedItems = useCallback((selectedId) => {
         if (Array.isArray(selectedId)) {
             setSelectedItems(selectedId);
             return;
         }
 
-        const hasItem = selectedItems.includes(selectedId);
-
         setSelectedItems((prev) =>
-            hasItem
+            prev.includes(selectedId)
                 ? prev.filter((selectedItem) => selectedItem !== selectedId)
                 : [...prev, selectedId],
         );
-    }
+    }, []);
+
+    const handleRowRemoveJob = useCallback((applicationId) => {
+        setSelectedItems((prev) =>
+            prev.filter((item) => item !== applicationId),
+        );
+    }, []);
 
     function handlePageChange(value) {
         setPage((prev) => {
@@ -98,6 +102,7 @@ export default function ManageJobs() {
                     isPlaceholderData={isPlaceholderData}
                     selectedItems={selectedItems}
                     onSelectedItems={onSelectedItems}
+                    onRowRemoveJob={handleRowRemoveJob}
                     page={page}
                 />
                 {selectedItems.length > 0 && (

@@ -3,13 +3,14 @@ import JobSeekerAvatar from "../common/JobSeekerAvatar";
 import { getDateDifferenceFromNow } from "../../utils/getDateDifferenceFromNow";
 import { Link } from "react-router";
 import { getStatusConfig } from "../../utils/getStatusConfig";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { createPortal } from "react-dom";
 import CoverLetterModal from "./CoverLetterModal";
 import ActionSelectMenu from "../common/ActionSelectMenu";
-import { applicantStatusMap } from "../../data/applicantStatusMap";
+import { applicantStatusOptionData } from "../../data/applicantStatusOptionData";
+import toast from "react-hot-toast";
 
-export default function ApplicantsCard({
+const ApplicantsCard = memo(function ApplicantsCard({
     companyApplicantData,
     isCard,
     onApplicantStatusUpdate,
@@ -23,10 +24,13 @@ export default function ApplicantsCard({
 
     const status = companyApplicantData?.status || "New";
     const badgeConfig = getStatusConfig(status);
-    const applicantStatusItemsData = applicantStatusMap[status] ?? [];
 
     function handleValueChange(data) {
-        if (!data) return;
+        if (data === status) {
+            toast.error(`Applicant is already marked as: ${status}`);
+            return;
+        }
+
         onApplicantStatusUpdate(companyApplicantData.id, data);
     }
 
@@ -104,20 +108,23 @@ export default function ApplicantsCard({
                                     document.getElementById("modal-container"),
                                 )}
                         </>
-                        {applicantStatusItemsData.length > 0 && (
+                        {
                             <div>
                                 <ActionSelectMenu
                                     selectTitle="Update Applicant Status"
-                                    itemsData={applicantStatusItemsData}
+                                    itemsData={applicantStatusOptionData}
                                     onValueChange={handleValueChange}
                                     defaultSelect="Applicant Status"
                                     disabled={isUpdating}
+                                    valueDisabled={status}
                                 />
                             </div>
-                        )}
+                        }
                     </div>
                 </div>
             </div>
         </article>
     );
-}
+});
+
+export default ApplicantsCard;

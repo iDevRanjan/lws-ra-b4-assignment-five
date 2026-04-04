@@ -1,16 +1,29 @@
+import toast from "react-hot-toast";
+
 export default function ActionSelectMenu({
     selectTitle,
     itemsData,
     onValueChange,
-    defaultSelect,
+    defaultSelect = "",
     disabled = false,
+    valueDisabled,
 }) {
     function handleChange(event) {
-        onValueChange(event.target.value);
+        const value = event.target.value;
+        if (value === defaultSelect) {
+            toast.error("Please select a valid option!");
+            return;
+        }
+        onValueChange(value);
     }
 
     return (
-        <select name={selectTitle} onChange={handleChange} disabled={disabled}>
+        <select
+            name={selectTitle}
+            onChange={handleChange}
+            disabled={disabled}
+            defaultValue={defaultSelect}
+        >
             <button>
                 <selectedcontent></selectedcontent>
                 <svg
@@ -30,12 +43,16 @@ export default function ActionSelectMenu({
             </button>
             <div className="option-container">
                 {defaultSelect && (
-                    <option value="" disabled selected>
+                    <option value={defaultSelect} disabled>
                         {defaultSelect}
                     </option>
                 )}
                 {itemsData?.map((itemData) => (
-                    <option key={itemData.id} value={itemData.value}>
+                    <option
+                        key={itemData.id}
+                        value={itemData.value}
+                        disabled={itemData.value === valueDisabled}
+                    >
                         <div>
                             <span>{itemData.name}</span>
                         </div>

@@ -80,13 +80,6 @@ export default function CreateAndEditJob() {
     }
 
     async function onSubmit(formData) {
-        const isAnyFieldChange = Object.keys(dirtyFields).length > 0;
-
-        if (!isAnyFieldChange) {
-            toast("ℹ️ You haven't made any changes yet");
-            return;
-        }
-
         const payload = { ...formData };
 
         if (payload.skills) {
@@ -94,6 +87,13 @@ export default function CreateAndEditJob() {
         }
 
         if (isEditMode) {
+            const isAnyFieldChange = Object.keys(dirtyFields).length > 0;
+
+            if (!isAnyFieldChange) {
+                toast("ℹ️ You haven't made any changes yet");
+                return;
+            }
+
             const updatedData = Object.keys(dirtyFields).reduce((acc, key) => {
                 acc[key] = payload[key];
                 return acc;

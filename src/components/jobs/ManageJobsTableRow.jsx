@@ -2,16 +2,15 @@ import { Briefcase, Edit, MapPin, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 import { getJobStatusConfig } from "../../utils/getJobStatusConfig";
 import { formatDate } from "../../utils/formatDate";
+import { memo } from "react";
 
-export default function ManageJobsTableRow({
+const ManageJobsTableRow = memo(function ManageJobsTableRow({
     openPositionForOwnData,
-    selectedItems,
+    canBeChecked,
     onSelectedItems,
     onDeleteCompanyJob,
     isDeleting,
 }) {
-    const canBeChecked = selectedItems.includes(openPositionForOwnData.id);
-
     const status = openPositionForOwnData?.status || "Active";
     const badgeConfig = getJobStatusConfig(status);
 
@@ -90,4 +89,6 @@ export default function ManageJobsTableRow({
             </td>
         </tr>
     );
-}
+});
+
+export default ManageJobsTableRow;

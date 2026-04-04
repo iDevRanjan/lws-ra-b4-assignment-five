@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import ApplicantsCard from "./ApplicantsCard";
 import { applicationStatusUpdateMutationOption } from "../../services/mutationOptions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -9,34 +9,46 @@ export default function ApplicantsCardGrid({
     companyApplicants,
     isPlaceholderData,
 }) {
-    const { isPending: isUpdating, mutateAsync: mutateApplicantStatusAsync } =
-        useMutation(applicationStatusUpdateMutationOption());
+    const [chooseApplicantId, setChooseApplicantId] = useState(null);
+
+    const { mutateAsync: mutateApplicantStatusAsync } = useMutation(
+        applicationStatusUpdateMutationOption(),
+    );
 
     const queryClient = useQueryClient();
     const pages = companyApplicants?.pages ?? [];
 
-    async function handleApplicantStatusUpdate(applicationId, type) {
-        try {
-            const responseData = await mutateApplicantStatusAsync({
-                applicationId,
-                payload: {
-                    status: type,
-                },
-            });
-            toast.success(
-                `Status updated to ${responseData?.data.status || "new status"}!`,
-            );
-            await queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.companyApplicants],
-            });
-        } catch (error) {
-            toast.error(
-                error?.response?.data?.message ||
-                    error.message ||
-                    "Failed to update",
-            );
-        }
-    }
+    const handleApplicantStatusUpdate = useCallback(
+        async (applicationId, type) => {
+            setChooseApplicantId(applicationId);
+
+            try {
+                const responseData = await mutateApplicantStatusAsync({
+                    applicationId,
+                    payload: {
+                        status: type,
+                    },
+                });
+
+                toast.success(
+                    `Status updated to ${responseData?.data.status || "new status"}!`,
+                );
+
+                await queryClient.invalidateQueries({
+                    queryKey: [QUERY_KEYS.companyApplicants],
+                });
+            } catch (error) {
+                toast.error(
+                    error?.response?.data?.message ||
+                        error.message ||
+                        "Failed to update",
+                );
+            } finally {
+                setChooseApplicantId(null);
+            }
+        },
+        [mutateApplicantStatusAsync, queryClient],
+    );
 
     return (
         <div
@@ -55,7 +67,7 @@ export default function ApplicantsCardGrid({
                             onApplicantStatusUpdate={
                                 handleApplicantStatusUpdate
                             }
-                            isUpdating={isUpdating}
+                            isUpdating={chooseApplicantId === applicant.id}
                         />
                     ))}
                 </React.Fragment>

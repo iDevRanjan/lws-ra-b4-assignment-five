@@ -127,11 +127,11 @@ const router = createBrowserRouter([
                             },
                             {
                                 path: "manage-jobs/create",
-                                element: <CreateAndEditJob />,
+                                element: <CreateAndEditJob key="create" />,
                             },
                             {
                                 path: "manage-jobs/edit/:jobSlug",
-                                element: <CreateAndEditJob />,
+                                element: <CreateAndEditJob key="edit" />,
                                 loader: editJobLoader,
                             },
                         ],

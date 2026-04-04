@@ -4,6 +4,7 @@ import ManageJobsTableRowSkeleton from "../skeletons/ManageJobsTableRowSkeleton"
 import ManageJobsTableRow from "./ManageJobsTableRow";
 import toast from "react-hot-toast";
 import { QUERY_KEYS } from "../../utils/constants";
+import { useCallback, useState } from "react";
 
 export default function ManageJobsTable({
     isPending,
@@ -13,9 +14,12 @@ export default function ManageJobsTable({
     isPlaceholderData,
     selectedItems = [],
     onSelectedItems,
+    onRowRemoveJob,
 }) {
-    const { isPending: isDeleting, mutateAsync: mutateDeleteJobAsync } =
-        useMutation(deleteCompanyJobMutationOption());
+    const [deletingId, setDeletingId] = useState(null);
+    const { mutateAsync: mutateDeleteJobAsync } = useMutation(
+        deleteCompanyJobMutationOption(),
+    );
 
     const queryClient = useQueryClient();
     const openPositionsForOwnData = openPositionsForOwn?.data ?? [];
@@ -34,23 +38,63 @@ export default function ManageJobsTable({
         onSelectedItems(isTopCheckboxChecked ? selectedItemsArray : []);
     }
 
-    async function handleDeleteCompanyJob(applicationId) {
-        if (!confirm("Are you sure you want to delete this job?")) return;
+    const handleDeleteCompanyJob = useCallback(
+        async (applicationId) => {
+            if (!confirm("Are you sure you want to delete this job?")) return;
 
-        try {
-            await mutateDeleteJobAsync(applicationId);
-            toast.success("Jobs deleted successfully!");
-            await queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.companyOpenPositionsForOwn],
-            });
+            setDeletingId(applicationId);
 
-            const hasItem = selectedItems.includes(applicationId);
-            if (hasItem) onSelectedItems(applicationId);
-        } catch (error) {
-            const errorMessage =
-                error?.response?.data?.message || error.message;
-            toast.error(`Delete failed: ${errorMessage}`);
+            try {
+                await mutateDeleteJobAsync(applicationId);
+                toast.success("Jobs deleted successfully!");
+                await queryClient.invalidateQueries({
+                    queryKey: [QUERY_KEYS.companyOpenPositionsForOwn],
+                });
+
+                onRowRemoveJob(applicationId);
+            } catch (error) {
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                toast.error(`Delete failed: ${errorMessage}`);
+            } finally {
+                setDeletingId(null);
+            }
+        },
+        [mutateDeleteJobAsync, queryClient, onRowRemoveJob],
+    );
+
+    function renderManageJobsTableRow() {
+        if (!openPositionsForOwn?.success) {
+            return null;
         }
+
+        if (!(openPositionsForOwnData.length > 0)) {
+            return (
+                <tr>
+                    <td
+                        colSpan="100%"
+                        className="text-muted-foreground py-4 text-center"
+                    >
+                        No jobs are available
+                    </td>
+                </tr>
+            );
+        }
+
+        return openPositionsForOwnData.map((openPositionForOwn) => {
+            const canBeChecked = selectedItems.includes(openPositionForOwn.id);
+
+            return (
+                <ManageJobsTableRow
+                    key={openPositionForOwn.id}
+                    openPositionForOwnData={openPositionForOwn}
+                    canBeChecked={canBeChecked}
+                    onSelectedItems={onSelectedItems}
+                    onDeleteCompanyJob={handleDeleteCompanyJob}
+                    isDeleting={deletingId === openPositionForOwn.id}
+                />
+            );
+        });
     }
 
     return (
@@ -105,34 +149,7 @@ export default function ManageJobsTable({
                             </td>
                         </tr>
                     )}
-                    {openPositionsForOwn?.success &&
-                        (openPositionsForOwnData.length > 0 ? (
-                            openPositionsForOwnData.map(
-                                (openPositionForOwn) => (
-                                    <ManageJobsTableRow
-                                        key={openPositionForOwn.id}
-                                        openPositionForOwnData={
-                                            openPositionForOwn
-                                        }
-                                        selectedItems={selectedItems}
-                                        onSelectedItems={onSelectedItems}
-                                        onDeleteCompanyJob={
-                                            handleDeleteCompanyJob
-                                        }
-                                        isDeleting={isDeleting}
-                                    />
-                                ),
-                            )
-                        ) : (
-                            <tr>
-                                <td
-                                    colSpan="100%"
-                                    className="text-muted-foreground py-4 text-center"
-                                >
-                                    No jobs are available
-                                </td>
-                            </tr>
-                        ))}
+                    {renderManageJobsTableRow()}
                 </tbody>
             </table>
         </div>

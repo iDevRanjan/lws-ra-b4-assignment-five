@@ -12,7 +12,10 @@ export default function JobSeekerProfile() {
 
     return (
         <main className="container mx-auto px-4 py-8">
-            <JobSeekerProfileHeader profileData={jobSeekerProfile?.data} role="USER" />
+            <JobSeekerProfileHeader
+                profileData={jobSeekerProfile?.data}
+                role="USER"
+            />
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 <div className="space-y-6 lg:col-span-2">
                     <div className="card p-6">

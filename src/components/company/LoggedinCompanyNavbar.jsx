@@ -50,7 +50,7 @@ export default function LoggedinCompanyNavbar({ companyProfileData }) {
                     </span>
                     {open && (
                         <NavbarNavigationMenu
-                            toProfile="login"
+                            toProfile="company-settings"
                             toDashboard="company-dashboard"
                         />
                     )}

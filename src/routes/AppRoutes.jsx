@@ -30,6 +30,7 @@ import ApplicantProfile from "../pages/company/ApplicantProfile";
 import ManageJobs from "../pages/company/ManageJobs";
 import Applicants from "../pages/company/Applicants";
 import CreateAndEditJob from "../pages/company/CreateAndEditJob";
+import CompanySettings from "../pages/company/CompanySettings";
 
 const router = createBrowserRouter([
     {
@@ -122,8 +123,8 @@ const router = createBrowserRouter([
                                 element: <Applicants />,
                             },
                             {
-                                path: "edit-company-profile",
-                                // element: <EditCompanyProfile />,
+                                path: "company-settings",
+                                element: <CompanySettings />,
                             },
                             {
                                 path: "manage-jobs/create",

@@ -7,7 +7,7 @@ export default function CompanyQuickActions() {
             <h3 className="mb-4 text-lg font-semibold">Quick Actions</h3>
             <div className="space-y-2">
                 <Link
-                    to="/create-job"
+                    to="/manage-jobs/create"
                     className="btn btn-primary w-full justify-start"
                 >
                     <Plus className="mr-2 h-4 w-4" />
@@ -28,7 +28,7 @@ export default function CompanyQuickActions() {
                     View Applicants
                 </Link>
                 <Link
-                    to="/edit-company-profile"
+                    to="/company-settings"
                     className="btn btn-outline w-full justify-start"
                 >
                     <Settings className="mr-2 h-4 w-4" />

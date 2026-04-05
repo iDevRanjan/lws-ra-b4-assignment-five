@@ -106,6 +106,43 @@ Static data and helper functions are separated to keep the code clean.
 - **Data Files:** Job types, skill lists, salary ranges, or filtering options are kept as objects/arrays inside `src/data/` instead of being hardcoded (e.g., `categoryOptionData.js`, `statusFiltersData.js`).
 - **Utils:** Various helper functions like `slugify.js` (creating URL-friendly names), `getDateDifferenceFromNow.js` (calculating time differences), and `applicationJobChecking.js` (validation for whether a user has applied to a job).
 
+## 🚀 Roadmap & Future Enhancements
+
+While the current iteration of the LWS Job Portal delivers a robust and fully functional recruitment experience, continuous improvement is at the core of our development lifecycle. To ensure better code maintainability, enhanced scalability, and a flawless user experience, we have outlined a clear path for upcoming updates. Whether you are reviewing the project's long-term trajectory or looking for areas to contribute, the following roadmap details our planned technical refinements and feature additions:
+
+- **Refactor Query Arguments:** Update the function argument names in `queryOptions` from generic terms (like `params`) to explicitly reflect the actual data being received.
+- **Standardize Form Validation:** Implement robust schema validation across all form components using standard libraries like **Zod** or **Yup**.
+- **Input Sanitization:** Protect all form fields from leading and trailing whitespaces to maintain data integrity.
+    - _Implementation note:_ Apply `.trim()` on the `onBlur` event for all text inputs. Example:
+
+        ```javascript
+        const { setValue } = useForm({ ... });
+
+        <input
+            type="text"
+            id="fieldName"
+            className="input"
+            {...register("fieldName", {
+                required: "Field Name is required",
+                onBlur: (e) => {
+                    setValue("fieldName", e.target.value.trim(), {
+                        shouldDirty: true,
+                        shouldValidate: true
+                    });
+                }
+            })}
+        />
+        ```
+
+- **Component Modularization:** Refactor and break down large, monolithic UI structures into smaller, manageable, and reusable components within the following pages:
+    - `Login`
+    - `JobSeekerRegister`
+    - `CompanyRegister`
+    - `EditJobSeekerProfile`
+    - `CreateAndEditJob`
+
+- **Develop Company Settings Page:** Build the `CompanySettings` page by adopting the same structural pattern and UI layout used in the `EditJobSeekerProfile` page.
+
 ## 🛠️ Getting Started
 
 Follow the steps below to successfully run the project on your local machine. You will need the backend server API to run this project.
